@@ -36,6 +36,7 @@ Results are tied to the version and date they were run. When the app changes, th
 
 | Version | Date | Browser and device | Result |
 |---|---|---|---|
+| 2.2.1 | Nov 1, 2026 | Chrome (Blink engine) on Linux: full check at phone size, plus layout checks at tablet, laptop and desktop sizes (fixes the feedback email address) | ✓ Passed, 1,240 automated checks |
 | 2.2 | Nov 1, 2026 | Chrome (Blink engine) on Linux: full check at phone size, plus layout checks at tablet, laptop and desktop sizes | ✓ Passed, 1,233 automated checks |
 | 2.2 | Nov 1, 2026 | Safari engine (WebKit) on a real iPhone | ✓ Passed, 1,243 automated checks |
 | 2.1 | Nov 1, 2026 | Chrome (Blink engine) on Linux: full check at phone size, plus layout checks at tablet, laptop and desktop sizes | ✓ Passed, 1,219 automated checks |
@@ -76,7 +77,7 @@ All lessons, questions and essay passages are original and were written with hel
 
 Spotted a mistake, got stuck or have an idea? You don't need an account to reach us.
 
-- **Email:** freestudycoach@proton.me (private, no account needed)
+- **Email:** freestudycoach@protonmail.com (private, no account needed)
 - **GitHub:** open an issue in this repository's **Issues** tab (public, needs a free GitHub account)
 - **In the app:** after you answer a question, and in your test results, tap **Report a mistake**. It fills in which question you mean. The About screen has a feedback button too.
 
