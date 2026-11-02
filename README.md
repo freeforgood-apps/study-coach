@@ -36,18 +36,20 @@ Results are tied to the version and date they were run. When the app changes, th
 
 | Version | Date | Browser and device | Result |
 |---|---|---|---|
+| 2.2 | Nov 1, 2026 | Chrome (Blink engine) on Linux: full check at phone size, plus layout checks at tablet, laptop and desktop sizes | ✓ Passed, 1,233 automated checks |
+| 2.2 | Nov 1, 2026 | Safari engine (WebKit) on a real iPhone | ✓ Passed, 1,243 automated checks |
 | 2.1 | Nov 1, 2026 | Chrome (Blink engine) on Linux: full check at phone size, plus layout checks at tablet, laptop and desktop sizes | ✓ Passed, 1,219 automated checks |
 | 2.1 | Nov 1, 2026 | Safari engine (WebKit) on a real iPhone | ✓ Passed, 1,219 automated checks |
 | 2.1 | Nov 1, 2026 | The published GitHub Pages site, Safari engine on a real iPhone | ✓ Passed, 1,227 automated checks |
 | — | — | Firefox | Not tested yet |
 
-**What the automated checks cover:** every lesson and quiz, all four full practice tests (answering, flagging, jumping between questions, pausing, saving and resuming, and finishing when time runs out), score math, missed-question review, Quick 5, flashcards, essay practice, the calculator's answers, read-aloud, keyboard shortcuts, the test-date planner, backup and restore, saving to the device, and checks that no screen scrolls sideways or shows broken text. The exact number of checks varies a little between runs because practice questions are shuffled.
+**What the automated checks cover:** every lesson and quiz, all four full practice tests (answering, flagging, jumping between questions, pausing, saving and resuming, and finishing when time runs out), score math, missed-question review, Quick 5, flashcards, essay practice, the calculator's answers, read-aloud, keyboard shortcuts, the test-date planner, backup and restore, saving to the device, feedback and mistake reporting, and checks that no screen scrolls sideways or shows broken text. The exact number of checks varies a little between runs because practice questions are shuffled.
 
 Chrome's engine also powers Microsoft Edge, Chromebooks, Android phones, Samsung Internet, Brave and Opera. Safari's engine powers Safari and nearly every other browser on iPhone and iPad.
 
 ### Run the self-test yourself
 
-Open **selftest.html** in any browser and tap **Run self-test**. In a few seconds it taps through the whole app and shows a pass/fail report you can copy. It saves to its own separate storage, so it never touches anyone's real progress. If you run it on a browser that isn't listed above, please share the report in this repository's **Issues** tab.
+Open **selftest.html** in any browser and tap **Run self-test**. In a few seconds it taps through the whole app and shows a pass/fail report you can copy. It saves to its own separate storage, so it never touches anyone's real progress. If you run it on a browser that isn't listed above, please share the report by email or in this repository's **Issues** tab (see Feedback below).
 
 ## Privacy
 
@@ -58,7 +60,7 @@ Open **selftest.html** in any browser and tap **Run self-test**. In a few second
 
 ## Accessibility
 
-Designed for phones first, with large tap targets, screen-reader labels, a large-text setting, light and dark themes, and text colors that meet WCAG 2.2 AA contrast. **Listen** reads lessons and questions out loud. On computers, the keyboard works too: A–D to answer, Enter for the next question, ← → to move through a practice test, F to flag. Please open an issue if anything is hard to use.
+Designed for phones first, with large tap targets, screen-reader labels, a large-text setting, light and dark themes, and text colors that meet WCAG 2.2 AA contrast. **Listen** reads lessons and questions out loud. On computers, the keyboard works too: A–D to answer, Enter for the next question, ← → to move through a practice test, F to flag. If anything is hard to use, please let us know (see Feedback below).
 
 ## Not an official GED® product
 
@@ -68,7 +70,17 @@ GED® and GED Testing Service® are registered trademarks of the American Counci
 
 ## About the content
 
-All lessons, questions and essay passages are original and were written with help from AI (Claude, made by Anthropic), then reviewed for accuracy. Mistakes are still possible. If you find one, please open an issue in this repository's **Issues** tab. The essay passages, and the people and studies in them, are made up for practice.
+All lessons, questions and essay passages are original and were written with help from AI (Claude, made by Anthropic), then reviewed for accuracy. Mistakes are still possible. If you find one, tap **Report a mistake** after answering a question or in your test results, or see Feedback below. The essay passages, and the people and studies in them, are made up for practice.
+
+## Feedback
+
+Spotted a mistake, got stuck or have an idea? You don't need an account to reach us.
+
+- **Email:** freestudycoach@proton.me (private, no account needed)
+- **GitHub:** open an issue in this repository's **Issues** tab (public, needs a free GitHub account)
+- **In the app:** after you answer a question, and in your test results, tap **Report a mistake**. It fills in which question you mean. The About screen has a feedback button too.
+
+Study Coach is a one-person volunteer project, so replies can take a while. Every report still helps, even if you don't hear back right away. Please don't include personal details you don't want to share.
 
 ## Terms of use
 
