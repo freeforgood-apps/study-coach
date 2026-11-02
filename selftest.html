@@ -893,7 +893,7 @@ const TIPS = [
 </script>
 <script>
 "use strict";
-const APP_VERSION = "2.2.1 · November 2026";
+const APP_VERSION = "2.2.2 · November 2026";
 const FEEDBACK_EMAIL = "freestudycoach@protonmail.com";
 /* ================= question registry ================= */
 const QMAP = {};
@@ -2033,6 +2033,8 @@ try {
       act("cleardate"); if (P.set.date) issues.push("Clear date didn't work"); click(".hrow"); check("Past result"); act("back");
       act("bkexport"); const code = $("#bkcode").value, snap = JSON.stringify(P); act("bkclose");
       act("reset"); act("resetyes"); act("bkimport"); $("#bkin").value = code; act("bkrestore"); if (JSON.stringify(P) !== snap) issues.push("Backup didn't restore exactly");
+      await step("Offline cache name");
+      if (/^https?:$/.test(location.protocol)) { try { const sw = await fetch("sw.js", {cache:"no-store"}); if (sw.ok) { steps++; const want = '"study-coach-v' + APP_VERSION.split(" ")[0] + '"'; if ((await sw.text()).indexOf(want) < 0) issues.push("Offline cache name in sw.js doesn't match version " + APP_VERSION.split(" ")[0]); } } catch (e) {} }
       await step("Saving to the device");
       const saved = JSON.parse(localStorage.getItem(KEY) || "null"); if (!saved || Object.keys(saved.u).length !== 19) issues.push("Progress didn't save to the device");
     } catch (e) { issues.push("Test stopped early: " + (e && e.message)); }
