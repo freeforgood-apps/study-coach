@@ -37,6 +37,7 @@ Results are tied to the version and date they were run. When the app changes, th
 | Version | Date | Browser and device | Result |
 |---|---|---|---|
 | 2.2.2 | Nov 2, 2026 | Chrome (Blink engine) on Linux: full check at phone size, plus layout checks at small phone, tablet, laptop and desktop sizes (updates the offline copy's name to match the version) | ✓ Passed, 1,243 automated checks |
+| 2.2.2 | Nov 2, 2026 | The published GitHub Pages site, Safari engine (WebKit) on a real iPhone | ✓ Passed, 1,244 automated checks |
 | 2.2.1 | Nov 1, 2026 | Chrome (Blink engine) on Linux: full check at phone size, plus layout checks at tablet, laptop and desktop sizes (fixes the feedback email address) | ✓ Passed, 1,240 automated checks |
 | 2.2 | Nov 1, 2026 | Chrome (Blink engine) on Linux: full check at phone size, plus layout checks at tablet, laptop and desktop sizes | ✓ Passed, 1,233 automated checks |
 | 2.2 | Nov 1, 2026 | Safari engine (WebKit) on a real iPhone | ✓ Passed, 1,243 automated checks |
