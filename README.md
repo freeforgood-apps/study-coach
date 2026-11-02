@@ -36,6 +36,7 @@ Results are tied to the version and date they were run. When the app changes, th
 
 | Version | Date | Browser and device | Result |
 |---|---|---|---|
+| 2.2.2 | Nov 2, 2026 | Chrome (Blink engine) on Linux: full check at phone size, plus layout checks at small phone, tablet, laptop and desktop sizes (updates the offline copy's name to match the version) | ✓ Passed, 1,243 automated checks |
 | 2.2.1 | Nov 1, 2026 | Chrome (Blink engine) on Linux: full check at phone size, plus layout checks at tablet, laptop and desktop sizes (fixes the feedback email address) | ✓ Passed, 1,240 automated checks |
 | 2.2 | Nov 1, 2026 | Chrome (Blink engine) on Linux: full check at phone size, plus layout checks at tablet, laptop and desktop sizes | ✓ Passed, 1,233 automated checks |
 | 2.2 | Nov 1, 2026 | Safari engine (WebKit) on a real iPhone | ✓ Passed, 1,243 automated checks |
@@ -44,7 +45,7 @@ Results are tied to the version and date they were run. When the app changes, th
 | 2.1 | Nov 1, 2026 | The published GitHub Pages site, Safari engine on a real iPhone | ✓ Passed, 1,227 automated checks |
 | — | — | Firefox | Not tested yet |
 
-**What the automated checks cover:** every lesson and quiz, all four full practice tests (answering, flagging, jumping between questions, pausing, saving and resuming, and finishing when time runs out), score math, missed-question review, Quick 5, flashcards, essay practice, the calculator's answers, read-aloud, keyboard shortcuts, the test-date planner, backup and restore, saving to the device, feedback and mistake reporting, and checks that no screen scrolls sideways or shows broken text. The exact number of checks varies a little between runs because practice questions are shuffled.
+**What the automated checks cover:** every lesson and quiz, all four full practice tests (answering, flagging, jumping between questions, pausing, saving and resuming, and finishing when time runs out), score math, missed-question review, Quick 5, flashcards, essay practice, the calculator's answers, read-aloud, keyboard shortcuts, the test-date planner, backup and restore, saving to the device, feedback and mistake reporting, that the offline copy's name matches the app version, and checks that no screen scrolls sideways or shows broken text. The exact number of checks varies a little between runs because practice questions are shuffled.
 
 Chrome's engine also powers Microsoft Edge, Chromebooks, Android phones, Samsung Internet, Brave and Opera. Safari's engine powers Safari and nearly every other browser on iPhone and iPad.
 
