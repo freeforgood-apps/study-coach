@@ -1,0 +1,1845 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Study Coach for the GED® Test</title>
+<meta name="description" content="A free study app for the GED® test: lessons, full practice tests, flashcards, essay practice and a calculator. Not affiliated with ACE or GED Testing Service.">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Study Coach">
+<meta name="theme-color" content="#F2F4F9" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0E1322" media="(prefers-color-scheme: dark)">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAE6klEQVR4Xu2cMYoUQRRAe0XMDVwQ3DsILgaCt/AegqEHMBS8h7cQDGQD77CBsIm5kUFB2/Z09dSf+lVd///34pnPTPebV93FzFw9e/FqAtjiEYcFciAHIAfIoRxAOUAO5QDKAXIoB1AOkEM5gHKAHMoBlAPkUA6gHCCHcgDlADmUAygHyKEcQDlADuUAygFyKAdQDpBDOYBygBzKAZQD5FAOoBwgh3IA5QA5lAMoB8ihHEA5QA7l+I+H+zv5MXTLFX81mVhpcX1z6/acFxNdjrOpiGxJXDnOarEkpiIR5RBpEVmRQHJc7MQpQUISQg5FLUKFxLkcjbQIoohbOTpo4V4Rb3J0dsL35YgfOQ7Xwl9IPMgxlBaeFDEsx7BOuFlrTMphSAvTITEmh1EtjCpiQw4HTlhca0aXw6UWVkIyrhzutRhfkeHkCOXE4GvNQHIE12LAkAwhB1pscvgXAw6WAy3OcqAix8iBExfQ35LecqBFJT0V6ScHWijSR5HmcuBEU5pa0lAOtOhGI0UaypFAkaY00iLxuOlLn6Z/rx5LzNHvh9TXN7dNNQd1+smRQJGL6X/omi8rm8wJYa05y4G5PUaOmfTOUWT/I3QUB8sxrzUosuTAWiwZQg4UWaV0EAaSY6lItJAMkooVw8kR7XJkTC0S48rhfq0ZWQsbcvhba8Z3Ymb0cqwwfetrSItE7x3Si1nuhfTfK6xk9YKt7OtYKkc6pvPnb/xt1tNUWNHC0jXHkvn4riwZ6rivtBjqtZVjqRwrNkNy+GnwoYXVcpQo0n8PzfoKsonhcpyuNcsz1O2+xqUWTspx4OWIpxXEczlK1hrFyxH3WjgsR4kiNZcjjleQQOVQvxyJpoX/cqhcjgRZQYKW47K1JmYqVji5lZWy2kCbd+Uf7u/QYiaoHImcIjOKNzgWCS3HUhF+nHcKctCJLGa+zwH9QQ6gHCCHcgDlADmUwxKn+y5Nd2KQwww5D9r5gRw22DegkR/IYYCSc1/yGCnIAdytgBzKAZQD5FAOA5T8PL/kMVKQwwb7576FGdPU/r/PdWlxw9aZmhO5+fZrBu7T/I/xG2HOEq1TuHrjWmM3sSpHwoQiTc9fU2zLMTOgJXadmHEix1AhcaBFwpUcx4bEjRM+y7Gi21rjTwvP5VjSVBGvWkSRo8Va49uJEMvKJpUhCaJFuHLUXJGEciJuOaSKxNQiejn2LYnsBOXIXpGgBXLAefg+B2RBDkAOkEM5gHKAHMoBlAPkUA6gHCCHcgDlADmUAygHyKEckKXVH+M/ffOl5qj//v6+5Omfn78teViOD7++lTz9z7vrkoflePL1oeTpH1//LHlYjk8/XtY8fZMm5ag0Y5qKJlSaMU1FEyrNmKaiCZVmTJPChFP05ag3I7E/p96MxP6cejMS+3PqzUhozZlRlkPLjH0/tMzY90PLjH0/dM+o7jRlOcATyAFZkAOQA+Qol6Nwf6KQ3LTC/YlCctMK9ycKyU3T3Z/QnaYsxzSp+bHvmZYf+3O0/Nifo3VGtea0upVN1PejZEK9HyUT6v0omVB/XusnnOLzb59ABf1lBdyAHMCtLMihHEA5QA7lAMoBcigHUA6QQzmAcoAcygGUA+RQDqAcIIdyAOUAOZQDKAfIoRxAOUAO5QDKAXIoB1AOkEM5gHKAHMoBlAPkUA7I8hd5SKW2bm064QAAAABJRU5ErkJggg==">
+<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAE6klEQVR4Xu2cMYoUQRRAe0XMDVwQ3DsILgaCt/AegqEHMBS8h7cQDGQD77CBsIm5kUFB2/Z09dSf+lVd///34pnPTPebV93FzFw9e/FqAtjiEYcFciAHIAfIoRxAOUAO5QDKAXIoB1AOkEM5gHKAHMoBlAPkUA6gHCCHcgDlADmUAygHyKEcQDlADuUAygFyKAdQDpBDOYBygBzKAZQD5FAOoBwgh3IA5QA5lAMoB8ihHEA5QA7l+I+H+zv5MXTLFX81mVhpcX1z6/acFxNdjrOpiGxJXDnOarEkpiIR5RBpEVmRQHJc7MQpQUISQg5FLUKFxLkcjbQIoohbOTpo4V4Rb3J0dsL35YgfOQ7Xwl9IPMgxlBaeFDEsx7BOuFlrTMphSAvTITEmh1EtjCpiQw4HTlhca0aXw6UWVkIyrhzutRhfkeHkCOXE4GvNQHIE12LAkAwhB1pscvgXAw6WAy3OcqAix8iBExfQ35LecqBFJT0V6ScHWijSR5HmcuBEU5pa0lAOtOhGI0UaypFAkaY00iLxuOlLn6Z/rx5LzNHvh9TXN7dNNQd1+smRQJGL6X/omi8rm8wJYa05y4G5PUaOmfTOUWT/I3QUB8sxrzUosuTAWiwZQg4UWaV0EAaSY6lItJAMkooVw8kR7XJkTC0S48rhfq0ZWQsbcvhba8Z3Ymb0cqwwfetrSItE7x3Si1nuhfTfK6xk9YKt7OtYKkc6pvPnb/xt1tNUWNHC0jXHkvn4riwZ6rivtBjqtZVjqRwrNkNy+GnwoYXVcpQo0n8PzfoKsonhcpyuNcsz1O2+xqUWTspx4OWIpxXEczlK1hrFyxH3WjgsR4kiNZcjjleQQOVQvxyJpoX/cqhcjgRZQYKW47K1JmYqVji5lZWy2kCbd+Uf7u/QYiaoHImcIjOKNzgWCS3HUhF+nHcKctCJLGa+zwH9QQ6gHCCHcgDlADmUwxKn+y5Nd2KQwww5D9r5gRw22DegkR/IYYCSc1/yGCnIAdytgBzKAZQD5FAOA5T8PL/kMVKQwwb7576FGdPU/r/PdWlxw9aZmhO5+fZrBu7T/I/xG2HOEq1TuHrjWmM3sSpHwoQiTc9fU2zLMTOgJXadmHEix1AhcaBFwpUcx4bEjRM+y7Gi21rjTwvP5VjSVBGvWkSRo8Va49uJEMvKJpUhCaJFuHLUXJGEciJuOaSKxNQiejn2LYnsBOXIXpGgBXLAefg+B2RBDkAOkEM5gHKAHMoBlAPkUA6gHCCHcgDlADmUAygHyKEckKXVH+M/ffOl5qj//v6+5Omfn78teViOD7++lTz9z7vrkoflePL1oeTpH1//LHlYjk8/XtY8fZMm5ag0Y5qKJlSaMU1FEyrNmKaiCZVmTJPChFP05ag3I7E/p96MxP6cejMS+3PqzUhozZlRlkPLjH0/tMzY90PLjH0/dM+o7jRlOcATyAFZkAOQA+Qol6Nwf6KQ3LTC/YlCctMK9ycKyU3T3Z/QnaYsxzSp+bHvmZYf+3O0/Nifo3VGtea0upVN1PejZEK9HyUT6v0omVB/XusnnOLzb59ABf1lBdyAHMCtLMihHEA5QA7lAMoBcigHUA6QQzmAcoAcygGUA+RQDqAcIIdyAOUAOZQDKAfIoRxAOUAO5QDKAXIoB1AOkEM5gHKAHMoBlAPkUA7I8hd5SKW2bm064QAAAABJRU5ErkJggg==">
+<style>
+:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;font:14px/1.4 system-ui,-apple-system,sans-serif}
+img{max-width:100%}
+[hidden]{display:none!important}
+</style>
+<style>
+/* Layout: one friendly column (max 640px), sticky top bar, bottom tab bar, big tappable cards; each subject's color carries the wayfinding */
+:root{
+  --bg:#F2F4F9; --surface:#FFFFFF; --ink:#151C33; --muted:#565F7C; --line:#DADFEB;
+  --math:#2656C4; --rla:#A33570; --sci:#0F7049; --ss:#8F5203;
+  --good:#116C3E; --bad:#B02E2E; --flag:#C98400; --onc:#FFFFFF; --scrim:rgba(16,21,40,.45);
+  --display:"Bricolage Grotesque","Avenir Next","Segoe UI",system-ui,sans-serif;
+  --body:"Atkinson Hyperlegible",-apple-system,"Segoe UI",system-ui,sans-serif;
+  --c:var(--math);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E1322; --surface:#171F35; --ink:#ECEFF7; --muted:#9CA5C0; --line:#29324E;
+    --math:#7CA3FF; --rla:#EC86B8; --sci:#52CD9A; --ss:#F2AE48;
+    --good:#4FCB8A; --bad:#FF7A7A; --flag:#F5BC45; --onc:#0E1322; --scrim:rgba(0,0,0,.6); color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0E1322; --surface:#171F35; --ink:#ECEFF7; --muted:#9CA5C0; --line:#29324E;
+  --math:#7CA3FF; --rla:#EC86B8; --sci:#52CD9A; --ss:#F2AE48;
+  --good:#4FCB8A; --bad:#FF7A7A; --flag:#F5BC45; --onc:#0E1322; --scrim:rgba(0,0,0,.6); color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;font-size:106.25%}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:1rem;line-height:1.55}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+button{font:inherit;color:inherit;-webkit-tap-highlight-color:transparent}
+:focus-visible{outline:3px solid var(--c);outline-offset:2px}
+a{color:var(--c);font-weight:700}
+svg{display:block}
+
+.wrap{max-width:640px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px}
+.tabbed .wrap{padding-block:0 calc(100px + env(safe-area-inset-bottom,0px))}
+.wrap.docked{padding-block:0 calc(120px + env(safe-area-inset-bottom,0px))}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg)}
+.bar{display:flex;align-items:center;gap:8px;min-height:62px}
+.iconbtn{flex:none;width:44px;height:44px;border-radius:14px;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center;cursor:pointer;color:var(--ink)}
+.iconbtn svg{width:22px;height:22px}
+.tt{flex:1;min-width:0;font-family:var(--display);font-weight:600;font-size:1.06rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand{flex:1;display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:800;font-size:1.12rem}
+.brand i svg{width:20px;height:20px}
+.brand i{font-style:normal;display:grid;place-items:center;width:34px;height:34px;border-radius:10px;background:var(--ink);color:var(--bg);font-size:.74rem;letter-spacing:.02em}
+.topright{font-size:.85rem;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+
+.screen{display:flex;flex-direction:column;gap:16px}
+.screen.enter{animation:in .22s ease-out}
+@keyframes in{from{opacity:.4;transform:translateY(6px)}to{opacity:1;transform:none}}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(1.65rem,7.2vw,2.25rem);line-height:1.08;letter-spacing:-.015em;margin:0;text-wrap:balance}
+.h1s{font-size:clamp(1.5rem,6.5vw,1.9rem)}
+h2{font-family:var(--display);font-weight:600;font-size:1.3rem;line-height:1.2;margin:0;text-wrap:balance}
+p{margin:0}
+.muted{color:var(--muted)}
+.small{font-size:.88rem}
+.center{text-align:center}
+.label{font-size:.76rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-top:8px}
+.eyebrow{font-size:.76rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--c)}
+.mid{min-width:0;display:flex;flex-direction:column}
+
+/* home */
+.hero{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:center;padding-top:4px}
+.hero p{margin-top:10px;color:var(--muted)}
+.ring{position:relative;width:92px;height:92px}
+.ring svg{width:92px;height:92px;transform:rotate(-90deg)}
+.ring .num{position:absolute;inset:0;display:grid;place-items:center;text-align:center;font-family:var(--display);font-weight:800;font-size:1.3rem;line-height:1;font-variant-numeric:tabular-nums}
+.ring .num small{display:block;font-family:var(--body);font-weight:400;font-size:.66rem;color:var(--muted);margin-top:3px}
+.goal{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.goalrow{display:flex;justify-content:space-between;align-items:center;gap:8px 12px;flex-wrap:wrap;font-size:.94rem}
+.streak{display:inline-flex;align-items:center;gap:4px;font-weight:700;color:var(--ink)}
+.streak svg{width:18px;height:18px;color:var(--flag)}
+.continue{display:flex;flex-direction:column;gap:2px;text-align:left;width:100%;border:0;border-radius:20px;padding:16px 18px;cursor:pointer;background:var(--c);color:var(--onc)}
+.continue .eyebrow{color:var(--onc);opacity:.85}
+.continue .ct{font-family:var(--display);font-weight:600;font-size:1.24rem}
+.continue .cs{font-size:.88rem;opacity:.9}
+
+.list{display:flex;flex-direction:column;gap:10px}
+.subj{display:grid;grid-template-columns:56px minmax(0,1fr) auto;gap:14px;align-items:center;width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:14px;cursor:pointer}
+.glyph{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:1.24rem;color:var(--c);background:color-mix(in srgb,var(--c) 14%,var(--surface));flex:none}
+.glyph.sm{font-size:.94rem}
+.sname{font-weight:700;font-size:1.06rem;line-height:1.25}
+.smeta{font-size:.82rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.track{display:block;height:8px;border-radius:99px;background:color-mix(in srgb,var(--c) 15%,var(--surface));overflow:hidden;margin-top:8px}
+.fill{display:block;height:100%;background:var(--c);border-radius:inherit}
+.fill.weak{background:var(--bad)}
+.chev{color:var(--muted);width:20px}
+.chev svg{width:20px;height:20px}
+
+details.info{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:0 18px}
+details.info summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:58px;font-weight:700}
+details.info summary::-webkit-details-marker{display:none}
+details.info summary .chev svg{transition:transform .2s}
+details.info[open] summary .chev svg{transform:rotate(90deg)}
+.facts{display:flex;flex-direction:column;gap:12px;padding-bottom:18px}
+.times{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.time{border-radius:14px;padding:10px 12px;background:color-mix(in srgb,var(--c) 10%,var(--surface))}
+.time b{display:block;font-family:var(--display);font-size:1.18rem;color:var(--c);font-variant-numeric:tabular-nums}
+.time span{font-size:.82rem;color:var(--muted)}
+.scale{display:flex;border-radius:12px;overflow:hidden;font-size:.76rem;font-weight:700;text-align:center}
+.scale div{padding:8px 4px;flex:1}
+.scale .s1{background:color-mix(in srgb,var(--bad) 14%,var(--surface));color:var(--bad)}
+.scale .s2{background:color-mix(in srgb,var(--good) 16%,var(--surface));color:var(--good);flex:1.3}
+.scale .s3{background:color-mix(in srgb,var(--math) 16%,var(--surface));color:var(--math)}
+.scale small{display:block;font-weight:400;color:var(--muted)}
+.note{border:2px dashed var(--line);border-radius:20px;padding:16px 18px;display:flex;flex-direction:column;gap:6px}
+.foot{display:flex;flex-direction:column;align-items:center;gap:10px;padding-top:8px;text-align:center}
+.linkbtn{border:0;background:none;color:var(--muted);text-decoration:underline;cursor:pointer;padding:8px;font-size:.88rem;align-self:flex-start}
+.foot .linkbtn{align-self:center}
+.linkbtn.sm{color:var(--c);padding:4px 0;font-weight:700}
+.confirm{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;align-items:center}
+
+/* subject + lists */
+.shead{display:grid;grid-template-columns:64px minmax(0,1fr);gap:16px;align-items:center}
+.shead .glyph{width:64px;height:64px;font-size:1.4rem}
+.shead .glyph.sm{font-size:1.06rem}
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pill{font-size:.82rem;font-weight:700;padding:6px 12px;border-radius:99px;background:var(--surface);border:1px solid var(--line);font-variant-numeric:tabular-nums}
+.unit{display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:12px;align-items:center;width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:14px;cursor:pointer}
+.n{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-weight:700;border:2px solid var(--line);color:var(--muted);font-variant-numeric:tabular-nums}
+.n.done{background:var(--c);border-color:var(--c);color:var(--onc)}
+.n svg{width:18px;height:18px}
+.ico{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:color-mix(in srgb,var(--c) 14%,var(--surface));color:var(--c)}
+.ico svg{width:21px;height:21px}
+.utitle{font-weight:700;line-height:1.3}
+.usum{font-size:.88rem;color:var(--muted);line-height:1.4;margin-top:2px}
+.chip{font-size:.76rem;font-weight:700;padding:4px 10px;border-radius:99px;background:color-mix(in srgb,var(--c) 14%,var(--surface));color:var(--c);white-space:nowrap;font-variant-numeric:tabular-nums}
+.mix{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;width:100%;text-align:left;border:2px solid var(--c);background:color-mix(in srgb,var(--c) 8%,var(--surface));border-radius:20px;padding:16px 18px;cursor:pointer}
+.mix .utitle{font-size:1.06rem}
+.quick{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.qk{display:flex;align-items:center;gap:12px;padding:12px;border-radius:18px;border:1px solid var(--line);background:var(--surface);text-align:left;cursor:pointer}
+.qk .glyph{width:44px;height:44px;border-radius:12px;font-size:1rem}
+.qk .glyph.sm{font-size:.76rem}
+.qk b{font-size:.94rem;line-height:1.25}
+.qk small{font-size:.76rem;color:var(--muted)}
+.hrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;width:100%;text-align:left;padding:12px 14px;border-radius:16px;border:1px solid var(--line);background:var(--surface);cursor:pointer;font-size:.94rem}
+
+/* lesson */
+.sec{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:18px;display:flex;flex-direction:column;gap:10px}
+.sec h3{font-family:var(--display);font-weight:600;font-size:1.18rem;line-height:1.25;margin:0;text-wrap:balance}
+.sec ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+.ex{background:color-mix(in srgb,var(--c) 9%,var(--surface));border-radius:14px;padding:12px 14px;font-variant-numeric:tabular-nums;line-height:1.7}
+.tip{border-radius:20px;padding:16px 18px;background:color-mix(in srgb,var(--c) 12%,var(--bg));display:flex;flex-direction:column;gap:4px}
+.tip .eyebrow{display:flex;align-items:center;gap:6px}
+.tip .eyebrow svg{width:16px;height:16px}
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:6;padding-top:18px;padding-bottom:calc(14px + env(safe-area-inset-bottom,0px));padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));background:linear-gradient(to bottom,transparent,var(--bg) 40%)}
+.dock .in{max-width:608px;margin:0 auto}
+
+/* buttons */
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:56px;border-radius:16px;border:0;background:var(--c);color:var(--onc);font-weight:700;font-size:1rem;cursor:pointer;padding:0 18px;text-align:center}
+.btn.ghost{background:var(--surface);color:var(--ink);border:1px solid var(--line)}
+.btn.sm{min-height:44px;width:auto;font-size:.88rem;border-radius:12px;padding:0 14px}
+.btn svg{width:20px;height:20px;flex:none}
+.btn[disabled]{opacity:.4;cursor:default}
+.stack{display:flex;flex-direction:column;gap:10px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.seg{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:4px;padding:4px;border-radius:14px;background:color-mix(in srgb,var(--ink) 8%,var(--bg))}
+.seg button{border:0;background:none;min-height:44px;border-radius:10px;font-weight:700;color:var(--muted);cursor:pointer;font-size:.88rem;padding:0 6px}
+.seg button.on{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px color-mix(in srgb,var(--ink) 20%,transparent)}
+.warn{padding:12px 14px;border-radius:14px;background:color-mix(in srgb,var(--flag) 16%,var(--surface));font-size:.94rem}
+.warn.confirm{justify-content:flex-start}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chipbtn{min-height:40px;padding:0 14px;border-radius:99px;border:1px solid var(--line);background:var(--surface);font-weight:700;cursor:pointer;font-size:.88rem}
+.chipbtn.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+
+/* quiz + test */
+.qtrack{height:10px;border-radius:99px;background:color-mix(in srgb,var(--c) 15%,var(--surface));overflow:hidden}
+.qtrack div{height:100%;background:var(--c);border-radius:inherit;transition:width .3s}
+.passage{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px 18px;font-size:.94rem;line-height:1.65}
+.passage > .eyebrow{display:block;margin-bottom:6px;color:var(--muted)}
+.ph{font-family:var(--display);font-weight:600;font-size:1.12rem;margin:0 0 6px}
+.qtext{font-weight:700;font-size:1.12rem;line-height:1.4;text-wrap:pretty}
+.opts{display:flex;flex-direction:column;gap:10px}
+.opt{display:grid;grid-template-columns:34px minmax(0,1fr);gap:12px;align-items:center;text-align:left;width:100%;min-height:60px;padding:12px 14px;border-radius:16px;background:var(--surface);border:2px solid var(--line);cursor:pointer;line-height:1.35}
+.opt .L{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-weight:700;background:var(--bg);color:var(--muted)}
+.opt[disabled]{cursor:default}
+.opt.sel{border-color:var(--c);background:color-mix(in srgb,var(--c) 10%,var(--surface))}
+.opt.sel .L{background:var(--c);color:var(--onc)}
+.opt.right{border-color:var(--good);background:color-mix(in srgb,var(--good) 12%,var(--surface))}
+.opt.right .L{background:var(--good);color:var(--onc)}
+.opt.wrong{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,var(--surface))}
+.opt.wrong .L{background:var(--bad);color:var(--onc)}
+.opt.dim{opacity:.5}
+.fb{border-radius:18px;padding:16px 18px;border:2px solid;display:flex;flex-direction:column;gap:6px;background:var(--surface)}
+.fb.good{border-color:var(--good)}
+.fb.bad{border-color:var(--bad)}
+.fb h4{margin:0;font-family:var(--display);font-weight:600;font-size:1.18rem}
+.fb.good h4{color:var(--good)}
+.fb.bad h4{color:var(--bad)}
+.qhead{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.qnum{font-family:var(--display);font-weight:600;font-size:1.12rem;font-variant-numeric:tabular-nums}
+.flag{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 14px;border-radius:99px;border:1px solid var(--line);background:var(--surface);font-weight:700;font-size:.85rem;cursor:pointer;color:var(--muted)}
+.flag svg{width:17px;height:17px}
+.flag.on{background:color-mix(in srgb,var(--flag) 20%,var(--surface));border-color:var(--flag);color:var(--ink)}
+.timer{flex:none;display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 12px;border-radius:14px;border:1px solid var(--line);background:var(--surface);font-weight:700;font-variant-numeric:tabular-nums;cursor:pointer;white-space:nowrap;color:var(--ink)}
+.timer svg{width:15px;height:15px}
+.timer.low{color:var(--bad);border-color:var(--bad)}
+.tnav{display:grid;grid-template-columns:56px minmax(0,1fr) minmax(0,1.3fr);gap:10px}
+.tnav .btn{min-height:54px;padding:0 10px}
+
+/* sheets */
+.overlay{position:fixed;inset:0;z-index:20;background:var(--scrim);display:flex;align-items:flex-end;justify-content:center;animation:fade .18s ease-out}
+.sheet{background:var(--surface);width:100%;max-width:640px;border-radius:24px 24px 0 0;padding:20px max(18px,env(safe-area-inset-right,0px)) calc(20px + env(safe-area-inset-bottom,0px)) max(18px,env(safe-area-inset-left,0px));max-height:88vh;overflow:auto;display:flex;flex-direction:column;gap:14px;animation:up .22s ease-out}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes up{from{transform:translateY(24px)}to{transform:none}}
+.shd{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.navgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(48px,1fr));gap:8px}
+.cell{position:relative;min-height:48px;border-radius:12px;border:2px solid var(--line);background:var(--surface);font-weight:700;font-variant-numeric:tabular-nums;cursor:pointer}
+.cell.ans{background:color-mix(in srgb,var(--c) 18%,var(--surface));border-color:transparent}
+.cell.cur{border-color:var(--c)}
+.cell.fl::after{content:"";position:absolute;top:5px;right:5px;width:9px;height:9px;border-radius:50%;background:var(--flag)}
+.legend{display:flex;gap:6px 14px;flex-wrap:wrap;font-size:.8rem;color:var(--muted)}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:4px;margin-right:6px;vertical-align:-1px}
+.lg-a{background:color-mix(in srgb,var(--c) 18%,var(--surface))}
+.lg-f{background:var(--flag);border-radius:50%!important}
+.lg-n{border:2px solid var(--line)}
+
+/* results */
+.score{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;padding:12px 0 4px}
+.big{font-family:var(--display);font-weight:800;font-size:3.8rem;line-height:1;font-variant-numeric:tabular-nums}
+.big span{color:var(--muted);font-size:2rem}
+.miss,.rev{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+.ans{color:var(--good);font-weight:700;display:flex;gap:6px;align-items:flex-start}
+.ans svg{width:18px;height:18px;flex:none;margin-top:3px}
+.yours{color:var(--bad)}
+.rev-h{display:flex;align-items:center;gap:10px}
+.rnum{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-weight:700;background:var(--bg);font-size:.85rem;font-variant-numeric:tabular-nums}
+.rstat{font-weight:700;font-size:.85rem}
+.rev.ok .rstat{color:var(--good)}
+.rev.no .rstat{color:var(--bad)}
+details.pd summary{cursor:pointer;color:var(--c);font-weight:700;font-size:.88rem}
+details.pd div{margin-top:8px;font-size:.92rem;line-height:1.6;padding:12px;border-radius:12px;background:var(--bg)}
+.trow{display:flex;flex-direction:column;gap:2px;padding:6px 0}
+.trow-h{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.tnum{font-size:.85rem;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.trow .track{margin-top:6px}
+
+/* tools */
+.flash{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:14px;min-height:300px;padding:28px 22px;border-radius:24px;border:1px solid var(--line);background:var(--surface);cursor:pointer;width:100%;box-shadow:0 10px 30px -16px color-mix(in srgb,var(--c) 55%,transparent);animation:flipin .28s ease-out}
+.flash.back{background:color-mix(in srgb,var(--c) 8%,var(--surface))}
+@keyframes flipin{from{transform:perspective(800px) rotateY(60deg);opacity:.3}to{transform:none;opacity:1}}
+.fterm{font-family:var(--display);font-weight:800;font-size:clamp(1.6rem,7vw,2.2rem);line-height:1.15;text-wrap:balance}
+.fdef{font-size:1.18rem;line-height:1.5;text-wrap:pretty}
+.fhint{font-size:.8rem;color:var(--muted)}
+.frow{display:flex;flex-direction:column;gap:2px;padding:10px 0;border-top:1px solid var(--line)}
+.frow:first-child{border-top:0;padding-top:0}
+.frow span{font-size:.85rem;color:var(--muted)}
+.frow b{font-size:1.06rem;font-variant-numeric:tabular-nums}
+.ebar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.ebtns{display:flex;gap:8px}
+textarea.essay{width:100%;min-height:55vh;resize:vertical;padding:16px;border-radius:18px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;line-height:1.6}
+textarea.essay:focus{outline:3px solid color-mix(in srgb,var(--c) 50%,transparent);outline-offset:0}
+.ck{display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px;align-items:start;padding:8px 0;cursor:pointer}
+.ck input{width:22px;height:22px;margin:2px 0 0;accent-color:var(--c)}
+.tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:14px 16px}
+.tile b{display:block;font-family:var(--display);font-weight:800;font-size:1.9rem;line-height:1.1;font-variant-numeric:tabular-nums}
+.tile span{font-size:.85rem;color:var(--muted)}
+
+/* calculator */
+.calc{z-index:30}
+.calcsheet{max-width:440px}
+.cdisp{padding:14px 16px;border-radius:16px;background:var(--bg);text-align:right;min-height:92px;display:flex;flex-direction:column;justify-content:flex-end;gap:4px;overflow:hidden}
+#cexpr{font-size:1.6rem;font-weight:700;word-break:break-all;font-variant-numeric:tabular-nums;line-height:1.25}
+#cres{color:var(--muted);min-height:1.4em;font-variant-numeric:tabular-nums}
+#cres.err{color:var(--bad)}
+.keys{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.key{min-height:54px;border-radius:14px;border:1px solid var(--line);background:var(--surface);font-size:1.2rem;font-weight:700;cursor:pointer}
+.key.fn{font-size:1.02rem;color:var(--muted);background:var(--bg)}
+.key.op{background:color-mix(in srgb,var(--math) 13%,var(--surface));color:var(--math);border-color:transparent}
+.key.eq{background:var(--math);color:var(--onc);border-color:var(--math)}
+
+/* welcome, about, backup */
+.welcome{background:color-mix(in srgb,var(--math) 10%,var(--surface));border:1px solid color-mix(in srgb,var(--math) 30%,var(--line));border-radius:20px;padding:18px;display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+.welcome ol{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:6px}
+textarea.code{width:100%;min-height:110px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.78rem;line-height:1.4;word-break:break-all;padding:12px;border-radius:14px;border:1px solid var(--line);background:var(--bg);color:var(--ink);resize:vertical}
+.okmsg{color:var(--good);font-weight:700}
+.errmsg{color:var(--bad);font-weight:700}
+.sec .legal{font-size:.85rem;color:var(--muted)}
+
+/* read aloud, pace, keyboard */
+.listen{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 14px;border-radius:99px;border:1px solid var(--line);background:var(--surface);font-weight:700;font-size:.85rem;cursor:pointer;color:var(--ink);align-self:flex-start;flex:none}
+.listen svg{width:17px;height:17px}
+.qtools{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.qhead{flex-wrap:wrap}
+.qhead-r{display:flex;gap:8px;align-items:center}
+.kbd{display:none}
+@media (hover:hover) and (pointer:fine){.kbd{display:block}}
+.goal .btn{align-self:flex-start}
+.pace{display:flex;gap:8px;align-items:flex-start}
+.pace svg{width:18px;height:18px;flex:none;margin-top:2px;color:var(--muted)}
+.dateinput{min-height:48px;padding:0 12px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:inherit;width:100%;max-width:260px}
+.warnnote{border-style:solid;border-color:color-mix(in srgb,var(--flag) 55%,var(--line));background:color-mix(in srgb,var(--flag) 10%,var(--surface))}
+.warnnote .btn{align-self:flex-start;margin-top:4px}
+
+/* tab bar */
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:8;background:color-mix(in srgb,var(--surface) 94%,transparent);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);padding-left:max(8px,env(safe-area-inset-left,0px));padding-right:max(8px,env(safe-area-inset-right,0px))}
+.tabs .in{max-width:640px;margin:0 auto;display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+.tabs button{border:0;background:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:60px;font-size:.72rem;font-weight:700;color:var(--muted);cursor:pointer}
+.tabs button svg{width:24px;height:24px}
+.tabs button.on{color:var(--ink)}
+.tabs button.on svg{stroke-width:2.6}
+
+@media (prefers-reduced-motion: reduce){.screen,.flash,.overlay,.sheet{animation:none}.qtrack div{transition:none}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="calc" class="overlay calc" data-act="calcclose" data-scrim="1" hidden></div>
+
+<script>
+"use strict";
+const SUBJECTS = [
+{ id:"math", name:"Math", full:"Mathematical Reasoning", glyph:"x²", color:"--math", time:"115 min",
+  note:"The first few questions are no-calculator. After that you get an on-screen TI-30XS calculator and a formula sheet.",
+  units:[
+  { id:"m1", title:"Fractions, Decimals & Percents", sum:"Switch between forms and find percents fast.",
+    lesson:[
+      {h:"Three ways to write one number", html:`<p>A fraction, a decimal and a percent can all name the same amount.</p><div class="ex"><b>1/4 = 0.25 = 25%</b><br>Fraction → decimal: divide top by bottom (1 ÷ 4 = 0.25)<br>Decimal → percent: move the decimal two places right (0.25 → 25%)</div>`},
+      {h:"Adding and subtracting fractions", html:`<p>Get a common denominator (same bottom number) first.</p><div class="ex">1/3 + 1/4<br>= 4/12 + 3/12<br>= <b>7/12</b></div>`},
+      {h:"Multiplying and dividing fractions", html:`<ul><li><b>Multiply:</b> top × top, bottom × bottom. 2/3 × 3/5 = 6/15 = 2/5</li><li><b>Divide:</b> flip the second fraction, then multiply. 1/2 ÷ 1/4 = 1/2 × 4/1 = 2</li></ul>`},
+      {h:"Percent of a number", html:`<p>Change the percent to a decimal, then multiply.</p><div class="ex">20% of 85 = 0.20 × 85 = <b>17</b></div><p><b>Percent change</b> = (new − old) ÷ old × 100. A price going from $40 to $50 is 10 ÷ 40 = a 25% increase.</p>`},
+      {h:"Order of operations", html:`<p>Work in this order: Parentheses, Exponents, Multiply and Divide (left to right), then Add and Subtract (left to right). Most people remember it as <b>PEMDAS</b>.</p>`},
+      {h:"Negative numbers", html:`<ul><li>Adding a negative is subtracting: 7 + (−3) = 4</li><li>Subtracting a negative is adding: 5 − (−3) = 8</li><li>Negative × negative = positive; negative × positive = negative</li></ul>`}
+    ],
+    tip:"Ask if your answer makes sense. 25% off should always leave you paying less than the original price.",
+    quiz:[
+      {q:"What is 2/5 written as a percent?", o:["40%","25%","52%","20%"], why:"2 ÷ 5 = 0.4. Move the decimal two places right: 40%."},
+      {q:"A jacket costs $60 and is on sale for 25% off. What is the sale price?", o:["$45","$15","$35","$48"], why:"25% of $60 is 0.25 × 60 = $15. Subtract it: $60 − $15 = $45. ($15 is the discount, not the price.)"},
+      {q:"3/4 + 1/6 = ?", o:["11/12","4/10","5/6","1"], why:"The common denominator is 12. 3/4 = 9/12 and 1/6 = 2/12, so 9/12 + 2/12 = 11/12."},
+      {q:"Evaluate: 8 + 4 × 3 − 6 ÷ 2", o:["17","15","33","21"], why:"Multiply and divide first: 4 × 3 = 12 and 6 ÷ 2 = 3. Then 8 + 12 − 3 = 17."}
+    ]},
+  { id:"m2", title:"Ratios, Rates & Proportions", sum:"Unit prices, recipes and scale problems.",
+    lesson:[
+      {h:"Ratios compare amounts", html:`<p>A ratio compares two quantities. 3 nurses for every 12 patients can be written 3:12, 3 to 12, or 3/12. Simplify it like a fraction: <b>1:4</b>.</p>`},
+      {h:"Unit rates", html:`<p>A unit rate tells you how much for <b>one</b>. Divide to find it.</p><div class="ex">$4.50 for 3 lb → 4.50 ÷ 3 = <b>$1.50 per lb</b></div><p>Unit rates are the fastest way to compare deals.</p>`},
+      {h:"Solving proportions", html:`<p>A proportion says two ratios are equal. Cross-multiply to solve.</p><div class="ex">3/5 = x/20<br>5 · x = 3 · 20<br>5x = 60<br><b>x = 12</b></div>`},
+      {h:"Scale and maps", html:`<p>If 1 inch on a map = 50 miles, then 3.5 inches = 3.5 × 50 = <b>175 miles</b>. Set it up as a proportion if you're unsure.</p>`}
+    ],
+    tip:"Keep units lined up. If the top of one ratio is miles, the top of the other ratio must be miles too.",
+    quiz:[
+      {q:"A car goes 180 miles on 6 gallons of gas. How many miles per gallon is that?", o:["30","25","36","60"], why:"Divide miles by gallons: 180 ÷ 6 = 30 miles per gallon."},
+      {q:"A recipe uses 2 cups of flour for 3 dozen cookies. How much flour for 9 dozen?", o:["6 cups","4 cups","5 cups","9 cups"], why:"9 dozen is 3 times as many as 3 dozen, so triple the flour: 2 × 3 = 6 cups."},
+      {q:"Solve for x: x/8 = 15/24", o:["5","3","6","45"], why:"Cross-multiply: 24x = 8 × 15 = 120. Divide: x = 120 ÷ 24 = 5."},
+      {q:"Which is the better buy: 12 oz of coffee for $3.00, or 20 oz for $4.40?", o:["20 oz for $4.40","12 oz for $3.00","They cost the same per ounce","Not enough information"], why:"Unit prices: $3.00 ÷ 12 = $0.25 per oz, and $4.40 ÷ 20 = $0.22 per oz. The 20 oz bag is cheaper per ounce."}
+    ]},
+  { id:"m3", title:"Algebra Basics", sum:"Variables, equations and inequalities.",
+    lesson:[
+      {h:"Variables and expressions", html:`<p>A variable (like x) stands for an unknown number. The expression 3x + 2 means "3 times a number, plus 2."</p>`},
+      {h:"Combine like terms", html:`<p>Like terms have the same variable part. Add or subtract their numbers.</p><div class="ex">5x + 2 − 3x + 7<br>= (5x − 3x) + (2 + 7)<br>= <b>2x + 9</b></div>`},
+      {h:"Solve equations by undoing", html:`<p>Whatever you do to one side, do to the other. Undo adding or subtracting first, then multiplying or dividing.</p><div class="ex">4x − 5 = 19<br>4x = 24 &nbsp;(add 5 to both sides)<br><b>x = 6</b> &nbsp;(divide both sides by 4)</div>`},
+      {h:"Substitution", html:`<p>To evaluate an expression, replace each letter with its value and follow the order of operations.</p><div class="ex">If x = 3: x² + 2x = 9 + 6 = <b>15</b></div>`},
+      {h:"Inequalities", html:`<p>Solve them like equations, with one twist: if you multiply or divide by a <b>negative</b> number, flip the sign.</p><div class="ex">−3x &lt; 12<br>x &gt; −4 &nbsp;(divided by −3, so &lt; became &gt;)</div>`},
+      {h:"Exponents and square roots", html:`<p>An exponent tells you how many times to multiply a number by itself: 2³ = 2 × 2 × 2 = 8. A square root undoes squaring: √49 = 7, because 7 × 7 = 49.</p><p>An equation like x² = 81 has <b>two</b> answers, 9 and −9, because both of them squared equal 81.</p>`},
+      {h:"Factoring", html:`<p>To factor x² + bx + c, find two numbers that <b>multiply to c</b> and <b>add to b</b>.</p><div class="ex">x² + 7x + 12<br>3 × 4 = 12 and 3 + 4 = 7<br>= <b>(x + 3)(x + 4)</b></div><p>For harder ones, the quadratic formula on the formula sheet solves any equation in the form ax² + bx + c = 0.</p>`}
+    ],
+    tip:"Plug your answer back in to check it. If 4(6) − 5 really equals 19, you know x = 6 is right.",
+    quiz:[
+      {q:"Solve: 3x + 7 = 22", o:["x = 5","x = 3","x = 7","x = 9"], why:"Subtract 7 from both sides: 3x = 15. Divide by 3: x = 5."},
+      {q:"Simplify: 4x + 3 − 2x + 5", o:["2x + 8","6x + 8","2x + 2","10x"], why:"Combine the x terms (4x − 2x = 2x) and the numbers (3 + 5 = 8): 2x + 8."},
+      {q:"What is 2a² − b when a = 3 and b = 4?", o:["14","32","8","2"], why:"Exponent first: 3² = 9. Then 2 × 9 = 18, and 18 − 4 = 14."},
+      {q:"Solve: −2x &gt; 10", o:["x &lt; −5","x &gt; −5","x &gt; 5","x &lt; 5"], why:"Divide both sides by −2. Because you divided by a negative, flip the sign: x &lt; −5."}
+    ]},
+  { id:"m4", title:"Lines, Slope & Graphs", sum:"Slope, y = mx + b and functions.",
+    lesson:[
+      {h:"The coordinate plane", html:`<p>Points are written (x, y). x tells you how far left or right; y tells you how far up or down. (0, 0) is the origin.</p>`},
+      {h:"Slope", html:`<p>Slope measures steepness: rise over run.</p><div class="ex">slope = (y₂ − y₁) ÷ (x₂ − x₁)<br>From (2, 1) to (6, 9): (9 − 1) ÷ (6 − 2) = 8 ÷ 4 = <b>2</b></div><ul><li>Positive slope goes up from left to right</li><li>Negative slope goes down</li><li>A flat line has slope 0</li></ul>`},
+      {h:"Slope-intercept form", html:`<p><b>y = mx + b</b>. m is the slope; b is where the line crosses the y-axis.</p><div class="ex">y = 3x − 2 → slope 3, y-intercept −2</div>`},
+      {h:"Word problems as lines", html:`<p>A one-time starting amount is b. A rate per unit is m.</p><div class="ex">A plumber charges $60 to show up plus $45 an hour:<br><b>C = 45h + 60</b></div>`},
+      {h:"Functions", html:`<p>A function gives exactly one output for each input. In a table, if the same x shows up with two different y values, it is not a function.</p><p><b>Function notation:</b> f(x) = 2x + 1 means "plug a number in for x." So f(4) = 2(4) + 1 = 9.</p>`},
+      {h:"Parallel and perpendicular lines", html:`<ul><li><b>Parallel</b> lines never meet and have the <b>same slope</b>. y = 2x + 1 and y = 2x − 5 are parallel.</li><li><b>Perpendicular</b> lines meet at a right angle. Their slopes are negative reciprocals, like 2 and −1/2.</li></ul>`}
+    ],
+    tip:"The slope formula and y = mx + b are both on the GED formula sheet. Practice using them so you're not learning them on test day.",
+    quiz:[
+      {q:"What is the slope of the line through (1, 2) and (4, 11)?", o:["3","1/3","9","13/5"], why:"(11 − 2) ÷ (4 − 1) = 9 ÷ 3 = 3."},
+      {q:"In the equation y = −2x + 5, what is the y-intercept?", o:["5","−2","2","−5"], why:"In y = mx + b, b is the y-intercept. Here b = 5. (−2 is the slope.)"},
+      {q:"A gym charges $25 to join plus $15 per month. Which equation gives the total cost C after m months?", o:["C = 15m + 25","C = 25m + 15","C = 40m","C = 15(m + 25)"], why:"The $15 is charged every month, so it goes with m. The $25 is paid once, so it's the starting amount: C = 15m + 25."},
+      {q:"Which point is on the line y = 3x − 1?", o:["(2, 5)","(1, 3)","(0, 1)","(3, 7)"], why:"Plug in x = 2: 3(2) − 1 = 5. So (2, 5) works. The others don't: x = 1 gives 2, x = 0 gives −1, x = 3 gives 8."}
+    ]},
+  { id:"m5", title:"Geometry", sum:"Area, volume, circles and right triangles.",
+    lesson:[
+      {h:"Perimeter and area", html:`<ul><li><b>Perimeter:</b> the distance around. Add all the sides.</li><li><b>Rectangle area</b> = length × width</li><li><b>Triangle area</b> = ½ × base × height</li></ul><div class="ex">A 12 ft × 9 ft room needs 12 × 9 = <b>108 sq ft</b> of flooring.</div>`},
+      {h:"Circles", html:`<ul><li><b>Circumference</b> = 2πr (or π × diameter)</li><li><b>Area</b> = πr²</li><li>π ≈ 3.14. The radius is half the diameter.</li></ul>`},
+      {h:"Volume", html:`<ul><li><b>Box (rectangular prism)</b> = length × width × height</li><li><b>Cylinder</b> = πr² × height</li></ul><p>Volume is in cubic units, like ft³ or cm³.</p>`},
+      {h:"Pythagorean theorem", html:`<p>For right triangles only: <b>a² + b² = c²</b>, where c is the longest side (the hypotenuse).</p><div class="ex">Legs 3 and 4: 9 + 16 = 25, and √25 = <b>5</b></div>`}
+    ],
+    tip:"Sketch the shape and label what you know. The most common slip is using the diameter when the formula wants the radius.",
+    quiz:[
+      {q:"What is the area of a triangle with a base of 10 inches and a height of 6 inches?", o:["30 sq in","60 sq in","16 sq in","36 sq in"], why:"½ × 10 × 6 = 30. (60 is what you get if you forget the ½.)"},
+      {q:"A right triangle has legs of 6 and 8. How long is the hypotenuse?", o:["10","14","12","48"], why:"6² + 8² = 36 + 64 = 100, and √100 = 10."},
+      {q:"A circle has a radius of 5 cm. What is its area? (Use π ≈ 3.14)", o:["78.5 sq cm","31.4 sq cm","15.7 sq cm","25 sq cm"], why:"Area = πr² = 3.14 × 5 × 5 = 3.14 × 25 = 78.5 sq cm. (31.4 is the circumference.)"},
+      {q:"A storage box is 4 ft long, 3 ft wide and 2 ft tall. What is its volume?", o:["24 cubic ft","9 cubic ft","26 cubic ft","12 cubic ft"], why:"Volume = length × width × height = 4 × 3 × 2 = 24 cubic feet."}
+    ]},
+  { id:"m6", title:"Data, Statistics & Probability", sum:"Mean, median, mode and chances.",
+    lesson:[
+      {h:"Mean, median, mode, range", html:`<ul><li><b>Mean:</b> add them up, divide by how many</li><li><b>Median:</b> the middle value once sorted (average the two middle values if there's an even count)</li><li><b>Mode:</b> the value that shows up most</li><li><b>Range:</b> biggest minus smallest</li></ul>`},
+      {h:"Reading charts", html:`<p>Check the title, the axis labels and the scale before you read any values. Bar graphs compare groups, line graphs show change over time, and circle graphs show parts of a whole.</p>`},
+      {h:"Probability", html:`<p>Probability = favorable outcomes ÷ total outcomes. It's always between 0 (impossible) and 1 (certain).</p><div class="ex">Rolling a 5 on a die: 1/6<br>Rolling an even number: 3/6 = <b>1/2</b></div>`},
+      {h:"Two events in a row", html:`<p>For events that don't affect each other, multiply. Flipping heads twice: ½ × ½ = <b>¼</b>.</p>`}
+    ],
+    tip:"Always sort the numbers before finding the median. Skipping that step is the most common mistake.",
+    quiz:[
+      {q:"What is the mean of 4, 8, 10, 6 and 12?", o:["8","10","6","40"], why:"Add them: 4 + 8 + 10 + 6 + 12 = 40. Divide by 5 numbers: 40 ÷ 5 = 8."},
+      {q:"What is the median of 3, 9, 4, 7, 2, 8?", o:["5.5","4","7","5"], why:"Sort first: 2, 3, 4, 7, 8, 9. With six numbers, average the middle two: (4 + 7) ÷ 2 = 5.5."},
+      {q:"A bag holds 3 red, 5 blue and 2 green marbles. What's the probability of pulling out a blue one?", o:["1/2","1/5","5/3","1/3"], why:"There are 5 blue out of 10 total marbles. 5/10 = 1/2."},
+      {q:"Test scores: 70, 85, 85, 90, 95. What is the mode?", o:["85","70","25","90"], why:"The mode is the value that appears most often. 85 appears twice. (25 is the range.)"}
+    ]}
+  ]},
+{ id:"rla", name:"Language Arts", full:"Reasoning Through Language Arts", glyph:"Aa", color:"--rla", time:"150 min",
+  note:"Reading passages, grammar questions built into passages, and a 45-minute essay called the Extended Response.",
+  units:[
+  { id:"r1", title:"Main Idea & Details", sum:"Find the big point and what supports it.",
+    lesson:[
+      {h:"What is the main idea?", html:`<p>The main idea is the one point the whole passage is making. It's often near the beginning or end, but sometimes you have to put it together yourself.</p>`},
+      {h:"Supporting details", html:`<p>Details are facts, examples and reasons that back up the main idea. Ask yourself: does this sentence prove or explain the big point?</p>`},
+      {h:"Summarizing", html:`<p>A good summary is short, uses your own words and includes only the main points. It leaves out small details and your personal opinion.</p>`},
+      {h:"How a passage is built", html:`<p>Notice the structure: cause and effect, problem and solution, compare and contrast, or time order. Signal words give it away:</p><div class="ex"><i>because, as a result</i> → cause and effect<br><i>however, on the other hand</i> → contrast<br><i>first, then, finally</i> → time order</div>`}
+    ],
+    tip:"Read the question before the passage. You'll know what to look for while you read.",
+    quiz:[
+      {p:`Community gardens have spread across many cities over the past decade. Residents who once had no space to grow food now share small plots in empty lots. Studies have linked these gardens to fresher diets, stronger ties between neighbors, and even lower crime on nearby blocks. For many neighborhoods, a garden is more than a place to grow tomatoes.`,
+       q:"Which sentence best states the main idea of the passage?", o:["Community gardens bring neighborhoods benefits beyond food.","Tomatoes are the most popular crop in community gardens.","Empty lots in cities are dangerous.","Studies about community gardens are unreliable."], why:"Every detail (diets, neighbors, crime) supports the idea that gardens do more than grow food. The last sentence says it directly."},
+      {p:`Community gardens have spread across many cities over the past decade. Residents who once had no space to grow food now share small plots in empty lots. Studies have linked these gardens to fresher diets, stronger ties between neighbors, and even lower crime on nearby blocks. For many neighborhoods, a garden is more than a place to grow tomatoes.`,
+       q:"Which detail supports the idea that gardens help people connect?", o:["Stronger ties between neighbors","They have spread over the past decade","Residents once had no space to grow food","Plots are located in empty lots"], why:"\"Stronger ties between neighbors\" is the only detail about people connecting with each other."},
+      {q:"Which of these belongs in a good summary?", o:["The main points, in your own words","Every detail from the passage","Your opinion about the topic","Long quotes copied from the text"], why:"A summary is short and covers only the main points in your own words. It leaves out minor details and opinions."}
+    ]},
+  { id:"r2", title:"Inference, Tone & Purpose", sum:"Read between the lines.",
+    lesson:[
+      {h:"Making inferences", html:`<p>An inference is a smart conclusion based on clues in the text plus what you already know. It isn't stated directly, but the text must support it.</p>`},
+      {h:"Author's purpose", html:`<ul><li><b>Inform:</b> give facts (news, manuals)</li><li><b>Persuade:</b> convince you (editorials, ads)</li><li><b>Entertain:</b> tell a story</li><li><b>Explain:</b> show how or why something works</li></ul>`},
+      {h:"Tone", html:`<p>Tone is the author's attitude: hopeful, critical, angry, neutral, funny. Look at word choice. "The plan failed miserably" feels very different from "The plan did not succeed."</p>`},
+      {h:"Words in context", html:`<p>When you hit an unfamiliar word, look at the sentences around it. Definitions, examples and contrasts nearby often reveal the meaning.</p>`}
+    ],
+    tip:"On inference questions, wrong answers usually go too far. Pick the choice the text clearly supports, not the most dramatic one.",
+    quiz:[
+      {p:`Maria checked the clock for the fourth time in ten minutes. She smoothed her blazer, reread the notes in her folder, and practiced her handshake on the empty air. When the receptionist finally called her name, she took a deep breath and stood up.`,
+       q:"What can you infer about Maria?", o:["She is nervous before a job interview.","She is late for a movie.","She is the receptionist's boss.","She is bored at home."], why:"The clues (checking the clock, blazer, notes, practicing a handshake, a receptionist calling her name) point to a nervous job candidate."},
+      {q:"A newspaper editorial urges voters to approve money for a new library. What is the author's main purpose?", o:["To persuade","To inform","To entertain","To describe"], why:"Editorials try to convince readers. \"Urges voters\" is a strong sign the purpose is to persuade."},
+      {q:"\"The hike was arduous; by the end, our legs ached and we needed long breaks.\" What does arduous most likely mean?", o:["Difficult","Short","Beautiful","Boring"], why:"The clues after the semicolon (aching legs, long breaks) show the hike was hard."}
+    ]},
+  { id:"r3", title:"Arguments & Evidence", sum:"Judge claims, evidence and weak reasoning.",
+    lesson:[
+      {h:"Claim, evidence, reasoning", html:`<p>An argument has a <b>claim</b> (what the author wants you to believe), <b>evidence</b> (facts, data, expert quotes, examples) and <b>reasoning</b> that connects the two.</p>`},
+      {h:"Fact vs. opinion", html:`<p>A fact can be checked and proven. An opinion is a belief or judgment. Words like <i>best, should, terrible</i> and <i>I think</i> often signal opinions.</p>`},
+      {h:"Judging evidence", html:`<p>Strong evidence is relevant, specific and from a credible source. Weak evidence is a personal story, a vague claim, or an emotional appeal with nothing behind it.</p>`},
+      {h:"Faulty reasoning", html:`<ul><li><b>Overgeneralizing:</b> "My two friends liked it, so everyone will."</li><li><b>Either/or:</b> pretending there are only two options</li><li><b>Attacking the person</b> instead of their idea</li></ul>`},
+      {h:"Comparing two texts", html:`<p>The test often gives you two passages on the same topic. Compare their claims, their evidence and how convincing each one is.</p>`}
+    ],
+    tip:"This lesson is also the key to the essay, which asks you to judge which of two arguments is better supported.",
+    quiz:[
+      {q:"Which statement is a fact, not an opinion?", o:["The city council voted 6–3 to approve the budget.","This is the best budget the city has ever had.","Residents should be thankful for the new budget.","Property taxes are far too high."], why:"A vote count can be checked in public records. The others are judgments (best, should, too high)."},
+      {q:"Claim: \"Schools should start later because teens need more sleep.\" Which is the strongest support?", o:["A study of 9,000 students found later start times improved attendance and grades.","My cousin hates waking up early.","Everyone knows teenagers are lazy.","Early mornings are dark and gloomy."], why:"The study is specific, large and relevant. The others are a personal story, a stereotype and a feeling."},
+      {q:"\"Everyone I know loves this phone, so it must be the best phone on the market.\" What is the flaw in this reasoning?", o:["It generalizes from a small, limited group.","It uses too many statistics.","It attacks a competitor.","It cites an expert."], why:"The people one person knows aren't enough to prove what's best for everyone. That's overgeneralizing."}
+    ]},
+  { id:"r4", title:"Grammar & Language", sum:"Agreement, run-ons and confusing words.",
+    lesson:[
+      {h:"Subject-verb agreement", html:`<p>Singular subjects take singular verbs. Watch for words between the subject and the verb.</p><div class="ex">The box of tools <b>is</b> in the truck.<br>(The subject is box, not tools.)</div><p>Each, every, everyone and nobody are singular.</p><p>With <i>either/or</i> and <i>neither/nor</i>, the verb matches the subject closest to it: "Neither the manager nor the <b>workers were</b> told."</p>`},
+      {h:"Complete sentences", html:`<ul><li><b>Fragment:</b> missing a subject or verb. "Because I was late."</li><li><b>Run-on:</b> two sentences jammed together. "I was late I missed the bus."</li><li><b>Comma splice:</b> two sentences joined with only a comma.</li></ul><p>Fix run-ons with a period, a semicolon, or a comma plus and/but/so.</p>`},
+      {h:"Commonly confused words", html:`<ul><li><b>its</b> (belongs to it) vs. <b>it's</b> (it is)</li><li><b>their</b> (belongs to them), <b>there</b> (a place), <b>they're</b> (they are)</li><li><b>your</b> vs. <b>you're</b> (you are)</li><li><b>affect</b> (verb: to influence) vs. <b>effect</b> (noun: a result)</li><li><b>then</b> (time) vs. <b>than</b> (comparing)</li></ul>`},
+      {h:"Transitions", html:`<p>Transition words show how ideas connect: <i>however</i> (contrast), <i>as a result</i> (effect), <i>for example</i> (example), <i>in addition</i> (adding on).</p>`},
+      {h:"Pronouns and apostrophes", html:`<ul><li>Use <b>I, he, she, we, they</b> as the subject: "Marcus and I left early."</li><li>Use <b>me, him, her, us, them</b> after verbs and words like <i>to, for, with</i>: "She called Marcus and me."</li><li>One worker's badge → add <b>'s</b>. Several workers' badges → the word already ends in s, so add just <b>'</b>.</li></ul><p>Quick check: drop the other person. "Me left early" sounds wrong, so it's "Marcus and I."</p>`},
+      {h:"Parallel structure and modifiers", html:`<p><b>Parallel structure:</b> items in a list should match in form. "I like hiking, swimming and cooking" (not "to cook").</p><p><b>Dangling modifiers:</b> an opening phrase must describe the word right after the comma. "Running for the bus, my bag fell open" says the bag was running. Fix: "Running for the bus, I dropped my bag."</p>`}
+    ],
+    tip:"On the test these show up as drop-down menus inside a passage. Read the whole sentence with each choice before you pick.",
+    quiz:[
+      {q:"Each of the workers ___ a safety badge.", o:["has","have","having","are having"], why:"\"Each\" is singular, so it takes the singular verb \"has.\" Don't let \"workers\" fool you."},
+      {q:"The company updated ___ website last week.", o:["its","it's","its'","it is"], why:"\"Its\" shows possession (the website belongs to it). \"It's\" means \"it is.\""},
+      {q:"Which correctly fixes this run-on? \"I finished my shift I drove home.\"", o:["I finished my shift, and I drove home.","I finished my shift, I drove home.","I finished my shift and, I drove home.","I finished, my shift I drove home."], why:"A comma plus \"and\" correctly joins two complete sentences. Using only a comma creates a comma splice."},
+      {q:"The store raised its prices. ___, many customers began shopping elsewhere.", o:["As a result","However","For example","In contrast"], why:"Customers leaving is an effect of the price increase, so \"As a result\" fits."}
+    ]},
+  { id:"r5", title:"Writing the Essay", sum:"Plan and write the Extended Response.",
+    lesson:[
+      {h:"What the task asks", html:`<p>The Extended Response gives you passages arguing opposite sides of an issue. You have <b>45 minutes</b> to explain which argument is <b>better supported</b>. Your personal opinion on the topic doesn't matter.</p>`},
+      {h:"How it's scored", html:`<p>Graders look at three things:</p><ul><li>How well you analyze the arguments and use evidence from the passages</li><li>How clearly your essay is developed and organized</li><li>How well you use standard English</li></ul>`},
+      {h:"A simple structure", html:`<ul><li><b>Intro:</b> name the issue and state which side is better supported (your thesis)</li><li><b>Body 1–2:</b> show the stronger side's best evidence and why it works</li><li><b>Body 3:</b> point out the weaker side's flaws</li><li><b>Conclusion:</b> restate your thesis in new words</li></ul>`},
+      {h:"Time plan", html:`<div class="ex">10 min: read both passages and plan<br>25 min: write<br>10 min: reread and fix errors</div>`}
+    ],
+    tip:"Point to specific evidence. \"Passage A cites a five-year study of 2,000 workers\" beats \"Passage A has good facts.\"",
+    quiz:[
+      {q:"In the Extended Response, what is your main job?", o:["Explain which argument is better supported, using evidence from the passages","Share your personal opinion on the issue","Summarize both passages equally","Write a story about the topic"], why:"The essay is about judging the arguments, not about what you personally believe."},
+      {q:"Which is the strongest thesis statement?", o:["Passage A makes the stronger case because it backs its claims with research and expert testimony, while Passage B relies on personal stories.","Both passages make some good points.","I agree with Passage B because I like its topic.","This essay will talk about two passages."], why:"A strong thesis takes a clear position and says why, pointing to the kind of evidence each side uses."},
+      {q:"How long do you have for the Extended Response?", o:["45 minutes","25 minutes","60 minutes","90 minutes"], why:"The essay portion of the Language Arts test is 45 minutes."}
+    ]}
+  ]},
+{ id:"sci", name:"Science", full:"Science", glyph:"H₂O", glyphSm:true, color:"--sci", time:"90 min",
+  note:"Mostly reading passages, charts and experiments. An on-screen calculator is available.",
+  units:[
+  { id:"s1", title:"Life Science", sum:"Cells, genetics, ecosystems and evolution.",
+    lesson:[
+      {h:"Cells", html:`<p>Cells are the basic unit of life.</p><ul><li><b>Nucleus:</b> holds DNA and controls the cell</li><li><b>Mitochondria:</b> release energy from food</li><li><b>Cell membrane:</b> controls what goes in and out</li><li>Plant cells also have a <b>cell wall</b> and <b>chloroplasts</b> for photosynthesis</li></ul>`},
+      {h:"Photosynthesis and respiration", html:`<p>Plants use sunlight, water and carbon dioxide to make glucose (sugar) and release oxygen. Cellular respiration does the reverse: it uses glucose and oxygen to release energy, carbon dioxide and water.</p>`},
+      {h:"Genetics", html:`<p>Genes come in versions called alleles. A <b>dominant</b> allele (B) shows up with just one copy. A <b>recessive</b> allele (b) only shows up with two copies (bb).</p><div class="ex">Bb × Bb gives: BB, Bb, Bb, bb<br>3 out of 4 show the dominant trait<br>1 out of 4 (<b>25%</b>) show the recessive trait</div>`},
+      {h:"Ecosystems", html:`<p><b>Producers</b> (plants) make their own food. <b>Consumers</b> eat other living things. <b>Decomposers</b> (fungi, bacteria) break down dead material. Only about 10% of energy passes from one level of a food chain to the next.</p>`},
+      {h:"Evolution", html:`<p>In natural selection, organisms with traits that help them survive and reproduce pass those traits on. Over many generations, the population changes.</p>`},
+      {h:"Body systems and health", html:`<ul><li><b>Circulatory</b> (heart, blood): carries oxygen and nutrients to cells</li><li><b>Respiratory</b> (lungs): brings in oxygen, removes carbon dioxide</li><li><b>Digestive:</b> breaks food down into nutrients</li><li><b>Nervous</b> (brain, nerves): sends signals through the body</li><li><b>Immune:</b> fights infections</li></ul><p>Bacteria are living cells; viruses need a host cell to copy themselves. <b>Antibiotics work on bacteria, not viruses.</b></p>`}
+    ],
+    tip:"Most science questions are about reading the passage or chart in front of you. Knowing these terms just makes the reading faster.",
+    quiz:[
+      {q:"Which part of a plant cell carries out photosynthesis?", o:["Chloroplast","Mitochondria","Nucleus","Cell membrane"], why:"Chloroplasts capture sunlight and make glucose. Mitochondria release energy from that food."},
+      {q:"Brown fur (B) is dominant over white fur (b). Two Bb parents have offspring. What is the chance an offspring has white fur?", o:["25%","0%","50%","75%"], why:"Bb × Bb gives BB, Bb, Bb, bb. Only bb shows the recessive white fur: 1 out of 4, or 25%."},
+      {q:"In the food chain grass → rabbit → fox, the rabbit is a…", o:["Primary consumer","Producer","Secondary consumer","Decomposer"], why:"The rabbit eats the producer (grass), which makes it the first-level, or primary, consumer."},
+      {q:"Which statement best describes natural selection?", o:["Organisms with helpful traits are more likely to survive and pass those traits on.","Organisms change their traits on purpose to survive.","All organisms in a species have identical traits.","Traits an animal learns are passed to its offspring."], why:"Natural selection works on traits organisms already have. Those that help survival get passed on more often."}
+    ]},
+  { id:"s2", title:"Physical Science", sum:"Matter, force, motion and energy.",
+    lesson:[
+      {h:"Matter", html:`<p>Matter is anything with mass. It exists as solids, liquids and gases. Atoms make up elements, and elements bond to form compounds, like H₂O (water).</p><p><b>Density</b> = mass ÷ volume. Something denser than water (1 g/cm³) sinks; something less dense floats.</p>`},
+      {h:"Physical vs. chemical change", html:`<p>A <b>physical change</b> changes form but not what it's made of (melting ice, tearing paper). A <b>chemical change</b> makes a new substance (burning, rusting, cooking an egg). Signs of a chemical change: gas, heat, light or a color change.</p>`},
+      {h:"Motion and force", html:`<ul><li><b>Speed</b> = distance ÷ time</li><li><b>Newton's 1st law:</b> objects keep doing what they're doing unless a force acts on them (inertia)</li><li><b>Newton's 2nd law:</b> Force = mass × acceleration (F = ma)</li><li><b>Newton's 3rd law:</b> every action has an equal and opposite reaction</li></ul><p><b>Friction</b> is a force that works against motion. It's why a rolling ball eventually stops.</p>`},
+      {h:"Energy", html:`<p><b>Kinetic</b> energy is energy of motion. <b>Potential</b> energy is stored energy, like a rock at the top of a hill. Energy can change form but is never created or destroyed.</p>`},
+      {h:"Heat transfer", html:`<ul><li><b>Conduction:</b> through direct contact (a hot pan handle)</li><li><b>Convection:</b> through moving liquids or gases (warm air rising)</li><li><b>Radiation:</b> through waves (sunlight)</li></ul>`}
+    ],
+    tip:"When a science question needs a formula, it's usually given to you. Your job is to plug in the right numbers.",
+    quiz:[
+      {q:"How much force is needed to accelerate a 10 kg cart at 3 m/s²?", o:["30 N","3.3 N","13 N","300 N"], why:"F = m × a = 10 × 3 = 30 newtons."},
+      {q:"Which of these is a chemical change?", o:["Burning wood","Melting ice","Cutting paper","Dissolving sugar in water"], why:"Burning creates new substances (ash, smoke, gases). The others change form but not what the material is."},
+      {q:"A runner covers 400 meters in 80 seconds. What is her average speed?", o:["5 m/s","0.2 m/s","320 m/s","32,000 m/s"], why:"Speed = distance ÷ time = 400 ÷ 80 = 5 meters per second."},
+      {q:"A ball resting at the top of a hill has mostly which kind of energy?", o:["Potential energy","Kinetic energy","Thermal energy","Sound energy"], why:"It isn't moving yet, so its energy is stored because of its height. That's potential energy."}
+    ]},
+  { id:"s3", title:"Earth & Space", sum:"Plates, cycles, weather and seasons.",
+    lesson:[
+      {h:"Earth's structure", html:`<p>Earth has a crust, mantle, outer core and inner core. The crust is broken into <b>tectonic plates</b> that slowly move. Where plates meet, you get earthquakes, mountains and volcanoes.</p>`},
+      {h:"Hotspots", html:`<p>Some volcanoes form over a <b>hotspot</b>, a plume of hot material rising from deep in the mantle. As a plate slides over it, a chain of islands forms. The Hawaiian Islands are the classic example.</p>`},
+      {h:"Cycles", html:`<p><b>Water cycle:</b> evaporation → condensation → precipitation → collection.<br><b>Rock cycle:</b> igneous, sedimentary and metamorphic rocks change into one another over long periods of time.</p><ul><li><b>Igneous:</b> forms when melted rock (magma or lava) cools</li><li><b>Sedimentary:</b> layers of sand, mud and shells pressed together</li><li><b>Metamorphic:</b> changed by heat and pressure</li></ul>`},
+      {h:"Weather, climate and seasons", html:`<p><b>Weather</b> is day-to-day conditions; <b>climate</b> is the long-term pattern. Seasons happen because Earth's axis is tilted, so each half of the planet gets more direct sunlight at different times of year.</p>`},
+      {h:"Resources", html:`<p><b>Renewable</b> resources refill naturally (sun, wind, water). <b>Nonrenewable</b> resources take millions of years to form (coal, oil, natural gas).</p>`},
+      {h:"Earth in space", html:`<ul><li>Earth <b>rotates</b> on its axis once a day, causing day and night</li><li>Earth <b>orbits</b> the sun once a year</li><li>The moon's <b>phases</b> come from seeing different amounts of its sunlit half as it orbits Earth</li><li>The moon's gravity is the main cause of ocean <b>tides</b></li><li>The sun is a star at the center of our solar system</li></ul>`}
+    ],
+    tip:"Seasons are NOT caused by Earth getting closer to the sun. That's a classic trick answer.",
+    quiz:[
+      {q:"What causes Earth's seasons?", o:["The tilt of Earth's axis","Earth's changing distance from the sun","The phases of the moon","Changes in cloud cover"], why:"The tilt means each hemisphere gets more direct sunlight for part of the year (summer) and less for another part (winter)."},
+      {q:"Which energy source is renewable?", o:["Wind","Coal","Natural gas","Oil"], why:"Wind keeps blowing naturally. Coal, natural gas and oil took millions of years to form and will run out."},
+      {q:"The Hawaiian Islands formed mainly from…", o:["Volcanoes over a hotspot","Glaciers carving rock","Two plates colliding","Rivers depositing sand"], why:"The Pacific Plate moves over a hotspot, building a chain of volcanic islands over time."},
+      {q:"Water vapor cooling to form clouds is called…", o:["Condensation","Evaporation","Precipitation","Collection"], why:"Condensation is when a gas cools into a liquid, like water droplets forming clouds."}
+    ]},
+  { id:"s4", title:"Experiments & Data", sum:"Variables, hypotheses and graphs.",
+    lesson:[
+      {h:"The scientific method", html:`<p>Ask a question → form a hypothesis → test it → analyze the data → draw a conclusion. A hypothesis must be <b>testable</b>, often written as "If…, then…"</p>`},
+      {h:"Variables", html:`<ul><li><b>Independent variable:</b> what you change on purpose</li><li><b>Dependent variable:</b> what you measure</li><li><b>Constants:</b> everything you keep the same</li><li><b>Control group:</b> the group with no treatment, used for comparison</li></ul><p><b>Reliable results</b> come from repeating trials, using larger samples and changing only one variable at a time.</p>`},
+      {h:"Reading graphs and tables", html:`<p>Check the title, labels and units first. Then look for the trend: does one value rise as the other rises, fall, or show no pattern?</p>`},
+      {h:"Correlation vs. causation", html:`<p>Two things happening together doesn't prove one causes the other. Ice cream sales and sunburns both rise in summer, but ice cream doesn't cause sunburn. Hot, sunny weather drives both.</p>`}
+    ],
+    tip:"A big share of the science test is reading experiments and data. If you can name the variables, you're halfway there.",
+    quiz:[
+      {q:"A student gives plants different amounts of fertilizer and measures how tall they grow. What is the independent variable?", o:["The amount of fertilizer","The height of the plants","The type of soil","The amount of sunlight"], why:"The independent variable is what the student changes on purpose: the fertilizer. Plant height is what's measured (dependent)."},
+      {q:"What is the purpose of a control group?", o:["To give a baseline to compare results against","To make the experiment faster","To test a second hypothesis","To increase the number of variables"], why:"The control group gets no treatment, so you can see what difference the treatment actually made."},
+      {p:`<b>Sugar that dissolves in 100 mL of water</b><br>20°C → 200 g<br>40°C → 240 g<br>60°C → 290 g<br>80°C → 360 g`,
+       q:"Which statement best describes the data?", o:["As water temperature rises, more sugar dissolves.","As water temperature rises, less sugar dissolves.","Temperature has no effect on dissolving sugar.","Sugar only dissolves above 60°C."], why:"Every time the temperature goes up, the amount of sugar that dissolves goes up too."},
+      {q:"Which hypothesis can be tested?", o:["If plants get more sunlight, they will grow taller.","Plants are the most beautiful living things.","Plants have feelings about music.","Sunlight is better than rain."], why:"Only the first one makes a prediction you can measure (sunlight and plant height)."}
+    ]}
+  ]},
+{ id:"ss", name:"Social Studies", full:"Social Studies", glyph:"1776", glyphSm:true, color:"--ss", time:"70 min",
+  note:"About half the questions are civics and government. Expect maps, charts and historical documents.",
+  units:[
+  { id:"ss1", title:"Civics & Government", sum:"Branches, the Constitution and your rights.",
+    lesson:[
+      {h:"Start here", html:`<p>Civics and government make up about half of the Social Studies test, so this is the unit to know best.</p>`},
+      {h:"Three branches", html:`<ul><li><b>Legislative</b> (Congress: the Senate and House): makes laws</li><li><b>Executive</b> (the President): carries out laws, can veto bills</li><li><b>Judicial</b> (the Supreme Court and federal courts): interprets laws and can strike down unconstitutional ones</li></ul><p>Each state has <b>2 senators</b>. The House has <b>435</b> members, with seats based on each state's population.</p>`},
+      {h:"Checks and balances", html:`<p>Each branch can limit the others. The President can veto a bill; Congress can override a veto with a two-thirds vote; courts can rule a law unconstitutional (judicial review); the Senate confirms judges. The House can <b>impeach</b> (formally charge) an official, and the Senate holds the trial.</p>`},
+      {h:"The Constitution", html:`<p>Written in 1787, it begins "We the People," showing that power comes from the people (<b>popular sovereignty</b>). <b>Federalism</b> splits power between the national and state governments. The <b>Bill of Rights</b> is the first 10 amendments: free speech, religion, press, a fair trial and more.</p><div class="ex"><b>Federal powers:</b> print money, declare war (Congress), make treaties<br><b>State powers:</b> driver's licenses, run elections, public schools<br><b>Shared:</b> collect taxes, set up courts</div>`},
+      {h:"Key amendments", html:`<ul><li><b>13th:</b> ended slavery</li><li><b>14th:</b> citizenship and equal protection under the law</li><li><b>15th:</b> voting rights regardless of race</li><li><b>19th:</b> women's right to vote</li><li><b>26th:</b> voting age lowered to 18</li></ul>`},
+      {h:"Rights and responsibilities", html:`<p>The U.S. is a <b>representative democracy</b>: citizens elect officials to make laws for them. The <b>First Amendment</b> protects freedom of religion, speech, the press, assembly and petition.</p><p>Citizens also have responsibilities, like serving on a jury when called, paying taxes and obeying laws.</p><p>A bill becomes law after it passes <b>both</b> the House and the Senate and is signed by the President (or Congress overrides a veto).</p>`}
+    ],
+    tip:"When a question describes one branch limiting another, the answer is almost always checks and balances.",
+    quiz:[
+      {q:"Which branch of government interprets the laws?", o:["Judicial","Legislative","Executive","State"], why:"The courts, led by the Supreme Court, decide what laws mean and whether they follow the Constitution."},
+      {q:"The President vetoes a bill, and Congress overrides the veto with a two-thirds vote. This is an example of…", o:["Checks and balances","Federalism","Popular sovereignty","Judicial review"], why:"One branch (Congress) is limiting the power of another (the President). That's checks and balances."},
+      {q:"Which amendment gave women the right to vote?", o:["19th","13th","15th","26th"], why:"The 19th Amendment, ratified in 1920, protected women's right to vote."},
+      {q:"What is the Bill of Rights?", o:["The first ten amendments to the Constitution","The Declaration of Independence","A list of laws passed by Congress each year","The rules for electing the President"], why:"The Bill of Rights is the first 10 amendments, protecting freedoms like speech, religion and a fair trial."}
+    ]},
+  { id:"ss2", title:"U.S. History", sum:"From 1776 to the Civil Rights Movement.",
+    lesson:[
+      {h:"Founding", html:`<p>The Declaration of Independence (1776) explained why the colonies were breaking from Britain. It says people have rights to "Life, Liberty and the pursuit of Happiness." The Revolutionary War followed, then the Constitution in 1787.</p>`},
+      {h:"Civil War and Reconstruction", html:`<p>The Civil War (1861–1865) was fought mainly over slavery and its spread. Lincoln's Emancipation Proclamation (1863) declared enslaved people in Confederate states free. After the war, the 13th, 14th and 15th Amendments were passed during Reconstruction.</p>`},
+      {h:"Industry and the World Wars", html:`<p>Factories, railroads and immigration transformed the country in the late 1800s, and many people moved from farms to cities (<b>urbanization</b>). Leaders like Susan B. Anthony fought for women's right to vote, which the 19th Amendment secured in 1920.</p><p>The U.S. fought in World War I (1917–1918) and World War II (1941–1945). Japan's attack on Pearl Harbor on December 7, 1941, brought the U.S. into World War II.</p>`},
+      {h:"Great Depression and the New Deal", html:`<p>The stock market crash of 1929 led to the Great Depression. President Franklin D. Roosevelt's New Deal created jobs programs and Social Security.</p>`},
+      {h:"Civil Rights Movement", html:`<ul><li><b>Brown v. Board of Education</b> (1954): segregated public schools are unconstitutional</li><li><b>Montgomery Bus Boycott</b> (1955–1956)</li><li><b>March on Washington</b> (1963), where Martin Luther King Jr. gave his "I Have a Dream" speech</li><li><b>Civil Rights Act</b> (1964) and <b>Voting Rights Act</b> (1965)</li></ul>`},
+      {h:"Cold War", html:`<p>After World War II, the U.S. and the Soviet Union competed for power without fighting each other directly, until the Soviet Union broke up in 1991.</p>`}
+    ],
+    tip:"You won't have to recite dates. You'll read a source and explain it. The timeline just gives you context.",
+    quiz:[
+      {q:"What was the main purpose of the Declaration of Independence?", o:["To explain why the colonies were separating from Britain","To set up the three branches of government","To end slavery","To list the rights in the Bill of Rights"], why:"The Declaration announced independence and gave the reasons. The Constitution (1787) set up the branches of government."},
+      {q:"The New Deal was a response to which event?", o:["The Great Depression","World War I","The Civil War","The Cold War"], why:"FDR's New Deal programs were created in the 1930s to fight unemployment and poverty during the Great Depression."},
+      {q:"What did the Supreme Court decide in Brown v. Board of Education (1954)?", o:["Segregated public schools are unconstitutional.","Women have the right to vote.","The President can veto laws.","States can leave the Union."], why:"Brown v. Board ruled that separating students by race in public schools violates the Constitution."}
+    ]},
+  { id:"ss3", title:"Economics", sum:"Supply, demand and how money works.",
+    lesson:[
+      {h:"Supply and demand", html:`<p>When demand rises and supply stays the same, prices go up. When supply rises and demand stays the same, prices go down.</p>`},
+      {h:"Scarcity and opportunity cost", html:`<p>Resources are limited, so we have to choose. The <b>opportunity cost</b> is the value of the next-best option you gave up.</p>`},
+      {h:"Inflation and GDP", html:`<p><b>Inflation</b> is a general rise in prices, so each dollar buys less. <b>GDP</b> (gross domestic product) is the total value of goods and services a country produces.</p>`},
+      {h:"Government and the economy", html:`<ul><li><b>Fiscal policy:</b> Congress and the President use taxes and spending</li><li><b>Monetary policy:</b> the Federal Reserve manages interest rates and the money supply</li></ul>`},
+      {h:"Competition", html:`<p>A <b>monopoly</b> is one company controlling a market. Competition among many sellers usually means lower prices and more choices.</p>`},
+      {h:"Credit and interest", html:`<p>When you borrow money, you pay <b>interest</b>. Simple interest: <b>I = p × r × t</b> (principal × rate × time in years).</p><div class="ex">$500 borrowed at 4% for 3 years<br>500 × 0.04 × 3 = <b>$60</b> in interest</div>`}
+    ],
+    tip:"Many economics questions come with a graph. Read the axes first, then the trend.",
+    quiz:[
+      {q:"Demand for a game console rises, but the supply stays the same. What usually happens to the price?", o:["It rises","It falls","It stays the same","It drops to zero"], why:"More people want the same number of consoles, so sellers can charge more."},
+      {q:"You pick up an extra shift instead of going to a concert. The concert is your…", o:["Opportunity cost","Profit","Inflation","Supply"], why:"Opportunity cost is the next-best thing you gave up to make your choice."},
+      {q:"What does inflation mean?", o:["Prices rise over time, so money buys less","Prices fall over time","The economy is growing quickly","Interest rates are low"], why:"Inflation is a general rise in prices, which shrinks what each dollar can buy."},
+      {q:"Which institution controls U.S. monetary policy?", o:["The Federal Reserve","Congress","The Supreme Court","The Department of Labor"], why:"The Federal Reserve sets interest rates and manages the money supply. Congress handles fiscal policy (taxes and spending)."}
+    ]},
+  { id:"ss4", title:"Geography & Sources", sum:"Maps, migration and reading documents.",
+    lesson:[
+      {h:"Map skills", html:`<p>Use the <b>legend</b> (key) to read symbols, the <b>scale</b> for distance and the <b>compass rose</b> for direction.</p><div class="ex"><b>Latitude</b> lines measure distance north or south of the Equator<br><b>Longitude</b> lines measure distance east or west of the Prime Meridian</div>`},
+      {h:"People and places", html:`<p>People move because of <b>push factors</b> (war, no jobs, disaster) and <b>pull factors</b> (jobs, safety, family). Climate and resources shape where people live and work.</p>`},
+      {h:"Primary and secondary sources", html:`<p>A <b>primary source</b> was created at the time by someone involved: a letter, diary, photo or speech. A <b>secondary source</b> explains events later: a textbook or a documentary.</p>`},
+      {h:"Point of view and bias", html:`<p>Ask who made a source, when and why. A political cartoon or speech is trying to persuade you, so look for its message and what it exaggerates.</p>`}
+    ],
+    tip:"When a question shows a map or chart, the answer is almost always in it. Trust what you see over what you remember.",
+    quiz:[
+      {q:"Which of these is a primary source?", o:["A letter written by a Civil War soldier","A history textbook chapter","An encyclopedia article","A documentary made in 2010"], why:"The soldier wrote the letter during the event. The others were made later by people explaining it."},
+      {q:"Lines of latitude measure distance…", o:["North or south of the Equator","East or west of the Prime Meridian","Above sea level","Between two cities"], why:"Latitude lines run east-west around the globe and tell you how far north or south a place is."},
+      {q:"A family moves because there are no jobs in their hometown. The lack of jobs is a…", o:["Push factor","Pull factor","Natural resource","Trade barrier"], why:"Push factors drive people away from a place. Pull factors (like jobs elsewhere) draw them toward a new one."}
+    ]}
+  ]}
+];
+
+</script>
+<script>
+"use strict";
+/* Full practice tests. In every question the FIRST option is the correct one; the app shuffles them.
+   t = the lesson (topic) the question belongs to, used for the score breakdown. */
+const PASS = {
+  repair:`In a church basement on Saturday mornings, a line forms by the door. People carry broken toasters, torn jackets and lamps that flicker. They are waiting for the volunteers of the neighborhood repair café, where fixing things is free.<br><br>The idea began in the Netherlands in 2009 and has since spread to thousands of communities. Organizers say the cafés keep usable goods out of landfills, but the benefits go beyond the trash bin. Visitors sit beside the volunteers, watch each repair and often learn to do it on their own next time. "People come in for a lamp," one volunteer explained, "and leave knowing how a lamp works."`,
+  letter:`<b>To the Editor:</b> The city's plan to remove 40 parking spaces on Main Street for a bike lane will ruin local businesses. My bakery depends on customers who drive. Last week, three of my regulars told me they would shop somewhere else if the parking disappears. Everyone knows that people won't walk more than a block to buy bread. The council should reject this plan before Main Street becomes a ghost town.<br><i>— R. Delgado, owner of Sunrise Bakery</i>`,
+  bus:`The bus was late again. Lani pulled her hood tighter and watched the rain blur the streetlights. Her phone buzzed: her uncle, asking if she'd made it to the interview yet. She typed <i>not yet</i>, then deleted it.<br><br>Instead, she started walking. Twenty blocks wasn't nothing, but neither was this chance. By the time the glass doors of the office came into view, her shoes were soaked and her heart was pounding. She checked the time. Four minutes early.`,
+  sleep:`Researchers have long known that sleep helps the brain store new information. In a common type of study, volunteers learn a list of words, then either sleep or stay awake for several hours before being tested. Those who sleep usually remember more.<br><br>Scientists think that during deep sleep, the brain replays the day's experiences and moves important memories into long-term storage. The lesson for students is simple: an all-night cram session may backfire. A few hours of review followed by a full night's rest often works better.`
+};
+
+const TESTS = {
+math:{ mins:60, qs:[
+  {t:"m1", q:"A worker earns $18.50 an hour. How much does she earn for 32 hours of work?", o:["$592.00","$576.00","$600.00","$518.00"], why:"18.50 × 32 = 592. Multiply the hourly rate by the hours."},
+  {t:"m1", q:"Which of these numbers is the greatest?", o:["5/8","62%","0.6","3/5"], why:"Convert everything to decimals: 5/8 = 0.625, 62% = 0.62, 0.6, and 3/5 = 0.6. The biggest is 0.625, which is 5/8."},
+  {t:"m1", q:"A restaurant bill is $48. You leave a 15% tip. What is the total you pay?", o:["$55.20","$7.20","$63.00","$50.40"], why:"15% of $48 is 0.15 × 48 = $7.20. Add it to the bill: $48 + $7.20 = $55.20. ($7.20 is just the tip.)"},
+  {t:"m1", q:"Rent goes up from $1,200 to $1,350 a month. What is the percent increase?", o:["12.5%","11.1%","15%","150%"], why:"The increase is $150. Divide by the original amount: 150 ÷ 1,200 = 0.125 = 12.5%. (Dividing by the new amount, 1,350, gives the wrong answer of 11.1%.)"},
+  {t:"m1", q:"−8 + 3 × (−2) = ?", o:["−14","10","−2","−22"], why:"Multiply first: 3 × (−2) = −6. Then −8 + (−6) = −14."},
+  {t:"m3", q:"2³ + √49 = ?", o:["15","13","57","10"], why:"2³ = 2 × 2 × 2 = 8 and √49 = 7. So 8 + 7 = 15. (13 comes from mistaking 2³ for 2 × 3.)"},
+  {t:"m2", q:"On a map, 1 inch represents 40 miles. Two towns are 2.5 inches apart on the map. How far apart are they in real life?", o:["100 miles","16 miles","42.5 miles","160 miles"], why:"Multiply: 2.5 × 40 = 100 miles."},
+  {t:"m6", p:`<b>Cars washed this week</b><br>Mon 12 · Tue 18 · Wed 9 · Thu 21 · Fri 15`, q:"What is the range of the number of cars washed?", o:["12","15","21","75"], why:"Range = highest − lowest = 21 − 9 = 12. (15 is the median and 75 is the total.)"},
+  {t:"m2", q:"An animal shelter has only cats and dogs, in a ratio of 3 cats to 5 dogs. There are 40 animals in all. How many are cats?", o:["15","24","25","8"], why:"3 + 5 = 8 parts in total. Cats are 3/8 of the animals: 3/8 × 40 = 15."},
+  {t:"m3", q:"Solve for x: 5(x − 2) = 3x + 6", o:["x = 8","x = 2","x = 4","x = −8"], why:"Distribute: 5x − 10 = 3x + 6. Subtract 3x: 2x − 10 = 6. Add 10: 2x = 16. Divide: x = 8."},
+  {t:"m3", q:"Which expression is equal to 3(2x − 4)?", o:["6x − 12","6x − 4","5x − 12","6x + 12"], why:"Multiply the 3 by both terms inside: 3 × 2x = 6x and 3 × (−4) = −12."},
+  {t:"m3", q:"A phone plan costs $40 a month plus $0.10 per text. Kai's bill was $52. How many texts did he send?", o:["120","12","520","1,200"], why:"Subtract the base fee: $52 − $40 = $12 spent on texts. Divide by the price per text: 12 ÷ 0.10 = 120."},
+  {t:"m3", q:"Which is the factored form of x² + 5x + 6?", o:["(x + 2)(x + 3)","(x + 1)(x + 6)","(x + 5)(x + 1)","(x − 2)(x − 3)"], why:"You need two numbers that multiply to 6 and add to 5: 2 and 3. So x² + 5x + 6 = (x + 2)(x + 3)."},
+  {t:"m3", q:"What are the solutions to x² = 81?", o:["x = 9 or x = −9","x = 9 only","x = 40.5","x = −9 only"], why:"Both 9 × 9 and (−9) × (−9) equal 81, so there are two solutions."},
+  {t:"m3", q:"Which is the solution to 4x − 3 ≤ 13?", o:["x ≤ 4","x ≥ 4","x ≤ 2.5","x ≥ −4"], why:"Add 3 to both sides: 4x ≤ 16. Divide by 4 (a positive number, so the sign stays the same): x ≤ 4."},
+  {t:"m4", q:"What is the slope of any line parallel to y = 4x − 7?", o:["4","−4","−1/4","−7"], why:"Parallel lines have the same slope. The slope of y = 4x − 7 is 4. (−1/4 would be the slope of a perpendicular line.)"},
+  {t:"m4", q:"A line crosses the y-axis at (0, 3) and has a slope of −2. What is its equation?", o:["y = −2x + 3","y = 3x − 2","y = 2x + 3","y = −2x − 3"], why:"In y = mx + b, m is the slope (−2) and b is the y-intercept (3): y = −2x + 3."},
+  {t:"m4", q:"If f(x) = 2x² − 3, what is f(−2)?", o:["5","−11","11","−5"], why:"Plug in −2: (−2)² = 4, then 2 × 4 = 8, and 8 − 3 = 5."},
+  {t:"m4", p:`<b>x:</b> 1, 2, 3, 4<br><b>y:</b> 5, 8, 11, 14`, q:"Which equation matches every pair in the table?", o:["y = 3x + 2","y = x + 4","y = 5x","y = 2x + 3"], why:"y goes up by 3 each time x goes up by 1, so the slope is 3. Check x = 1: 3(1) + 2 = 5. ✓ (y = 2x + 3 works for x = 1 but gives 7, not 8, for x = 2.)"},
+  {t:"m5", q:"A rectangular garden is 15 feet long and 8 feet wide. How much fencing is needed to go all the way around it?", o:["46 feet","120 feet","23 feet","38 feet"], why:"Perimeter = 15 + 8 + 15 + 8 = 46 feet. (120 is the area.)"},
+  {t:"m5", q:"A cylinder-shaped tank has a radius of 2 meters and a height of 5 meters. What is its volume? (Use π ≈ 3.14)", o:["62.8 cubic meters","31.4 cubic meters","125.6 cubic meters","20 cubic meters"], why:"V = πr²h = 3.14 × 2² × 5 = 3.14 × 4 × 5 = 62.8 cubic meters."},
+  {t:"m5", q:"A 13-foot ladder leans against a wall. Its base is 5 feet from the wall. How high up the wall does the ladder reach?", o:["12 feet","8 feet","18 feet","13.9 feet"], why:"The ladder is the hypotenuse: 5² + h² = 13², so 25 + h² = 169, h² = 144 and h = 12 feet."},
+  {t:"m5", q:"A circle has a diameter of 10 inches. What is its circumference? (Use π ≈ 3.14)", o:["31.4 inches","15.7 inches","78.5 inches","314 inches"], why:"Circumference = π × diameter = 3.14 × 10 = 31.4 inches. (78.5 is the area.)"},
+  {t:"m6", q:"You flip two coins. What is the probability that both land on tails?", o:["1/4","1/2","1/3","3/4"], why:"The flips don't affect each other, so multiply: 1/2 × 1/2 = 1/4."},
+  {t:"m6", q:"Over five weeks, Leilani worked 32, 40, 36, 40 and 27 hours. What was her mean (average) number of hours per week?", o:["35","36","40","13"], why:"Add the hours: 32 + 40 + 36 + 40 + 27 = 175. Divide by 5 weeks: 175 ÷ 5 = 35. (36 is the median, 40 is the mode and 13 is the range.)"}
+]},
+rla:{ mins:50, qs:[
+  {t:"r1", p:PASS.repair, q:"Which statement best expresses the main idea of the passage?", o:["Repair cafés help communities by fixing items for free and teaching people new skills.","Repair cafés began in the Netherlands in 2009.","Most broken toasters can't be fixed.","Church basements are good places for volunteers to meet."], why:"The passage describes the cafés, their spread and their benefits (less waste and new skills). The 2009 date is only a supporting detail."},
+  {t:"r1", p:PASS.repair, q:"Which detail shows that the idea has grown over time?", o:["It has since spread to thousands of communities.","A line forms by the door.","People carry broken toasters.","Fixing things is free."], why:"Going from one country in 2009 to thousands of communities shows growth."},
+  {t:"r2", p:PASS.repair, q:"Why does the author include the volunteer's quote at the end?", o:["To show that visitors gain knowledge, not just a fixed item","To explain how to repair a lamp","To argue that repair cafés should charge money","To show that the volunteers are tired"], why:"The quote sums up the bigger benefit: people leave understanding how things work."},
+  {t:"r2", p:PASS.repair, q:"The author's attitude toward repair cafés is best described as…", o:["approving","critical","confused","fearful"], why:"The author highlights benefits that \"go beyond the trash bin\" and ends on a positive quote. The tone is favorable."},
+  {t:"r3", p:PASS.letter, q:"What is the writer's main claim?", o:["The city council should reject the bike-lane plan.","Bike lanes make streets safer.","Sunrise Bakery sells the best bread in town.","Main Street needs more businesses."], why:"The last sentence states the claim directly: the council should reject the plan."},
+  {t:"r3", p:PASS.letter, q:"Which sentence is an unsupported generalization?", o:["Everyone knows that people won't walk more than a block to buy bread.","My bakery depends on customers who drive.","The plan will remove 40 parking spaces.","Three of my regulars told me they would shop somewhere else."], why:"\"Everyone knows\" makes a sweeping claim with no evidence behind it."},
+  {t:"r3", p:PASS.letter, q:"Which evidence would most strengthen the writer's argument?", o:["A survey showing most Main Street shoppers arrive by car","A photo of the bakery's best-selling bread","A story about the writer's first day in business","A list of bike shops in the city"], why:"A survey of real shoppers is specific, relevant evidence. Right now, the letter relies on three customers and a generalization."},
+  {t:"r2", p:PASS.letter, q:"Why does the writer say Main Street could become \"a ghost town\"?", o:["To exaggerate the possible harm and stir up emotion","To describe Main Street's history","To show that the street is already empty","To suggest the city build a museum"], why:"\"Ghost town\" is an exaggeration meant to make readers feel alarmed. It's an emotional appeal, not evidence."},
+  {t:"r2", p:PASS.bus, q:"What does the sentence \"Twenty blocks wasn't nothing, but neither was this chance\" suggest?", o:["Lani decides the opportunity is worth a hard walk.","Lani thinks the interview isn't important.","Lani is unsure where the office is.","Lani wants to go home."], why:"She admits the walk is tough but compares it to how much the chance matters, then walks."},
+  {t:"r2", p:PASS.bus, q:"Which word best describes Lani in this passage?", o:["determined","careless","lazy","angry"], why:"She walks twenty blocks in the rain instead of giving up and still arrives early. That's determination."},
+  {t:"r1", p:PASS.bus, q:"What does Lani do instead of waiting for the bus?", o:["She walks to the interview.","She calls her uncle for a ride.","She goes back home.","She asks a stranger for directions."], why:"\"Instead, she started walking.\" She walks the twenty blocks."},
+  {t:"r1", p:PASS.sleep, q:"What is the main idea of this passage?", o:["Sleep helps the brain lock in what you've learned.","Volunteers in studies learn lists of words.","Scientists don't understand sleep.","Students should study all night before a test."], why:"Every part of the passage, from the studies to the advice, supports the idea that sleep helps memory."},
+  {t:"r1", p:PASS.sleep, q:"Which detail explains HOW sleep may help memory?", o:["The brain replays the day's experiences and moves memories into long-term storage.","Volunteers learn a list of words.","Those who sleep usually remember more.","An all-night cram session may backfire."], why:"This is the only sentence that describes what happens in the brain, the \"how.\" The others describe results or advice."},
+  {t:"r2", p:PASS.sleep, q:"What is the purpose of the last two sentences?", o:["To give students practical advice based on the research","To introduce a new study","To argue that sleep research is wrong","To describe the volunteers"], why:"They turn the research into a takeaway for students: review, then rest."},
+  {t:"r4", q:"Either the cooks or the server ___ responsible for closing tonight.", o:["is","are","were","have been"], why:"With either/or, the verb matches the closest subject. \"Server\" is singular, so use \"is.\""},
+  {t:"r4", q:"Which sentence is punctuated correctly?", o:["After the meeting ended, we went to lunch.","After the meeting ended we, went to lunch.","After, the meeting ended we went to lunch.","After the meeting, ended we went to lunch."], why:"Put the comma after the opening clause \"After the meeting ended,\" before the main sentence begins."},
+  {t:"r4", q:"Which of these is a sentence fragment?", o:["Because the store closed early.","The store closed early.","We left because the store closed early.","The store closed early, so we left."], why:"\"Because the store closed early\" leaves you hanging. It needs a main clause to be a complete sentence."},
+  {t:"r4", q:"The new schedule will ___ every employee on the night shift.", o:["affect","effect","effects","affection"], why:"\"Affect\" is the verb meaning \"to influence.\" \"Effect\" is usually a noun meaning \"a result.\""},
+  {t:"r4", q:"\"___ going to need ___ ID at the front desk.\" Which pair fills the blanks correctly?", o:["You're / your","Your / you're","Your / your","You're / you're"], why:"\"You're\" means \"you are\" (you are going to need). \"Your\" shows ownership (your ID)."},
+  {t:"r4", q:"The supervisor thanked Keoni and ___ for staying late.", o:["me","I","myself","mine"], why:"The pronoun receives the action (thanked), so use the object form \"me.\" Drop Keoni to check: \"thanked me.\""},
+  {t:"r4", q:"The job requires typing quickly, answering phones and ___.", o:["greeting visitors","to greet visitors","visitors are greeted","greet visitors"], why:"Keep the list parallel: typing, answering, greeting. All three are -ing words."},
+  {t:"r4", q:"The store raised its prices. ___, the store stayed busy all month.", o:["Nevertheless","Therefore","For example","Similarly"], why:"You'd expect higher prices to drive people away, but they didn't. \"Nevertheless\" signals that contrast."},
+  {t:"r4", q:"Which sentence is written correctly?", o:["While cooking dinner, I heard the smoke alarm.","While cooking dinner, the smoke alarm went off.","The smoke alarm, while cooking dinner, went off.","While cooking dinner, the alarm was heard by me."], why:"The opening phrase must describe the person cooking. Only the first sentence puts \"I\" right after the comma. The others make it sound like the alarm was cooking."},
+  {t:"r4", q:"The two ___ uniforms were washed overnight.", o:["nurses'","nurse's","nurses","nurses's"], why:"The uniforms belong to two nurses. For a plural that already ends in s, add only an apostrophe: nurses'."},
+  {t:"r4", q:"Which sentence uses capital letters correctly?", o:["We visited Pearl Harbor in December.","We visited pearl harbor in December.","We visited Pearl Harbor in december.","We Visited Pearl Harbor in December."], why:"Names of specific places and months are capitalized. \"Visited\" is an ordinary verb, so it stays lowercase."}
+]},
+sci:{ mins:55, qs:[
+  {t:"s1", q:"Which part of a cell releases energy from food?", o:["Mitochondria","Nucleus","Cell wall","Chloroplast"], why:"Mitochondria carry out cellular respiration, releasing energy from glucose."},
+  {t:"s1", q:"Producers in an ecosystem, like grass and trees, get their energy from…", o:["sunlight","eating other plants","decomposers","the soil alone"], why:"Producers use sunlight to make their own food through photosynthesis."},
+  {t:"s1", q:"Which body system carries oxygen to the body's cells?", o:["Circulatory system","Digestive system","Nervous system","Skeletal system"], why:"The heart pumps blood, which carries oxygen and nutrients to cells."},
+  {t:"s1", q:"A plant is kept in a completely dark closet for two weeks. Which process is most directly affected?", o:["Photosynthesis","Digestion","Evaporation","Erosion"], why:"Photosynthesis needs light. Without it, the plant can't make food."},
+  {t:"s1", q:"Tall (T) is dominant over short (t). A TT plant is crossed with a tt plant. What percent of the offspring will be tall?", o:["100%","75%","50%","25%"], why:"Every offspring gets one T and one t, so they're all Tt. With a dominant T, all of them are tall."},
+  {t:"s1", q:"In the food chain grass → rabbit → fox, a disease kills most of the rabbits. What is most likely to happen next?", o:["The fox population decreases.","The grass dies out.","The fox population increases.","Nothing changes."], why:"Foxes lose their main food source, so their numbers drop. (With fewer rabbits eating it, the grass would likely grow more, not less.)"},
+  {t:"s1", q:"Antibiotics are medicines that work against…", o:["bacteria","viruses","all germs equally","allergies"], why:"Antibiotics kill bacteria or stop them from growing. They don't work on viruses like the common cold or flu."},
+  {t:"s2", q:"Which of these is a compound?", o:["Water (H₂O)","Oxygen (O₂)","Gold (Au)","Helium (He)"], why:"A compound contains two or more different elements bonded together. Water has hydrogen and oxygen. The others are each made of a single element."},
+  {t:"s2", q:"A rocket pushes hot gas downward, and the rocket moves upward. Which law does this show?", o:["Newton's third law","Newton's first law","The law of supply and demand","The water cycle"], why:"Every action (gas pushed down) has an equal and opposite reaction (rocket pushed up)."},
+  {t:"s2", q:"A 1,000 kg car speeds up at 2 m/s². How much force is acting on it?", o:["2,000 N","500 N","1,002 N","20,000 N"], why:"F = m × a = 1,000 × 2 = 2,000 newtons."},
+  {t:"s2", q:"The metal handle of a pan on the stove gets hot. How did the heat travel?", o:["Conduction","Convection","Radiation","Evaporation"], why:"Heat moved through the solid metal by direct contact. That's conduction."},
+  {t:"s2", q:"A cyclist stops pedaling on a flat road and gradually slows down. What force mainly causes this?", o:["Friction","Gravity pulling forward","Magnetism","Inertia speeding it up"], why:"Friction from the road and the air works against motion and slows the bike."},
+  {t:"s2", q:"An object has a mass of 30 g and a volume of 10 cm³. Water's density is 1 g/cm³. What is the object's density, and will it float in water?", o:["3 g/cm³; it sinks","3 g/cm³; it floats","0.33 g/cm³; it floats","300 g/cm³; it sinks"], why:"Density = mass ÷ volume = 30 ÷ 10 = 3 g/cm³. That's denser than water, so it sinks."},
+  {t:"s2", q:"What energy change happens in a toaster?", o:["Electrical energy to thermal (heat) energy","Thermal energy to electrical energy","Chemical energy to sound energy","Light energy to chemical energy"], why:"A toaster takes electricity from the outlet and turns it into heat."},
+  {t:"s3", q:"Where do most earthquakes happen?", o:["Along the edges of tectonic plates","In the middle of oceans far from any plates","Only in cold climates","Only near large cities"], why:"Earthquakes happen where plates grind past, push into or pull away from each other."},
+  {t:"s3", q:"Which statement describes climate rather than weather?", o:["The region usually has warm, dry summers and mild, wet winters.","It is raining right now.","Tomorrow will be windy.","This afternoon it reached 85°F."], why:"Climate is the long-term pattern. The others describe conditions on a single day."},
+  {t:"s3", q:"Which type of rock forms when lava cools and hardens?", o:["Igneous","Sedimentary","Metamorphic","Fossil"], why:"Igneous rock forms from cooled magma or lava, like the basalt that makes up much of Hawaiʻi."},
+  {t:"s3", q:"What causes the phases of the moon?", o:["We see different amounts of the moon's sunlit half as it orbits Earth.","Earth's shadow covers part of the moon each night.","The moon gives off less light some nights.","Clouds block part of the moon."], why:"Half the moon is always lit by the sun. As it orbits, we see more or less of that lit half. (Earth's shadow only causes eclipses.)"},
+  {t:"s3", q:"What causes day and night on Earth?", o:["Earth rotating on its axis","Earth orbiting the sun","The moon blocking the sun","The tilt of Earth's axis"], why:"Earth spins once every 24 hours, so each side faces toward and then away from the sun."},
+  {t:"s4", q:"A student tests whether water temperature affects how fast sugar dissolves. Which should stay the same in every trial?", o:["The amount of water","The water temperature","The time it takes to dissolve","The number of results recorded"], why:"Temperature is what's being changed (independent), and time is what's measured (dependent). The amount of water must stay constant for a fair test."},
+  {t:"s4", p:`<b>Hours of light per day → plant growth in 2 weeks</b><br>2 hours → 3 cm<br>4 hours → 6 cm<br>6 hours → 9 cm<br>8 hours → 12 cm`, q:"If the pattern continues, how much would a plant grow with 10 hours of light?", o:["15 cm","12 cm","20 cm","13 cm"], why:"Every 2 extra hours adds 3 cm. So 10 hours → 12 + 3 = 15 cm."},
+  {t:"s4", q:"Towns with more firefighters tend to have more fires. What is the best conclusion?", o:["Bigger towns likely have more of both; this doesn't show firefighters cause fires.","Firefighters cause fires.","Towns should get rid of firefighters.","Fires cause towns to shrink."], why:"This is correlation, not causation. A third factor, town size, explains both."},
+  {t:"s4", q:"Which change would make an experiment's results more reliable?", o:["Repeating it several times with more test subjects","Changing three variables at once","Skipping the control group","Recording only the best result"], why:"Repeating trials and using larger samples make it less likely the results happened by chance."},
+  {t:"s4", q:"In three trials, a ball rolled 42 cm, 45 cm and 48 cm. What was the average distance?", o:["45 cm","42 cm","48 cm","135 cm"], why:"(42 + 45 + 48) ÷ 3 = 135 ÷ 3 = 45 cm."},
+  {t:"s4", q:"Hypothesis: \"If students sleep 8 hours, then their test scores will improve.\" What is the dependent variable?", o:["Test scores","Hours of sleep","The students' ages","The type of test"], why:"The dependent variable is what you measure to see if it changes. Here, that's test scores."}
+]},
+ss:{ mins:50, qs:[
+  {t:"ss1", q:"How many senators does each state have in the U.S. Senate?", o:["Two","One","It depends on the state's population","Four"], why:"Every state has two senators. House seats, not Senate seats, are based on population."},
+  {t:"ss1", q:"Which power belongs to the states rather than the federal government?", o:["Issuing driver's licenses","Printing money","Declaring war","Making treaties with other countries"], why:"Driver's licenses are handled by each state. The other three are federal powers."},
+  {t:"ss1", q:"Which right is protected by the First Amendment?", o:["Freedom of speech","The right to bear arms","Protection from unreasonable searches","The right to vote at age 18"], why:"The First Amendment covers religion, speech, press, assembly and petition."},
+  {t:"ss1", q:"The Supreme Court rules that a law goes against the Constitution and strikes it down. What is this power called?", o:["Judicial review","Veto","Impeachment","Federalism"], why:"Judicial review is the courts' power to decide whether laws are constitutional."},
+  {t:"ss1", p:`"We the People of the United States, in Order to form a more perfect Union… do ordain and establish this Constitution for the United States of America."<br><i>— Preamble to the U.S. Constitution</i>`, q:"The phrase \"We the People\" best reflects which principle?", o:["Popular sovereignty","Separation of church and state","Judicial review","Checks and balances"], why:"Popular sovereignty means the government's power comes from the people."},
+  {t:"ss1", q:"Which part of the federal government has the power to declare war?", o:["Congress","The President","The Supreme Court","State governors"], why:"The Constitution gives Congress the power to declare war. The President is commander in chief of the military."},
+  {t:"ss1", q:"A 19-year-old's right to vote in federal elections is protected by which amendment?", o:["26th Amendment","19th Amendment","15th Amendment","1st Amendment"], why:"The 26th Amendment (1971) lowered the voting age to 18."},
+  {t:"ss1", q:"Which best describes a representative democracy?", o:["Citizens elect officials to make laws for them.","One person holds all power.","Citizens vote directly on every law.","A small group of wealthy families rules."], why:"In a representative democracy, voters choose leaders who represent them, like members of Congress."},
+  {t:"ss1", q:"After the House of Representatives impeaches an official, which body holds the trial?", o:["The Senate","The Supreme Court","The House","The President's Cabinet"], why:"The House brings the charges (impeachment); the Senate holds the trial and decides."},
+  {t:"ss1", q:"What must happen for a bill to become a law?", o:["It must pass both the House and the Senate and be signed by the President, or have a veto overridden.","It only needs the President's signature.","It must be approved by the Supreme Court.","It must pass the House only."], why:"Both chambers of Congress must pass it. Then the President signs it, or Congress overrides a veto with a two-thirds vote."},
+  {t:"ss1", p:`"Congress shall make no law respecting an establishment of religion, or prohibiting the free exercise thereof…"<br><i>— First Amendment</i>`, q:"What does this part of the First Amendment mean?", o:["The government can't set up an official religion or stop people from practicing their faith.","Everyone must belong to a religion.","Congress chooses the nation's religion.","Religious groups can make laws."], why:"\"Establishment\" means creating an official religion. \"Free exercise\" means the right to practice your faith."},
+  {t:"ss1", q:"Which of these is a responsibility of citizens, not just a right?", o:["Serving on a jury when called","Freedom of speech","Freedom of religion","The right to a fair trial"], why:"Jury duty is something citizens are expected to do. The others are rights the Constitution protects."},
+  {t:"ss2", q:"The Emancipation Proclamation of 1863 declared freedom for enslaved people in…", o:["the Confederate states","every country in the world","the Northern states only","the western territories only"], why:"It applied to states in rebellion (the Confederacy). The 13th Amendment later ended slavery everywhere in the U.S."},
+  {t:"ss2", q:"Susan B. Anthony is best known for her work in which movement?", o:["Women's right to vote","The New Deal","The Cold War","Building the railroads"], why:"Anthony was a leader of the women's suffrage movement, which led to the 19th Amendment."},
+  {t:"ss2", q:"Japan's attack on Pearl Harbor on December 7, 1941, led the United States to…", o:["enter World War II","enter World War I","start the Cold War","end the Great Depression immediately"], why:"The U.S. declared war on Japan the next day and entered World War II."},
+  {t:"ss2", q:"Which event is most closely linked to the start of the Great Depression?", o:["The stock market crash of 1929","The Civil War","The attack on Pearl Harbor","The signing of the Constitution"], why:"The 1929 crash set off the worst economic downturn in U.S. history."},
+  {t:"ss2", q:"Martin Luther King Jr.'s \"I Have a Dream\" speech (1963) is most closely tied to which movement?", o:["The Civil Rights Movement","The women's suffrage movement","The American Revolution","The New Deal"], why:"King gave the speech at the March on Washington, a landmark of the Civil Rights Movement."},
+  {t:"ss2", q:"During the Industrial Revolution, many Americans moved from farms to cities to work in factories. This movement is called…", o:["urbanization","colonization","immigration","emancipation"], why:"Urbanization is the growth of cities as people move to them from rural areas."},
+  {t:"ss3", q:"A farm harvests a huge crop of pineapples, but demand stays the same. What will most likely happen to pineapple prices?", o:["They will fall.","They will rise.","They will stay exactly the same.","Pineapples will become illegal."], why:"When supply goes up and demand doesn't change, prices usually drop."},
+  {t:"ss3", q:"Congress passes a tax cut so people have more money to spend. This is an example of…", o:["fiscal policy","monetary policy","a monopoly","inflation"], why:"Fiscal policy is government using taxes and spending. Monetary policy is the Federal Reserve managing interest rates."},
+  {t:"ss3", q:"You borrow $1,000 at 5% simple interest for 2 years. How much interest do you owe?", o:["$100","$50","$1,100","$10"], why:"I = p × r × t = 1,000 × 0.05 × 2 = $100. ($1,100 is the total you'd repay.)"},
+  {t:"ss3", q:"Only one company sells internet service in a town, and it keeps raising prices. What is this situation called?", o:["A monopoly","A recession","Fiscal policy","Opportunity cost"], why:"A monopoly is a single company controlling a market. Without competition, it can raise prices."},
+  {t:"ss4", q:"Which part of a map helps you measure the distance between two places?", o:["The scale","The compass rose","The legend","The title"], why:"The scale shows how map distance compares to real distance, like 1 inch = 50 miles."},
+  {t:"ss4", q:"In the 1800s, many people moved to cities because factory jobs were available. The factory jobs were a…", o:["pull factor","push factor","natural barrier","primary source"], why:"Pull factors attract people to a new place. Push factors drive them away from where they are."},
+  {t:"ss4", q:"An ad for a soda says it is \"the best drink on the market.\" What should a careful reader do?", o:["Consider the source's purpose and look for real evidence","Accept it, since it's in an ad","Assume every other drink is bad","Ignore all information about drinks"], why:"The ad's purpose is to sell, so it's biased. Look for evidence before believing a claim."}
+]}
+};
+
+</script>
+<script>
+"use strict";
+const CARDS = {
+math:[
+  ["Numerator","The top number of a fraction. In 3/4, it's 3."],
+  ["Denominator","The bottom number of a fraction. In 3/4, it's 4."],
+  ["Percent","Per hundred. 45% = 45/100 = 0.45."],
+  ["Ratio","A comparison of two amounts, like 3:5 or 3/5."],
+  ["Proportion","Two equal ratios, like 2/3 = 8/12. Solve by cross-multiplying."],
+  ["Variable","A letter that stands for an unknown number, like x."],
+  ["Coefficient","The number multiplied by a variable. In 7x, it's 7."],
+  ["Slope","How steep a line is: rise ÷ run, or (y₂ − y₁) ÷ (x₂ − x₁)."],
+  ["Y-intercept","Where a line crosses the y-axis. In y = mx + b, it's b."],
+  ["Perimeter","The distance around a shape. Add all the sides."],
+  ["Area","The space inside a flat shape, measured in square units."],
+  ["Volume","The space inside a 3D object, measured in cubic units."],
+  ["Hypotenuse","The longest side of a right triangle, across from the right angle."],
+  ["Mean","The average: add the values, then divide by how many there are."],
+  ["Median","The middle value once the numbers are in order."],
+  ["Mode","The value that appears most often."],
+  ["Probability","Favorable outcomes ÷ total outcomes. Always between 0 and 1."]
+],
+rla:[
+  ["Main idea","The central point of the whole passage."],
+  ["Supporting detail","A fact, example or reason that backs up the main idea."],
+  ["Inference","A conclusion you reach from clues in the text plus what you already know."],
+  ["Author's purpose","Why the author wrote: to inform, persuade, entertain or explain."],
+  ["Tone","The author's attitude, shown through word choice (hopeful, angry, neutral)."],
+  ["Claim","The main point an author wants you to believe."],
+  ["Evidence","Facts, data, expert quotes or examples that support a claim."],
+  ["Fact","A statement that can be checked and proven true."],
+  ["Opinion","A belief or judgment, often signaled by words like best or should."],
+  ["Context clues","Hints in nearby sentences that reveal what a word means."],
+  ["Sentence fragment","An incomplete sentence missing a subject, a verb or a complete thought."],
+  ["Run-on sentence","Two complete sentences jammed together with no punctuation."],
+  ["Comma splice","Two complete sentences joined with only a comma."],
+  ["Transition","A word that connects ideas, like however, therefore or for example."],
+  ["Thesis","One sentence that states your essay's main position."],
+  ["Parallel structure","Keeping items in a list in the same form: running, jumping, swimming."]
+],
+sci:[
+  ["Cell","The basic unit of all living things."],
+  ["DNA","The genetic code in the nucleus that carries the instructions for traits."],
+  ["Photosynthesis","Plants use sunlight, water and CO₂ to make glucose and release oxygen."],
+  ["Dominant allele","A version of a gene that shows up even with only one copy (B)."],
+  ["Recessive allele","A version of a gene that only shows up with two copies (bb)."],
+  ["Producer","A living thing that makes its own food, usually from sunlight."],
+  ["Decomposer","A living thing that breaks down dead material, like fungi and bacteria."],
+  ["Natural selection","Organisms with helpful traits survive and reproduce more, passing those traits on."],
+  ["Chemical change","A change that makes a new substance, like burning or rusting."],
+  ["Kinetic energy","The energy of motion."],
+  ["Potential energy","Stored energy, like a rock sitting at the top of a hill."],
+  ["Density","Mass ÷ volume. Denser than water sinks; less dense floats."],
+  ["Plate tectonics","The slow movement of Earth's crustal plates, which causes earthquakes and volcanoes."],
+  ["Hypothesis","A testable prediction, often written as \"If…, then…\""],
+  ["Independent variable","What you change on purpose in an experiment."],
+  ["Dependent variable","What you measure in an experiment."],
+  ["Control group","The group that gets no treatment, used for comparison."]
+],
+ss:[
+  ["Checks and balances","Each branch of government can limit the power of the others."],
+  ["Federalism","Power is divided between the national and state governments."],
+  ["Popular sovereignty","The government's power comes from the people."],
+  ["Judicial review","The courts' power to strike down laws that go against the Constitution."],
+  ["Veto","The President's power to reject a bill passed by Congress."],
+  ["Amendment","A formal change to the Constitution. There are 27."],
+  ["Bill of Rights","The first ten amendments, protecting freedoms like speech and religion."],
+  ["Emancipation Proclamation","Lincoln's 1863 order declaring enslaved people in Confederate states free."],
+  ["New Deal","FDR's programs to fight the Great Depression, including Social Security."],
+  ["Supply and demand","More demand pushes prices up; more supply pushes them down."],
+  ["Opportunity cost","The value of the next-best choice you gave up."],
+  ["Inflation","A general rise in prices, so each dollar buys less."],
+  ["Fiscal policy","Government using taxes and spending to guide the economy."],
+  ["Monetary policy","The Federal Reserve managing interest rates and the money supply."],
+  ["Primary source","A source made at the time by someone involved, like a letter or photo."],
+  ["Push factor","Something that drives people away from a place, like war or a lack of jobs."],
+  ["Pull factor","Something that draws people to a place, like jobs or safety."]
+]
+};
+
+const FORMULAS = [
+  {h:"Area", rows:[["Rectangle","A = l × w"],["Square","A = s²"],["Triangle","A = ½ × b × h"],["Parallelogram","A = b × h"],["Trapezoid","A = ½ × h × (b₁ + b₂)"],["Circle","A = πr²"]]},
+  {h:"Perimeter and circles", rows:[["Any shape","Add all the sides"],["Rectangle","P = 2l + 2w"],["Circumference","C = 2πr = πd"],["Pi","π ≈ 3.14"]]},
+  {h:"Volume", rows:[["Box (rectangular prism)","V = l × w × h"],["Cube","V = s³"],["Cylinder","V = πr²h"],["Pyramid","V = ⅓ × B × h, where B is the area of the base"],["Cone","V = ⅓πr²h"],["Sphere","V = ⁴⁄₃πr³"]]},
+  {h:"Algebra and lines", rows:[["Slope","m = (y₂ − y₁) ÷ (x₂ − x₁)"],["Slope-intercept form","y = mx + b"],["Point-slope form","y − y₁ = m(x − x₁)"],["Pythagorean theorem","a² + b² = c²"],["Quadratic formula","x = (−b ± √(b² − 4ac)) ÷ 2a"]]},
+  {h:"Everyday math", rows:[["Simple interest","I = p × r × t"],["Distance","d = r × t"],["Total cost","number of units × price per unit"],["Percent change","(new − old) ÷ old × 100"],["Percent of a number","percent as a decimal × the number"]]},
+  {h:"Data", rows:[["Mean","sum of the values ÷ number of values"],["Median","middle value when sorted"],["Range","highest − lowest"],["Probability","favorable outcomes ÷ total outcomes"]]},
+  {h:"Science", rows:[["Speed","distance ÷ time"],["Density","mass ÷ volume"],["Force","F = m × a"]]}
+];
+
+const ESSAYS = [
+{ id:"e1", title:"The four-day work week", issue:"Should employers switch to a four-day work week?",
+  a:{h:"A Shorter Week Pays Off", side:"For", text:`When the city of Ridgeport ran a six-month trial of a four-day work week at 40 local companies, the results surprised even the skeptics. According to the city's final report, 35 of the 40 companies chose to keep the shorter schedule after the trial ended. Output stayed level or rose at most of them, and employee sick days fell by nearly a third.<br><br>Dr. Alana Reyes, an economist who reviewed the data, explained that rested workers make fewer costly mistakes. "Companies didn't lose a day of work," she said. "They gained a more focused workforce."<br><br>Workers benefited too. In surveys, 7 in 10 employees reported lower stress, and turnover dropped, saving companies the high cost of hiring and training new staff. A four-day week is not a gift to workers. It is a smart business decision backed by evidence.`},
+  b:{h:"Keep the Five-Day Week", side:"Against", text:`The four-day week sounds nice, but it simply won't work for most businesses. Customers expect service five days a week or more, and no one wants to call a business and hear that it's closed on Friday.<br><br>My neighbor's company tried shorter weeks, and he told me everyone was more rushed than ever. Cramming 40 hours into four days means 10-hour shifts, and anyone who has worked a 10-hour shift knows how exhausting that is.<br><br>Supporters talk about happier workers, but a job isn't supposed to be a vacation. Hard work built this country, and cutting the work week sends the wrong message to the next generation. Leaders should reject this trendy idea before it hurts the economy.`} },
+{ id:"e2", title:"Phones in school", issue:"Should schools ban phones for the whole school day?",
+  a:{h:"Ban Phones in School", side:"For a ban", text:`Phones are destroying students' ability to focus. Walk into any classroom and you'll see kids staring at screens instead of listening. When I was in school, we didn't have phones, and we turned out fine.<br><br>Teachers are fed up, and parents are too. One teacher I spoke with said her students can't go five minutes without checking social media. It's obvious that phones are the reason test scores have dropped.<br><br>Schools need to take a stand and ban phones completely, from the first bell to the last. If students can't handle the responsibility, the school must handle it for them.`},
+  b:{h:"Teach Phone Habits Instead", side:"Against a ban", text:`A total phone ban sounds simple, but it creates new problems. In a two-year review by the Westlake School District, schools with full bans showed no clear difference in grades compared with schools that let students keep phones put away during class. What did help? Schools with clear rules, such as phones off during lessons but allowed at lunch, reported 40 percent fewer phone-related discipline problems.<br><br>Phones also meet real needs. In a district survey, 62 percent of parents said they rely on texting to arrange pickups and handle emergencies.<br><br>Principal David Kim notes that bans push phone use out of sight instead of teaching self-control. "Students will have phones at work and in college," he said. "Our job is to prepare them for that." Clear rules, not bans, give students skills they will actually use.`} }
+];
+
+const OUTLINE = `Intro: The two passages disagree about ___. Passage __ makes the stronger argument because ___.
+
+Body 1: Passage __'s strongest evidence is ___. This is convincing because ___.
+
+Body 2: Passage __ also supports its claim with ___.
+
+Body 3: Passage __ is weaker because it relies on ___. For example, ___.
+
+Conclusion: Overall, Passage __ is better supported because ___.`;
+
+const CHECKS = [
+  {h:"Arguments and evidence", items:["I clearly state which passage is better supported","I use specific evidence from both passages (numbers, quotes, examples)","I explain why the evidence is strong or weak","I point out at least one flaw in the weaker argument"]},
+  {h:"Organization", items:["I have an introduction, body paragraphs and a conclusion","Each body paragraph has one main point","I use transitions like however, in addition and as a result"]},
+  {h:"Clear writing", items:["My sentences are complete, with no fragments or run-ons","I checked spelling, capital letters and commas","I used formal language, not slang"]}
+];
+
+const TIPS = [
+  {h:"Before test day", items:["Take one subject at a time. There's no need to do all four together.","Use the full practice tests here until you score well, then take the official GED Ready® practice test.","Schedule your test at GED.com. You can test at a testing center or, in many states, online from home.","Check GED.com for the ID you'll need, and have it ready."]},
+  {h:"During the test", items:["Answer every question. A wrong answer doesn't cost you extra points, so never leave one blank.","Flag hard questions and come back to them once you've done the easier ones.","Read the question before the passage so you know what you're looking for.","Cross off answers you know are wrong, then choose from what's left.","Check your pace every 10 questions or so."]},
+  {h:"Math", items:["The first few math questions don't allow a calculator. Practice basic arithmetic by hand.","Practice with a TI-30XS-style calculator so it feels familiar on test day.","Stuck? Plug the answer choices back into the problem and see which one works."]},
+  {h:"If you feel nervous", items:["Nerves are normal, and they usually mean you care. They don't mean you're unprepared.","Try slow breathing: in for 4 counts, out for 6. Do it three times.","Skip a question that rattles you, flag it and come back. One question won't make or break your score.","If a test doesn't go your way, you can retake just that subject. It's a setback, not the end."]},
+  {h:"Take care of yourself", items:["Sleep well the night before. Sleep helps lock in what you studied.","Eat something before you start.","Arrive early, or log in early if you're testing online."]}
+];
+
+</script>
+<script>
+"use strict";
+const APP_VERSION = "2.1 · November 2026";
+/* ================= question registry ================= */
+const QMAP = {};
+SUBJECTS.forEach(s => s.units.forEach(u => u.quiz.forEach((q, i) => { q.id = u.id + "." + i; q.sid = s.id; q.uid = u.id; QMAP[q.id] = q; })));
+Object.keys(TESTS).forEach(sid => TESTS[sid].qs.forEach((q, i) => { q.id = sid + ".t" + i; q.sid = sid; q.uid = q.t; QMAP[q.id] = q; }));
+const isTestQ = q => q.id.indexOf(".t") > -1;
+
+/* ================= storage (this browser only) ================= */
+const KEY = (typeof window !== "undefined" && window.STUDY_COACH_KEY) || "ged-study-coach-v1";
+const fresh = () => ({u:{}, mix:{}, last:null, stats:{}, days:{}, miss:{}, tests:{}, active:null, cards:{}, essay:{}, set:{fs:"md"}});
+let P = fresh();
+try {
+  const d = JSON.parse(localStorage.getItem(KEY) || "null");
+  if (d && typeof d === "object") { P = Object.assign(fresh(), d); P.set = Object.assign({fs:"md"}, d.set || {}); }
+} catch (e) {}
+if (P.active && !TESTS[P.active.sid]) P.active = null;
+if (P.active) P.active.run = false;
+function save(){ try { localStorage.setItem(KEY, JSON.stringify(P)); } catch (e) {} }
+
+const pad = n => String(n).padStart(2, "0");
+const dayKey = d => d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate());
+const today = () => dayKey(new Date());
+function streak(){
+  const d = new Date();
+  if (!P.days[dayKey(d)]) d.setDate(d.getDate() - 1);
+  let n = 0;
+  while (P.days[dayKey(d)]) { n++; d.setDate(d.getDate() - 1); }
+  return n;
+}
+function record(q, ok){
+  const st = P.stats[q.sid] || (P.stats[q.sid] = {seen:0, right:0});
+  st.seen++; if (ok) st.right++;
+  const k = today(); P.days[k] = (P.days[k] || 0) + 1;
+  if (ok) delete P.miss[q.id]; else P.miss[q.id] = 1;
+}
+const missedIds = () => Object.keys(P.miss).filter(id => QMAP[id]);
+function applyFS(){ document.documentElement.style.fontSize = P.set.fs === "lg" ? "118.75%" : "106.25%"; }
+
+/* ================= helpers ================= */
+const subj = id => SUBJECTS.find(s => s.id === id);
+function findUnit(uid){ for (const s of SUBJECTS){ const i = s.units.findIndex(u => u.id === uid); if (i > -1) return {s, u:s.units[i], i}; } return null; }
+function prog(s){ return {done: s.units.filter(u => P.u[u.id] && P.u[u.id].done).length, total: s.units.length}; }
+const cvar = s => `--c:var(${s.color})`;
+const glyph = s => `<span class="glyph${s.glyphSm ? " sm" : ""}">${s.glyph}</span>`;
+const pct = (a, b) => b ? Math.round(a / b * 100) : 0;
+function fmtTime(ms){ const t = Math.max(0, Math.round(ms / 1000)), h = Math.floor(t / 3600), m = Math.floor(t % 3600 / 60), s = t % 60; return h ? `${h}:${pad(m)}:${pad(s)}` : `${m}:${pad(s)}`; }
+function shuffle(a){ a = a.slice(); for (let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+const wc = t => { t = (t || "").trim(); return t ? t.split(/\s+/).length : 0; };
+const fmtDate = d => new Date(d).toLocaleDateString(undefined, {month:"short", day:"numeric"});
+const reduceMotion = () => window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+const svg = (d, w = 2.2) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
+const I = {
+  back: svg(`<path d="M15 5l-7 7 7 7"/>`, 2.4),
+  close: svg(`<path d="M6 6l12 12M18 6L6 18"/>`, 2.4),
+  chev: `<span class="chev">${svg(`<path d="M9 5l7 7-7 7"/>`, 2.4)}</span>`,
+  check: svg(`<path d="M5 12.5l4.5 4.5L19 7.5"/>`, 3),
+  arrow: svg(`<path d="M5 12h14M13 6l6 6-6 6"/>`, 2.4),
+  bulb: svg(`<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.8.8 1 1.6 1 2.5h6c0-.9.2-1.7 1-2.5A6 6 0 0 0 12 3z"/>`),
+  book: svg(`<path d="M3 5.5c3-1.5 6-1.5 9 0v14c-3-1.5-6-1.5-9 0z"/><path d="M21 5.5c-3-1.5-6-1.5-9 0v14c3-1.5 6-1.5 9 0z"/>`),
+  clip: svg(`<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1"/><path d="M8.5 13l2.5 2.5 4.5-5"/>`),
+  apps: svg(`<rect x="4" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"/>`),
+  chart: svg(`<path d="M5 20V11M12 20V4M19 20v-6"/>`, 2.6),
+  calc: svg(`<rect x="5" y="3" width="14" height="18" rx="2.5"/><path d="M8.5 7.5h7"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01M8.5 16h.01M12 16h.01M15.5 16h.01" stroke-width="2.8"/>`),
+  flag: svg(`<path d="M5 21V4h11l-2 4 2 4H5"/>`),
+  pause: svg(`<path d="M9 5v14M15 5v14"/>`, 2.6),
+  play: svg(`<path d="M7 5l12 7-12 7z"/>`),
+  cards: svg(`<rect x="3" y="7" width="13" height="13" rx="2"/><path d="M8 3.5h11a2 2 0 0 1 2 2v11"/>`),
+  pi: svg(`<path d="M4 6h16M9 6c0 6-1 10-4 13M15 6v10.5c0 1.5.8 2.5 2.5 2.5"/>`),
+  pen: svg(`<path d="M4 20l4-1L19 8l-3-3L5 16z"/><path d="M14 7l3 3"/>`),
+  shuffle: svg(`<path d="M4 7h3c4 0 6 10 10 10h3M4 17h3c1.6 0 2.8-1.6 3.8-3.6M14 9.5C15 8 16 7 17 7h3"/><path d="M18 4.5l2.5 2.5L18 9.5M18 14.5l2.5 2.5-2.5 2.5"/>`),
+  redo: svg(`<path d="M4 12a8 8 0 1 0 2.5-5.8"/><path d="M4 4v4.5h4.5"/>`),
+  cap: svg(`<path d="M2 9.5L12 5l10 4.5L12 14z"/><path d="M6.5 11.5v4.5c3 2 8 2 11 0v-4.5"/><path d="M21 10v5"/>`),
+  info: svg(`<circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.01"/>`, 2.4),
+  speaker: svg(`<path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/>`),
+  stop: svg(`<rect x="7" y="7" width="10" height="10" rx="1.5"/>`),
+  bolt: svg(`<path d="M13 3L5 13.5h6L10 21l8-10.5h-6z"/>`),
+  cal: svg(`<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/>`),
+  flame: svg(`<path d="M12 3c.8 3 4.5 4.8 4.5 9a4.5 4.5 0 0 1-9 0c0-2.2 1.1-3.6 2-4.5.3 1.6 1.2 2.5 2.4 2.5C12 7.6 10.8 5.6 12 3z"/>`)
+};
+
+/* ================= read aloud ================= */
+const canSpeak = typeof window !== "undefined" && "speechSynthesis" in window && typeof SpeechSynthesisUtterance === "function";
+let speaking = false;
+function listenLabel(){ return speaking ? `${I.stop}<span>Stop</span>` : `${I.speaker}<span>Listen</span>`; }
+const listenBtn = () => canSpeak ? `<button class="listen" data-act="listen" aria-label="${speaking ? "Stop reading" : "Read aloud"}">${listenLabel()}</button>` : "";
+function syncListen(){ const b = document.querySelector('[data-act="listen"]'); if (b){ b.innerHTML = listenLabel(); b.setAttribute("aria-label", speaking ? "Stop reading" : "Read aloud"); } }
+function stopSpeak(){ if (!canSpeak) return; try { speechSynthesis.cancel(); } catch (e) {} speaking = false; }
+function speak(text){
+  if (!canSpeak || !text) return;
+  try {
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text); u.rate = 0.95; u.lang = "en-US";
+    u.onend = u.onerror = () => { speaking = false; syncListen(); };
+    speaking = true; speechSynthesis.speak(u);
+  } catch (e) { speaking = false; }
+}
+const strip = html => { const d = document.createElement("div"); d.innerHTML = String(html).replace(/<br\s*\/?>/gi, ". ").replace(/<\/(li|p|div|h3)>/gi, ". "); return d.textContent.replace(/\s+/g, " ").replace(/(\.\s*){2,}/g, ". ").trim(); };
+function readText(v){
+  if (v.v === "lesson"){ const u = findUnit(v.id).u; return [u.title + "."].concat(u.lesson.map(x => x.h + ". " + strip(x.html)), ["Test tip. " + u.tip]).join(" "); }
+  let q = null, opts = [];
+  if (v.v === "quiz"){ q = v.qs[v.i]; opts = q.opts.map(o => o.t); }
+  else if (v.v === "test" && P.active){ q = TESTS[P.active.sid].qs[P.active.i]; opts = P.active.ord[P.active.i].map(k => q.o[k]); }
+  if (!q) return "";
+  return (q.p ? strip(q.p) + " " : "") + strip(q.q) + " " + opts.map((o, j) => "Choice " + "ABCD"[j] + ". " + strip(o) + ".").join(" ");
+}
+
+/* ================= study pace + Safari tip ================= */
+function daysUntil(d){ const [y, m, dd] = d.split("-").map(Number); const t = new Date(y, m - 1, dd), n = new Date(); n.setHours(0, 0, 0, 0); return Math.round((t - n) / 86400000); }
+function paceText(){
+  if (!P.set.date) return "";
+  const d = daysUntil(P.set.date);
+  const total = SUBJECTS.reduce((a, s) => a + s.units.length, 0), left = total - SUBJECTS.reduce((a, s) => a + prog(s).done, 0);
+  if (isNaN(d)) return "";
+  if (d < 0) return "Your test date has passed. Set a new one in Progress when you're ready.";
+  if (d === 0) return "Test day is today. You've prepared for this. Breathe, and take it one question at a time.";
+  const when = d === 1 ? "1 day to your test." : d + " days to your test.";
+  if (!left) return when + " Every lesson is done, so focus on full practice tests.";
+  if (d < 7) return `${when} ${left} lesson${left === 1 ? "" : "s"} left. Focus on your weakest subject first.`;
+  const per = Math.ceil(left / (d / 7));
+  return `${when} ${left} lesson${left === 1 ? "" : "s"} left, about ${per} a week.`;
+}
+function safariTab(){
+  try {
+    const ua = navigator.userAgent;
+    const ios = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
+    const macSafari = /Macintosh/.test(ua) && /Version\/[\d.]+.*Safari/.test(ua) && !/Chrome|Chromium|Edg|Firefox/.test(ua);
+    const standalone = navigator.standalone === true || (window.matchMedia && matchMedia("(display-mode: standalone)").matches);
+    return (ios || macSafari) && !standalone && window.self === window.top;
+  } catch (e) { return false; }
+}
+
+/* ================= navigation ================= */
+const app = document.getElementById("app");
+const calcEl = document.getElementById("calc");
+let tab = "learn";
+const ROOT = {learn:"home", practice:"practice", tools:"tools", me:"me"};
+const stacks = {learn:[{v:"home"}], practice:[{v:"practice"}], tools:[{v:"tools"}], me:[{v:"me"}]};
+const FULL = new Set(["lesson", "quiz", "test", "cards", "essay"]);
+const cur = () => stacks[tab][stacks[tab].length - 1];
+function go(v){ stacks[tab].push(v); render(true); }
+function replace(v){ stacks[tab][stacks[tab].length - 1] = v; render(true); }
+function back(){ const st = stacks[tab]; if (st.length > 1){ st.pop(); render(true); } }
+function openLesson(uid){
+  const f = findUnit(uid); if (!f) return;
+  P.last = uid; save();
+  tab = "learn"; stacks.learn = [{v:"home"}, {v:"subject", id:f.s.id}, {v:"lesson", id:uid}];
+  render(true);
+}
+
+const page = (style, inner, cls = "") => `<div class="wrap ${cls}" style="${style}">${inner}</div>`;
+function topbar(title, o = {}){
+  const left = o.brand
+    ? `<div class="brand"><i>${I.cap}</i>Study Coach</div>`
+    : `<button class="iconbtn" data-act="${o.act || "back"}" aria-label="${o.close ? "Exit" : "Back"}">${o.close ? I.close : I.back}</button><div class="tt">${title}</div>`;
+  return `<header class="top"><div class="bar">${left}${o.right || ""}</div></header>`;
+}
+const calcBtn = `<button class="iconbtn" data-act="calc" aria-label="Open calculator">${I.calc}</button>`;
+const overlay = (inner, closeAct) => `<div class="overlay"${closeAct ? ` data-act="${closeAct}" data-scrim="1"` : ""}><div class="sheet" role="dialog" aria-modal="true">${inner}</div></div>`;
+
+function tabbar(){
+  const T = [["learn", "Learn", I.book], ["practice", "Practice", I.clip], ["tools", "Tools", I.apps], ["me", "Progress", I.chart]];
+  return `<nav class="tabs" aria-label="Sections"><div class="in">${T.map(([id, l, ic]) =>
+    `<button data-act="tab" data-id="${id}" class="${tab === id ? "on" : ""}"${tab === id ? ' aria-current="page"' : ""}>${ic}<span>${l}</span></button>`).join("")}</div></nav>`;
+}
+
+/* ================= LEARN ================= */
+function vHome(){
+  const total = SUBJECTS.reduce((a, s) => a + s.units.length, 0);
+  const done = SUBJECTS.reduce((a, s) => a + prog(s).done, 0);
+  const C = 2 * Math.PI * 38, off = C * (1 - done / total);
+  const td = P.days[today()] || 0, goal = 20, sk = streak();
+  let cont = "";
+  const A = P.active;
+  if (A){
+    const s = subj(A.sid);
+    cont += `<button class="continue" data-act="resume" style="${cvar(s)}"><span class="eyebrow">Unfinished practice test</span><span class="ct">${s.name} test</span><span class="cs">${A.ans.filter(x => x !== null).length} of ${A.ans.length} answered${A.limit ? " · " + fmtTime(A.limit - A.used) + " left" : ""}</span></button>`;
+  }
+  const f = P.last && findUnit(P.last);
+  if (f) cont += `<button class="continue" data-act="lesson" data-id="${f.u.id}" style="${cvar(f.s)}"><span class="eyebrow">Pick up where you left off</span><span class="ct">${f.u.title}</span><span class="cs">${f.s.name} · Lesson ${f.i + 1} of ${f.s.units.length}</span></button>`;
+  const cards = SUBJECTS.map(s => {
+    const p = prog(s);
+    return `<button class="subj" data-act="subject" data-id="${s.id}" style="${cvar(s)}">${glyph(s)}
+      <span class="mid"><span class="sname">${s.name}</span><span class="smeta">${p.done} of ${p.total} lessons · ${s.time} test</span>
+      <span class="track"><span class="fill" style="width:${pct(p.done, p.total)}%"></span></span></span>${I.chev}</button>`;
+  }).join("");
+  const times = SUBJECTS.map(s => `<div class="time" style="${cvar(s)}"><b>${s.time}</b><span>${s.full}</span></div>`).join("");
+  return page("--c:var(--ink)", topbar("", {brand:true}) + `<main class="screen">
+    <section class="hero">
+      <div><h1>Pass the GED® test, one subject at a time.</h1>
+      <p>Short lessons, full practice tests and tools that explain every answer. Study for five minutes or an hour. Your progress saves as you go.</p></div>
+      <div class="ring" role="img" aria-label="${done} of ${total} lessons done">
+        <svg viewBox="0 0 92 92"><circle cx="46" cy="46" r="38" fill="none" stroke="var(--line)" stroke-width="9"/><circle cx="46" cy="46" r="38" fill="none" stroke="var(--ink)" stroke-width="9" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${off}"/></svg>
+        <div class="num"><div>${done}/${total}<small>lessons</small></div></div>
+      </div>
+    </section>
+    <div class="goal">
+      <div class="goalrow"><span><b>${Math.min(td, goal)} of ${goal}</b> questions today${td >= goal ? " · goal met!" : ""}</span><span class="streak">${I.flame}${sk} day streak</span></div>
+      <div class="track"><div class="fill" style="width:${Math.min(100, td / goal * 100)}%"></div></div>
+      ${P.set.date ? `<p class="pace small">${I.cal}<span>${paceText()}</span></p>` : ""}
+      <button class="btn sm" data-act="quick5" style="--c:var(--ink)">${I.bolt} Quick 5 · got five minutes?</button>
+    </div>
+    ${safariTab() && !P.set.safariTip ? `<section class="note warnnote"><b>Keep your progress safe</b><span class="small">On iPhones and Macs, Safari can erase saved data for websites you haven't opened in 7 days. Add Study Coach to your Home Screen to keep it, or make a backup code in the Progress tab.</span><button class="btn sm ghost" data-act="safaritip">Got it</button></section>` : ""}
+    ${P.seen ? "" : `<section class="welcome"><h2>Welcome! Here's how to start</h2><ol><li>Pick a subject below and read a short lesson.</li><li>Answer the practice questions. Every answer is explained.</li><li>When you feel ready, take a full practice test in the Practice tab.</li></ol><button class="btn sm" data-act="welcomed" style="--c:var(--math)">Got it</button></section>`}
+    ${cont}
+    <div class="label">Subjects</div>
+    <div class="list">${cards}</div>
+    <details class="info"><summary>How the GED works ${I.chev}</summary>
+      <div class="facts">
+        <p>The GED is <b>four separate tests</b>. You can take them one at a time, in any order. In most states, a subject you pass stays passed while you work on the rest.</p>
+        <div><p class="small" style="margin-bottom:8px">Each test is scored from 100 to 200. You need <b>145 on each one</b>.</p>
+          <div class="scale"><div class="s1">100–144<small>Below</small></div><div class="s2">145–164<small>Pass</small></div><div class="s3">165–200<small>College Ready</small></div></div></div>
+        <div class="times">${times}</div>
+        <p class="small muted">When you're scoring well here, take the official GED Ready® practice test and schedule your exam at <a href="https://ged.com" target="_blank" rel="noopener">GED.com</a>.</p>
+      </div>
+    </details>
+    <div class="note"><b>Make it an app</b><span class="small muted"><b>iPhone:</b> open this page in Safari, tap Share, then “Add to Home Screen.”<br><b>Android:</b> open it in Chrome, tap the ⋮ menu, then “Add to Home screen.”</span></div>
+    <div class="foot"><span class="small muted">An independent study tool. Not affiliated with ACE or GED Testing Service.</span><button class="linkbtn" data-act="open" data-id="about">About, privacy and terms</button></div>
+  </main>`);
+}
+
+function vSubject(v){
+  const s = subj(v.id), p = prog(s), m = P.mix[s.id], T = TESTS[s.id], h = P.tests[s.id] || [];
+  const best = h.length ? Math.max(...h.map(a => pct(a.score, a.n))) : null;
+  const known = Object.keys(P.cards[s.id] || {}).length;
+  const units = s.units.map((u, i) => {
+    const r = P.u[u.id];
+    return `<button class="unit" data-act="lesson" data-id="${u.id}">
+      <span class="n${r && r.done ? " done" : ""}">${r && r.done ? I.check : i + 1}</span>
+      <span class="mid"><span class="utitle">${u.title}</span><span class="usum">${u.sum}</span></span>
+      ${r && r.done ? `<span class="chip">${r.best}/${r.of}</span>` : I.chev}</button>`;
+  }).join("");
+  return page(cvar(s), topbar(s.name) + `<main class="screen">
+    <section class="shead">${glyph(s)}<div class="mid"><span class="eyebrow">${p.done} of ${p.total} lessons done</span><h1 class="h1s">${s.full}</h1></div></section>
+    <div class="pills"><span class="pill">${s.time} test</span><span class="pill">145 to pass</span></div>
+    <p class="muted small">${s.note}</p>
+    <div class="label">Lessons</div>
+    <div class="list">${units}</div>
+    <div class="label">Practice</div>
+    <div class="list">
+      <button class="mix" data-act="testintro" data-id="${s.id}"><span class="mid"><span class="utitle">Full practice test</span><span class="usum">${T.qs.length} questions · ${T.mins} minutes · new questions, not from the lessons</span></span>${best !== null ? `<span class="chip">Best ${best}%</span>` : I.chev}</button>
+      <button class="unit" data-act="mix" data-id="${s.id}"><span class="ico">${I.shuffle}</span><span class="mid"><span class="utitle">Mixed practice</span><span class="usum">10 random questions from every lesson</span></span>${m ? `<span class="chip">${m.best}/${m.of}</span>` : I.chev}</button>
+      <button class="unit" data-act="deck" data-id="${s.id}"><span class="ico">${I.cards}</span><span class="mid"><span class="utitle">Flashcards</span><span class="usum">${known} of ${CARDS[s.id].length} terms known</span></span>${I.chev}</button>
+    </div>
+  </main>`);
+}
+
+function vLesson(v){
+  const f = findUnit(v.id), s = f.s, u = f.u;
+  const secs = u.lesson.map(x => `<section class="sec"><h3>${x.h}</h3>${x.html}</section>`).join("");
+  return page(cvar(s), topbar(s.name, {right:`<div class="topright">Lesson ${f.i + 1} of ${s.units.length}</div>`}) + `<main class="screen">
+    <div><span class="eyebrow">${s.full}</span><h1 style="margin-top:4px">${u.title}</h1></div>
+    ${listenBtn()}
+    ${secs}
+    <aside class="tip"><span class="eyebrow">${I.bulb} Test tip</span><p>${u.tip}</p></aside>
+  </main>
+  <div class="dock"><div class="in"><button class="btn" data-act="start" data-id="${u.id}">Practice: ${u.quiz.length} questions ${I.arrow}</button></div></div>`, "docked");
+}
+
+/* ================= QUIZ (lesson, mixed, missed, everything) ================= */
+function prep(q){ return Object.assign({}, q, {opts: shuffle(q.o.map((t, k) => ({t, ok: k === 0})))}); }
+function makeQuiz(mode, sid, uid){
+  let pool, title;
+  if (mode === "lesson"){ const f = findUnit(uid); pool = f.u.quiz; title = f.u.title; }
+  else if (mode === "mix"){ pool = shuffle(subj(sid).units.flatMap(u => u.quiz)).slice(0, 10); title = subj(sid).name + " · Mixed practice"; }
+  else if (mode === "quick"){
+    const miss = shuffle(missedIds().map(id => QMAP[id])).slice(0, 2), ids = new Set(miss.map(q => q.id));
+    pool = shuffle(miss.concat(shuffle(Object.values(QMAP).filter(q => !isTestQ(q) && !ids.has(q.id))).slice(0, 5 - miss.length)));
+    title = "Quick 5";
+  }
+  else if (mode === "all"){ pool = shuffle(Object.values(QMAP).filter(q => !isTestQ(q))).slice(0, 15); title = "Everything mix"; }
+  else { pool = shuffle(missedIds().map(id => QMAP[id])).slice(0, 15); title = "Missed questions"; }
+  return {v:"quiz", mode, sid, uid, title, qs: pool.map(prep), i:0, picked:null, score:0, wrongs:[]};
+}
+
+function vQuiz(v){
+  const q = v.qs[v.i], s = subj(q.sid), n = v.qs.length, answered = v.picked !== null;
+  const opts = q.opts.map((o, k) => {
+    let cls = "";
+    if (answered) cls = o.ok ? "right" : (k === v.picked ? "wrong" : "dim");
+    return `<button class="opt ${cls}" data-act="pick" data-i="${k}"${answered ? " disabled" : ""}><span class="L">${"ABCD"[k]}</span><span>${o.t}</span></button>`;
+  }).join("");
+  let fb = "";
+  if (answered){
+    const ok = q.opts[v.picked].ok, right = q.opts.find(o => o.ok).t;
+    fb = `<div class="fb ${ok ? "good" : "bad"}" aria-live="polite"><h4>${ok ? "Correct!" : "Not quite"}</h4>${ok ? "" : `<p><b>Answer:</b> ${right}</p>`}<p>${q.why}</p></div>
+      <button class="btn" id="fbnext" data-act="next">${v.i < n - 1 ? `Next question ${I.arrow}` : "See my results"}</button>`;
+  }
+  const tag = (v.mode === "all" || v.mode === "miss") ? `<span class="eyebrow">${s.name}</span>` : "";
+  return page(cvar(s), topbar(v.title, {close:true, right:`<div class="topright">${v.i + 1} of ${n}</div>${q.sid !== "rla" ? calcBtn : ""}`}) + `<main class="screen">
+    <div class="qtrack"><div style="width:${(v.i + (answered ? 1 : 0)) / n * 100}%"></div></div>
+    <div class="qtools">${tag || "<span></span>"}${listenBtn()}</div>
+    ${q.p ? `<div class="passage"><span class="eyebrow">Read this</span>${q.p}</div>` : ""}
+    <p class="qtext">${q.q}</p>
+    <div class="opts">${opts}</div>
+    <p class="kbd small muted">Keyboard: press A–D to answer${answered ? ", then Enter for the next question" : ""}.</p>
+    ${fb}
+  </main>`);
+}
+
+function vResults(v){
+  const s = v.sid ? subj(v.sid) : null, p = v.score / v.n;
+  const msg = p >= 0.8 ? ["Great work", "You've got this down. Keep the momentum going."]
+    : p >= 0.6 ? ["Solid progress", "Look over the ones you missed below, then try again."]
+    : ["Keep going", "Reread the lesson, then give it another shot. Every retry helps it stick."];
+  let next = "";
+  if (v.mode === "lesson"){ const f = findUnit(v.uid), nu = f.s.units[f.i + 1]; if (nu) next = `<button class="btn" data-act="nextlesson" data-id="${nu.id}">Next lesson: ${nu.title}</button>`; }
+  const canRetry = v.mode !== "miss" || missedIds().length > 0;
+  const backBtn = s ? `<button class="btn ghost" data-act="tosubject" data-id="${s.id}">Back to ${s.name}</button>` : `<button class="btn ghost" data-act="toroot">Done</button>`;
+  const misses = v.wrongs.length
+    ? `<div class="label">Review what you missed</div><div class="list">${v.wrongs.map(w => `<div class="miss"><p><b>${w.q}</b></p><p class="ans">${I.check}<span>${w.a}</span></p><p class="small muted">${w.why}</p></div>`).join("")}</div>`
+    : (v.mode === "miss" ? `<p class="center muted">You cleared every question you'd missed. Nice work.</p>` : "");
+  return page(s ? cvar(s) : "--c:var(--ink)", topbar(s ? s.name : "Practice") + `<main class="screen">
+    <section class="score"><span class="eyebrow">${v.title}</span>
+      <div class="big">${v.score}<span>/${v.n}</span></div><h2>${msg[0]}</h2><p class="muted">${msg[1]}</p></section>
+    <div class="stack">${next}
+      ${canRetry ? `<button class="btn${next ? " ghost" : ""}" data-act="retry">${I.redo} ${v.mode === "lesson" ? "Try again" : "New set of questions"}</button>` : ""}
+      ${backBtn}</div>
+    ${misses}
+  </main>`);
+}
+
+/* ================= PRACTICE ================= */
+function vPractice(){
+  const A = P.active, missN = missedIds().length;
+  const resume = A ? `<button class="continue" data-act="resume" style="${cvar(subj(A.sid))}"><span class="eyebrow">Unfinished practice test</span><span class="ct">${subj(A.sid).name} test</span><span class="cs">${A.ans.filter(x => x !== null).length} of ${A.ans.length} answered${A.limit ? " · " + fmtTime(A.limit - A.used) + " left" : " · untimed"}</span></button>` : "";
+  const tests = SUBJECTS.map(s => {
+    const T = TESTS[s.id], h = P.tests[s.id] || [];
+    const best = h.length ? Math.max(...h.map(a => pct(a.score, a.n))) : null;
+    return `<button class="subj" data-act="testintro" data-id="${s.id}" style="${cvar(s)}">${glyph(s)}
+      <span class="mid"><span class="sname">${s.name} test</span><span class="smeta">${T.qs.length} questions · ${T.mins} min${h.length ? ` · taken ${h.length}×` : ""}</span></span>
+      ${best !== null ? `<span class="chip">Best ${best}%</span>` : I.chev}</button>`;
+  }).join("");
+  const quick = SUBJECTS.map(s => `<button class="qk" data-act="mix" data-id="${s.id}" style="${cvar(s)}">${glyph(s)}<span class="mid"><b>${s.name}</b><small>10 questions</small></span></button>`).join("");
+  return page("--c:var(--ink)", topbar("", {brand:true}) + `<main class="screen">
+    <div><h1>Practice</h1><p class="muted" style="margin-top:6px">Full tests feel like test day. Quick sets give you instant feedback.</p></div>
+    ${resume}
+    <div class="label">Full practice tests</div>
+    <div class="list">${tests}</div>
+    <div class="label">Quick practice</div>
+    <div class="quick">${quick}</div>
+    <button class="unit" data-act="allmix" style="--c:var(--ink)"><span class="ico">${I.shuffle}</span><span class="mid"><span class="utitle">Everything mix</span><span class="usum">15 questions from all four subjects</span></span>${I.chev}</button>
+    ${missN
+      ? `<button class="mix" data-act="missed" style="--c:var(--bad)"><span class="mid"><span class="utitle">Review missed questions</span><span class="usum">Anything you've gotten wrong lands here until you get it right.</span></span><span class="chip">${missN}</span></button>`
+      : `<div class="note"><b>Missed questions</b><span class="small muted">Questions you get wrong will collect here so you can practice them again.</span></div>`}
+  </main>`);
+}
+
+function vTestIntro(v){
+  const s = subj(v.id), T = TESTS[v.id], A = P.active, timed = v.timed !== false, h = P.tests[s.id] || [];
+  let body;
+  if (A && A.sid === v.id){
+    body = `<div class="sec"><h3>This test is in progress</h3><p>${A.ans.filter(x => x !== null).length} of ${A.ans.length} answered${A.limit ? ` · ${fmtTime(A.limit - A.used)} left` : " · untimed"}.</p></div>
+      <div class="stack"><button class="btn" data-act="resume">Resume test</button><button class="btn ghost" data-act="starttest" data-id="${s.id}">Start over</button></div>`;
+  } else {
+    body = `<div class="label">Timer</div>
+      <div class="seg" role="group" aria-label="Timer"><button class="${timed ? "on" : ""}" data-act="settimed" data-id="1" aria-pressed="${timed}">Timed · ${T.mins} min</button><button class="${timed ? "" : "on"}" data-act="settimed" data-id="0" aria-pressed="${!timed}">Untimed</button></div>
+      ${A ? `<p class="warn">You have an unfinished ${subj(A.sid).name} test. Starting this one will replace it.</p>` : ""}
+      <button class="btn" data-act="starttest" data-id="${s.id}">Start test ${I.arrow}</button>`;
+  }
+  const hist = h.length ? `<div class="label">Past attempts</div><div class="list">${h.map((a, k) => ({a, k})).reverse().map(({a, k}) => `<button class="hrow" data-act="tres" data-id="${s.id}" data-n="${k}"><span>${fmtDate(a.d)}${a.timed ? "" : " · untimed"}</span><span class="chip">${pct(a.score, a.n)}%</span></button>`).join("")}</div>` : "";
+  return page(cvar(s), topbar(s.name + " test") + `<main class="screen">
+    <section class="shead">${glyph(s)}<div class="mid"><span class="eyebrow">Full practice test</span><h1 class="h1s">${s.full}</h1></div></section>
+    <div class="pills"><span class="pill">${T.qs.length} questions</span><span class="pill">${T.mins} minutes</span><span class="pill">Every lesson covered</span></div>
+    <div class="sec"><h3>How it works</h3><ul>
+      <li>Like the real test, you'll see answers and explanations when you finish.</li>
+      <li>Flag any question to come back to it, and jump around with the question list.</li>
+      <li>Pause any time. Your answers and time are saved.</li>
+      <li>The timer runs at roughly the pace of the real ${s.name} test.</li></ul></div>
+    ${body}
+    ${hist}
+  </main>`);
+}
+
+function startTest(sid, timed){
+  const T = TESTS[sid];
+  P.active = {sid, ord: T.qs.map(q => shuffle(q.o.map((_, k) => k))), ans: T.qs.map(() => null), flag: T.qs.map(() => false), i:0, used:0, limit: timed ? T.mins * 60000 : null, run:true, lt: Date.now()};
+  save();
+  tab = "practice"; stacks.practice = [{v:"practice"}, {v:"test"}];
+  render(true);
+}
+function resumeTest(){
+  const A = P.active; if (!A) return;
+  A.run = true; A.lt = Date.now();
+  tab = "practice"; stacks.practice = [{v:"practice"}, {v:"test"}];
+  render(true);
+}
+function commit(){ const A = P.active; if (A && A.run){ const now = Date.now(); A.used += now - A.lt; A.lt = now; } }
+
+function vTest(v){
+  const A = P.active;
+  if (!A) return page("--c:var(--ink)", topbar("Practice test") + `<main class="screen"><p>There's no test in progress.</p><button class="btn" data-act="toroot">Back to Practice</button></main>`);
+  const s = subj(A.sid), T = TESTS[A.sid], n = T.qs.length, q = T.qs[A.i], ord = A.ord[A.i], sel = A.ans[A.i];
+  const answered = A.ans.filter(x => x !== null).length, unanswered = n - answered, flagged = A.flag.filter(Boolean).length;
+  const opts = ord.map((k, j) => `<button class="opt ${sel === j ? "sel" : ""}" data-act="tpick" data-i="${j}" aria-pressed="${sel === j}"><span class="L">${"ABCD"[j]}</span><span>${q.o[k]}</span></button>`).join("");
+  const left = A.limit ? A.limit - A.used : 0;
+  const timer = `<button class="timer${A.limit && left < 300000 ? " low" : ""}" data-act="tpause" aria-label="Pause test">${I.pause}<span id="timer">${A.limit ? fmtTime(left) : fmtTime(A.used)}</span></button>`;
+  let sheet = "";
+  if (v.sheet === "nav"){
+    const cells = A.ans.map((x, i) => `<button class="cell${x !== null ? " ans" : ""}${A.flag[i] ? " fl" : ""}${i === A.i ? " cur" : ""}" data-act="tjump" data-i="${i}" aria-label="Question ${i + 1}${x !== null ? ", answered" : ", not answered"}${A.flag[i] ? ", flagged" : ""}">${i + 1}</button>`).join("");
+    sheet = overlay(`<div class="shd"><h2>Questions</h2><button class="iconbtn" data-act="tsheetclose" aria-label="Close">${I.close}</button></div>
+      <div class="legend"><span><i class="lg-a"></i>Answered</span><span><i class="lg-f"></i>Flagged</span><span><i class="lg-n"></i>Not answered</span></div>
+      <div class="navgrid">${cells}</div>
+      <p class="small muted">${answered} answered · ${unanswered} left · ${flagged} flagged</p>
+      <button class="btn" data-act="tsubmitask">Finish test</button>`, "tsheetclose");
+  } else if (v.sheet === "exit"){
+    sheet = overlay(`<h2>Leave the test?</h2><p class="muted">Your answers and remaining time are saved. Resume any time from the Practice tab.</p>
+      <div class="stack"><button class="btn" data-act="tsheetclose">Keep going</button><button class="btn ghost" data-act="texitgo">Save and exit</button></div>`);
+  } else if (v.sheet === "submit"){
+    sheet = overlay(`<h2>Finish the test?</h2>
+      ${unanswered ? `<p class="warn">You have ${unanswered} unanswered question${unanswered === 1 ? "" : "s"}. Unanswered questions count as wrong, so it's worth taking a guess.</p>` : `<p class="muted">You've answered every question.</p>`}
+      ${flagged ? `<p class="muted small">${flagged} question${flagged === 1 ? " is" : "s are"} flagged for review.</p>` : ""}
+      <div class="stack"><button class="btn" data-act="tsubmit">Finish and see results</button><button class="btn ghost" data-act="tsheetclose">Go back</button></div>`, "tsheetclose");
+  } else if (!A.run){
+    sheet = overlay(`<h2>Test paused</h2><p class="muted">${A.limit ? fmtTime(A.limit - A.used) + " left" : "Untimed"} · ${answered} of ${n} answered</p>
+      <div class="stack"><button class="btn" data-act="tresume">${I.play} Resume</button><button class="btn ghost" data-act="texitgo">Save and exit</button></div>`);
+  }
+  return page(cvar(s), topbar(s.name + " test", {close:true, act:"texit", right: timer + (A.sid !== "rla" ? calcBtn : "")}) + `<main class="screen">
+    <div class="qhead"><span class="qnum">Question ${A.i + 1} <span class="muted">of ${n}</span></span>
+      <span class="qhead-r">${listenBtn()}<button class="flag${A.flag[A.i] ? " on" : ""}" data-act="tflag" aria-pressed="${A.flag[A.i]}">${I.flag}${A.flag[A.i] ? "Flagged" : "Flag"}</button></span></div>
+    <div class="qtrack"><div style="width:${answered / n * 100}%"></div></div>
+    ${q.p ? `<div class="passage"><span class="eyebrow">Read this</span>${q.p}</div>` : ""}
+    <p class="qtext">${q.q}</p>
+    <div class="opts">${opts}</div>
+    <p class="kbd small muted">Keyboard: A–D to answer · ← → to move · F to flag</p>
+  </main>
+  <div class="dock"><div class="in tnav">
+    <button class="btn ghost" data-act="tprev"${A.i === 0 ? " disabled" : ""} aria-label="Previous question">${I.back}</button>
+    <button class="btn ghost" data-act="tnav" aria-label="All questions">${I.apps}<span>${answered}/${n}</span></button>
+    ${A.i < n - 1 ? `<button class="btn" data-act="tnext">Next ${I.arrow}</button>` : `<button class="btn" data-act="tsubmitask">Finish</button>`}
+  </div></div>${sheet}`, "docked");
+}
+
+function submitTest(auto){
+  const A = P.active; if (!A) return;
+  commit(); A.run = false;
+  const T = TESTS[A.sid];
+  let score = 0;
+  T.qs.forEach((q, i) => { const j = A.ans[i]; const ok = j !== null && A.ord[i][j] === 0; if (ok) score++; record(q, ok); });
+  const used = A.limit ? Math.min(A.used, A.limit) : A.used;
+  const att = {d: Date.now(), score, n: T.qs.length, secs: Math.round(used / 1000), ans: A.ans.slice(), ord: A.ord, timed: !!A.limit, auto: !!auto};
+  const h = P.tests[A.sid] || (P.tests[A.sid] = []);
+  h.push(att); if (h.length > 10) h.shift();
+  const sid = A.sid;
+  P.active = null; save();
+  tab = "practice"; stacks.practice = [{v:"practice"}, {v:"tres", sid, k: h.length - 1, filter:"miss"}];
+  render(true);
+}
+
+function vTestResult(v){
+  const s = subj(v.sid), T = TESTS[v.sid], att = (P.tests[v.sid] || [])[v.k];
+  if (!att) return page(cvar(s), topbar("Results") + `<main class="screen"><p>This result is no longer saved.</p></main>`);
+  const p = pct(att.score, att.n);
+  const msg = p >= 80 ? ["You're in great shape", "Keep it up. When you're scoring like this consistently, try the official GED Ready® practice test to confirm."]
+    : p >= 65 ? ["Getting close", "Focus on the topics with the lowest scores below, then retake the test."]
+    : ["Keep building", "Work through the lessons for your weakest topics, then retake the test. Scores climb fast with practice."];
+  const topics = {};
+  T.qs.forEach((q, i) => { const r = topics[q.t] || (topics[q.t] = {n:0, r:0}); r.n++; const j = att.ans[i]; if (j !== null && att.ord[i][j] === 0) r.r++; });
+  const trows = Object.keys(topics).map(uid => {
+    const f = findUnit(uid), r = topics[uid], tp = pct(r.r, r.n);
+    return `<div class="trow"><div class="trow-h"><span class="utitle">${f.u.title}</span><span class="tnum">${r.r}/${r.n}</span></div>
+      <div class="track"><div class="fill${tp < 60 ? " weak" : ""}" style="width:${tp}%"></div></div>
+      ${tp < 70 ? `<button class="linkbtn sm" data-act="lesson" data-id="${uid}">Review this lesson</button>` : ""}</div>`;
+  }).join("");
+  const all = T.qs.map((q, i) => { const j = att.ans[i]; return {q, i, j, ok: j !== null && att.ord[i][j] === 0}; });
+  const items = all.filter(x => v.filter === "all" || !x.ok);
+  const list = items.length ? items.map(x => `<div class="rev ${x.ok ? "ok" : "no"}">
+      <div class="rev-h"><span class="rnum">${x.i + 1}</span><span class="rstat">${x.ok ? "Correct" : x.j === null ? "Not answered" : "Missed"}</span></div>
+      ${x.q.p ? `<details class="pd"><summary>Show passage</summary><div>${x.q.p}</div></details>` : ""}
+      <p><b>${x.q.q}</b></p>
+      ${!x.ok && x.j !== null ? `<p class="yours">Your answer: ${x.q.o[att.ord[x.i][x.j]]}</p>` : ""}
+      <p class="ans">${I.check}<span>${x.q.o[0]}</span></p><p class="small muted">${x.q.why}</p></div>`).join("")
+    : `<p class="center muted">No missed questions. Perfect score!</p>`;
+  const missCount = all.filter(x => !x.ok).length;
+  return page(cvar(s), topbar(s.name + " test results") + `<main class="screen">
+    <section class="score"><span class="eyebrow">${fmtDate(att.d)} · ${att.timed ? "Timed" : "Untimed"}${att.auto ? " · time ran out" : ""}</span>
+      <div class="big">${p}<span>%</span></div>
+      <p class="muted">${att.score} of ${att.n} correct · ${fmtTime(att.secs * 1000)} used</p>
+      <h2>${msg[0]}</h2><p class="muted">${msg[1]}</p></section>
+    <p class="small muted center">This is a practice score for studying, not a GED® score. The official GED Ready® practice test is the best predictor of your real result.</p>
+    <div class="stack"><button class="btn" data-act="testintro" data-id="${s.id}">${I.redo} Retake test</button><button class="btn ghost" data-act="back">Done</button></div>
+    <div class="label">Score by topic</div>
+    <div class="sec">${trows}</div>
+    <div class="label">Answer review</div>
+    <div class="chips"><button class="chipbtn${v.filter !== "all" ? " on" : ""}" data-act="rfilter" data-id="miss">Missed (${missCount})</button><button class="chipbtn${v.filter === "all" ? " on" : ""}" data-act="rfilter" data-id="all">All ${att.n}</button></div>
+    <div class="list">${list}</div>
+  </main>`);
+}
+
+/* ================= TOOLS ================= */
+function vTools(){
+  const rows = [["decks", "Flashcards", "Flip through key terms for every subject", I.cards, "--sci"],
+    ["formulas", "Formula sheet", "Math and science formulas in one place", I.pi, "--math"],
+    ["essays", "Essay practice", "Timed Extended Response practice with a checklist", I.pen, "--rla"],
+    ["calc", "Calculator", "A scientific calculator for practice problems", I.calc, "--math"],
+    ["tips", "Test-day tips", "Pacing, guessing and what to do on test day", I.bulb, "--ss"],
+    ["about", "About this app", "Privacy, terms and how your data is saved", I.info, "--ink"]];
+  return page("--c:var(--ink)", topbar("", {brand:true}) + `<main class="screen">
+    <div><h1>Tools</h1><p class="muted" style="margin-top:6px">Extra help for studying and test day.</p></div>
+    <div class="list">${rows.map(([id, t, d, ic, c]) => `<button class="unit" data-act="${id === "calc" ? "calc" : "open"}" data-id="${id}" style="--c:var(${c})"><span class="ico">${ic}</span><span class="mid"><span class="utitle">${t}</span><span class="usum">${d}</span></span>${I.chev}</button>`).join("")}</div>
+  </main>`);
+}
+
+function vDecks(){
+  return page("--c:var(--ink)", topbar("Flashcards") + `<main class="screen">
+    <div><h1>Flashcards</h1><p class="muted" style="margin-top:6px">Tap a card to flip it. Mark what you know, and the rest comes back next time.</p></div>
+    <div class="list">${SUBJECTS.map(s => { const k = Object.keys(P.cards[s.id] || {}).length, n = CARDS[s.id].length;
+      return `<button class="subj" data-act="deck" data-id="${s.id}" style="${cvar(s)}">${glyph(s)}<span class="mid"><span class="sname">${s.name}</span><span class="smeta">${k} of ${n} known</span><span class="track"><span class="fill" style="width:${pct(k, n)}%"></span></span></span>${I.chev}</button>`; }).join("")}</div>
+  </main>`);
+}
+function startDeck(sid){
+  const known = P.cards[sid] || {};
+  let q = CARDS[sid].map((_, i) => i).filter(i => !known[i]);
+  if (!q.length) q = CARDS[sid].map((_, i) => i);
+  go({v:"cards", sid, queue: shuffle(q), i:0, flip:false, got:0});
+}
+function vCards(v){
+  const s = subj(v.sid), deck = CARDS[v.sid], kn = Object.keys(P.cards[v.sid] || {}).length;
+  if (v.i >= v.queue.length){
+    return page(cvar(s), topbar(s.name + " flashcards") + `<main class="screen">
+      <section class="score"><span class="eyebrow">Round complete</span><div class="big">${v.got}<span>/${v.queue.length}</span></div><h2>${kn === deck.length ? "You know every card!" : "Nice round"}</h2>
+      <p class="muted">${kn} of ${deck.length} terms known in this deck.</p></section>
+      <div class="stack"><button class="btn" data-act="deckagain" data-id="${v.sid}">${I.redo} Study again</button><button class="btn ghost" data-act="back">Done</button></div>
+    </main>`);
+  }
+  const c = deck[v.queue[v.i]];
+  return page(cvar(s), topbar(s.name + " flashcards", {right:`<div class="topright">${v.i + 1} of ${v.queue.length}</div>`}) + `<main class="screen">
+    <div class="qtrack"><div style="width:${v.i / v.queue.length * 100}%"></div></div>
+    <button class="flash${v.flip ? " back" : ""}" data-act="cflip" aria-label="${v.flip ? "Show the term" : "Show the definition"}">
+      <span class="eyebrow">${v.flip ? c[0] : "Term"}</span>
+      <span class="${v.flip ? "fdef" : "fterm"}">${v.flip ? c[1] : c[0]}</span>
+      <span class="fhint">${v.flip ? "Tap to flip back" : "Tap to see the definition"}</span>
+    </button>
+    ${v.flip ? `<div class="two"><button class="btn ghost" data-act="cagain">Still learning</button><button class="btn" data-act="cgot">${I.check} Got it</button></div>` : `<button class="btn ghost" data-act="cflip">Show definition</button>`}
+    <p class="small muted center">${kn} of ${deck.length} known in this deck</p>
+  </main>`);
+}
+
+function vFormulas(){
+  return page("--c:var(--math)", topbar("Formula sheet") + `<main class="screen">
+    <div><h1>Formula sheet</h1><p class="muted" style="margin-top:6px">On test day you get an official formula sheet, but it doesn't list everything. Know the basics, like perimeter and rectangle area, by heart. You can preview the official sheet at <a href="https://ged.com" target="_blank" rel="noopener">GED.com</a>.</p></div>
+    ${FORMULAS.map(g => `<section class="sec"><h3>${g.h}</h3><div>${g.rows.map(r => `<div class="frow"><span>${r[0]}</span><b>${r[1]}</b></div>`).join("")}</div></section>`).join("")}
+    <button class="btn ghost" data-act="calc">${I.calc} Open calculator</button>
+  </main>`);
+}
+
+function essayState(id){ return P.essay[id] || (P.essay[id] = {text:"", used:0, checks:{}}); }
+let essayRun = null;
+const ELIMIT = 45 * 60000;
+function pauseEssay(){ if (essayRun){ const st = essayState(essayRun.id); st.used += Date.now() - essayRun.lt; essayRun = null; save(); } }
+function vEssays(){
+  return page("--c:var(--rla)", topbar("Essay practice") + `<main class="screen">
+    <div><h1>Essay practice</h1><p class="muted" style="margin-top:6px">Practice the Extended Response: read two passages, decide which argument is better supported and explain why in 45 minutes.</p></div>
+    <div class="list">${ESSAYS.map(E => { const st = P.essay[E.id], w = st ? wc(st.text) : 0;
+      return `<button class="unit" data-act="essay" data-id="${E.id}"><span class="ico">${I.pen}</span><span class="mid"><span class="utitle">${E.title}</span><span class="usum">${E.issue}</span></span>${w ? `<span class="chip">${w} words</span>` : I.chev}</button>`; }).join("")}</div>
+    <div class="tip"><span class="eyebrow">${I.bulb} Before you start</span><p>Review the "Writing the Essay" lesson in Language Arts. It covers the structure, the scoring and a time plan.</p></div>
+  </main>`);
+}
+function vEssay(v){
+  const E = ESSAYS.find(e => e.id === v.id), st = essayState(v.id), pane = v.pane || "read";
+  const running = essayRun && essayRun.id === v.id;
+  const left = ELIMIT - st.used - (running ? Date.now() - essayRun.lt : 0);
+  const timer = `<button class="timer${left <= 0 ? " low" : ""}" data-act="etimer" aria-label="${left <= 0 ? "Reset timer" : running ? "Pause timer" : "Start timer"}">${left <= 0 ? I.redo : running ? I.pause : I.play}<span id="etimer">${left <= 0 ? "Time's up" : fmtTime(left)}</span></button>`;
+  const seg = `<div class="seg" role="group" aria-label="Essay steps">${[["read", "1. Read"], ["write", "2. Write"], ["check", "3. Check"]].map(([id, l]) => `<button class="${pane === id ? "on" : ""}" data-act="epane" data-id="${id}" aria-pressed="${pane === id}">${l}</button>`).join("")}</div>`;
+  let body;
+  if (pane === "read"){
+    body = `<div class="sec"><span class="eyebrow">Your task</span><p><b>${E.issue}</b></p><p>Read both passages. Then write an essay that analyzes both positions and explains which one is <b>better supported</b>. Use specific evidence from both passages. You have 45 minutes.</p><p class="small muted">Practice passages written for this app. The people, places and studies in them are made up.</p></div>
+      <article class="passage"><span class="eyebrow">Passage A · ${E.a.side}</span><h3 class="ph">${E.a.h}</h3><p>${E.a.text}</p></article>
+      <article class="passage"><span class="eyebrow">Passage B · ${E.b.side}</span><h3 class="ph">${E.b.h}</h3><p>${E.b.text}</p></article>
+      <button class="btn" data-act="epane" data-id="write">Start writing ${I.arrow}</button>`;
+  } else if (pane === "write"){
+    body = `<div class="ebar"><span id="wc" class="small muted">${wc(st.text)} words</span><span class="ebtns"><button class="btn sm ghost" data-act="eoutline">Add outline</button><button class="btn sm ghost" data-act="eclear">Clear</button></span></div>
+      ${v.ask ? `<div class="warn confirm"><span>Erase your whole draft?</span><button class="btn sm" data-act="eclearyes" style="--c:var(--bad)">Erase</button><button class="btn sm ghost" data-act="eclearno">Cancel</button></div>` : ""}
+      <textarea id="essay-text" class="essay" placeholder="Start with your thesis: which passage is better supported, and why?" aria-label="Your essay"></textarea>
+      <p class="small muted">Your draft saves automatically in this browser. Tap “1. Read” any time to look back at the passages.</p>`;
+  } else {
+    const total = CHECKS.reduce((a, g) => a + g.items.length, 0);
+    body = `<p class="muted">Reread your essay and check off each item. These match the three things graders look for.</p>
+      ${CHECKS.map((g, gi) => `<section class="sec"><h3>${g.h}</h3>${g.items.map((it, ii) => { const k = gi + "-" + ii;
+        return `<label class="ck"><input type="checkbox" id="ck-${v.id}-${k}" data-check="${k}"${st.checks[k] ? " checked" : ""}><span>${it}</span></label>`; }).join("")}</section>`).join("")}
+      <p class="center small muted" id="ckcount">${Object.keys(st.checks).length} of ${total} checked</p>`;
+  }
+  return page("--c:var(--rla)", topbar(E.title, {right: timer}) + `<main class="screen">${seg}${body}</main>`);
+}
+
+function vTips(){
+  return page("--c:var(--ss)", topbar("Test-day tips") + `<main class="screen">
+    <div><h1>Test-day tips</h1><p class="muted" style="margin-top:6px">Small habits that add points.</p></div>
+    ${TIPS.map(g => `<section class="sec"><h3>${g.h}</h3><ul>${g.items.map(x => `<li>${x}</li>`).join("")}</ul></section>`).join("")}
+  </main>`);
+}
+
+/* ================= PROGRESS ================= */
+function vMe(v){
+  let seen = 0, right = 0;
+  Object.values(P.stats).forEach(s => { seen += s.seen; right += s.right; });
+  const done = SUBJECTS.reduce((a, s) => a + prog(s).done, 0), total = SUBJECTS.reduce((a, s) => a + s.units.length, 0);
+  const rows = SUBJECTS.map(s => { const st = P.stats[s.id], a = st ? pct(st.right, st.seen) : null;
+    return `<div class="trow" style="${cvar(s)}"><div class="trow-h"><span class="utitle">${s.name}</span><span class="tnum">${a === null ? "Not started" : a + "% · " + st.seen + " answered"}</span></div><div class="track"><div class="fill" style="width:${a || 0}%"></div></div></div>`; }).join("");
+  const hist = [];
+  SUBJECTS.forEach(s => (P.tests[s.id] || []).forEach((a, k) => hist.push({s, a, k})));
+  hist.sort((x, y) => y.a.d - x.a.d);
+  const histHTML = hist.length ? `<div class="list">${hist.slice(0, 8).map(({s, a, k}) => `<button class="hrow" data-act="tres" data-id="${s.id}" data-n="${k}" style="${cvar(s)}"><span><b>${s.name} test</b> · ${fmtDate(a.d)}</span><span class="chip">${pct(a.score, a.n)}%</span></button>`).join("")}</div>`
+    : `<div class="note"><span class="small muted">Finish a full practice test and your scores will show up here.</span></div>`;
+  const fs = P.set.fs;
+  return page("--c:var(--ink)", topbar("", {brand:true}) + `<main class="screen">
+    <div><h1>Progress</h1></div>
+    <div class="tiles">
+      <div class="tile"><b>${streak()}</b><span>day streak</span></div>
+      <div class="tile"><b>${seen}</b><span>questions answered</span></div>
+      <div class="tile"><b>${seen ? pct(right, seen) + "%" : "–"}</b><span>accuracy</span></div>
+      <div class="tile"><b>${done}/${total}</b><span>lessons done</span></div>
+    </div>
+    <div class="label">Accuracy by subject</div>
+    <div class="sec">${rows}</div>
+    <div class="label">Practice test scores</div>
+    ${histHTML}
+    <div class="label">Settings</div>
+    <div class="sec"><h3>Text size</h3>
+      <div class="seg" role="group" aria-label="Text size"><button class="${fs !== "lg" ? "on" : ""}" data-act="fs" data-id="md" aria-pressed="${fs !== "lg"}">Standard</button><button class="${fs === "lg" ? "on" : ""}" data-act="fs" data-id="lg" aria-pressed="${fs === "lg"}" style="font-size:1.1rem">Large</button></div>
+    </div>
+    <div class="sec"><h3>Your test date</h3><p class="small muted">Pick the day you plan to test, and Study Coach will suggest a weekly pace.</p>
+      <input type="date" id="tdate" class="dateinput" value="${P.set.date || ""}" min="${today()}" aria-label="Your test date">
+      ${P.set.date ? `<p class="pace">${I.cal}<span>${paceText()}</span></p><button class="linkbtn sm" data-act="cleardate">Clear date</button>` : ""}</div>
+    <div class="sec"><h3>Move your progress</h3><p class="small muted">Progress saves in this browser only. Make a backup code to keep it safe or move it to another phone.</p>${backupHTML(v)}</div>
+    <button class="unit" data-act="open" data-id="about" style="--c:var(--ink)"><span class="ico">${I.info}</span><span class="mid"><span class="utitle">About, privacy and terms</span><span class="usum">Version ${APP_VERSION}</span></span>${I.chev}</button>
+    <div class="foot"><span class="small muted">Your progress saves in this browser on this device.</span>
+      ${v.ask ? `<div class="confirm"><span class="small muted">Erase all progress, scores and drafts?</span><button class="btn sm" data-act="resetyes" style="--c:var(--bad)">Yes, reset</button><button class="btn sm ghost" data-act="resetno">Cancel</button></div>` : `<button class="linkbtn" data-act="reset">Reset progress</button>`}</div>
+  </main>`);
+}
+
+/* ================= BACKUP ================= */
+const b64e = str => { const b = new TextEncoder().encode(str); let bin = ""; b.forEach(x => { bin += String.fromCharCode(x); }); return btoa(bin); };
+const b64d = str => new TextDecoder().decode(Uint8Array.from(atob(str), c => c.charCodeAt(0)));
+function exportCode(){ return "SC1." + b64e(JSON.stringify(P)); }
+function importCode(raw){
+  const str = (raw || "").replace(/\s+/g, "");
+  if (str.indexOf("SC1.") !== 0) throw new Error("prefix");
+  const d = JSON.parse(b64d(str.slice(4)));
+  if (!d || typeof d !== "object" || typeof d.u !== "object") throw new Error("shape");
+  essayRun = null;
+  P = Object.assign(fresh(), d); P.set = Object.assign({fs:"md"}, d.set || {});
+  if (P.active && !TESTS[P.active.sid]) P.active = null;
+  if (P.active) P.active.run = false;
+  save(); applyFS();
+}
+function backupHTML(v){
+  if (v.bk === "export") return `<textarea id="bkcode" class="code" readonly aria-label="Your backup code">${exportCode()}</textarea>
+    <div class="two"><button class="btn" data-act="bkcopy">Copy code</button><button class="btn ghost" data-act="bkclose">Done</button></div>
+    <p class="small muted" id="bkmsg" aria-live="polite">Keep this code somewhere safe, like your Notes app. On the other device, open Study Coach, tap Restore and paste it.</p>`;
+  if (v.bk === "import") return `<textarea id="bkin" class="code" placeholder="Paste your backup code here" aria-label="Backup code"></textarea>
+    <div class="two"><button class="btn" data-act="bkrestore">Restore</button><button class="btn ghost" data-act="bkclose">Cancel</button></div>
+    <p class="small muted" id="bkmsg" aria-live="polite">Restoring replaces the progress saved on this device.</p>`;
+  return `${v.bkok ? `<p class="okmsg" aria-live="polite">Progress restored.</p>` : ""}<div class="two"><button class="btn ghost" data-act="bkexport">Back up</button><button class="btn ghost" data-act="bkimport">Restore</button></div>`;
+}
+
+/* ================= ABOUT ================= */
+function ghIssues(){
+  const h = location.hostname;
+  if (!/\.github\.io$/.test(h)) return null;
+  const owner = h.split(".")[0], repo = location.pathname.split("/").filter(Boolean)[0];
+  return `https://github.com/${owner}/${repo && repo !== "index.html" ? repo : owner + ".github.io"}/issues`;
+}
+function vAbout(){
+  const gh = ghIssues();
+  return page("--c:var(--math)", topbar("About") + `<main class="screen">
+    <div><h1>About Study Coach</h1><p class="muted" style="margin-top:6px">A free study app for the GED® test · Version ${APP_VERSION}</p></div>
+    <section class="sec"><h3>Who it's for</h3><p>Anyone working toward a GED® credential, especially people fitting study into full lives: between shifts, on the bus, after the kids are asleep. Every lesson is short, every answer is explained, and nothing is locked or for sale. If school didn't work for you the first time, that says nothing about what you can do now.</p></section>
+    <section class="sec"><h3>What's inside</h3><p>19 short lessons across Math, Language Arts, Science and Social Studies, four full practice tests, flashcards, essay practice, a formula sheet and a calculator. It works on any phone or computer${navigator.serviceWorker && navigator.serviceWorker.controller ? ", and keeps working without an internet connection once it has loaded" : ""}.</p></section>
+    <section class="sec"><h3>Not an official GED® product</h3><p>Study Coach is an independent study tool. It is not affiliated with, endorsed by or sponsored by the American Council on Education (ACE) or GED Testing Service LLC. Practice scores are for studying only and are not GED® scores.</p>
+      <p class="legal">GED® and GED Testing Service® are registered trademarks of the American Council on Education. They may not be used or reproduced without the express written permission of ACE or GED Testing Service. The GED® and GED Testing Service® brands are administered by GED Testing Service LLC under license from the American Council on Education. GED Ready® is a trademark of its owner. These names are used here only to describe the test this app helps you prepare for.</p></section>
+    <section class="sec"><h3>About the content</h3><p>All lessons, questions and essay passages are original and were written with help from AI (Claude, made by Anthropic), then reviewed for accuracy. Mistakes are still possible. The essay passages, and the people and studies in them, are made up for practice.</p>
+      <p>Test rules, prices and policies change and can vary by state. Always check <a href="https://ged.com" target="_blank" rel="noopener">GED.com</a> for official information.</p></section>
+    <section class="sec"><h3>Privacy</h3><ul>
+      <li>No accounts, ads, analytics or tracking cookies.</li>
+      <li>Your progress, scores and essay drafts are saved only in this browser on your device. The app never sends them anywhere.</li>
+      <li>Clearing your browser data, or tapping Reset progress, erases them for good. Use Back up in the Progress tab to keep a copy.</li>
+      <li>Like any website, the service that hosts this page may log visitors' IP addresses for security.</li>
+      <li>Links to other sites, like GED.com, are covered by those sites' own privacy policies.</li></ul></section>
+    <section class="sec"><h3>Accessibility</h3><p>Study Coach follows your device's light or dark setting, has a large-text option in the Progress tab, labels its controls for screen readers, can read lessons and questions out loud (tap Listen), works with a keyboard on computers and is designed to meet WCAG 2.2 AA color contrast. If anything is hard to use, please say so using the feedback option below.</p></section>
+    <section class="sec"><h3>Terms of use</h3><p>Study Coach is free to use and is provided “as is,” without warranties of any kind. It's a study aid, not a guarantee of any test result, and shouldn't be your only source of information about the GED® test.</p></section>
+    <section class="sec"><h3>Feedback</h3><p>${gh ? `Spotted a mistake or have an idea? <a href="${gh}" target="_blank" rel="noopener">Report it on GitHub</a>.` : `Spotted a mistake or have an idea? Let the person who shared this app with you know.`}</p></section>
+    <p class="small muted center">© 2026 Study Coach</p>
+  </main>`);
+}
+
+/* ================= CALCULATOR ================= */
+let cx = "";
+function calcEval(src){
+  const t = src.replace(/×/g, "*").replace(/÷/g, "/").replace(/−/g, "-").replace(/π/g, "p").replace(/√/g, "r");
+  let i = 0;
+  function num(){ const m = /^(\d+\.?\d*|\.\d+)(e[+-]?\d+)?/.exec(t.slice(i)); if (!m) throw new Error("num"); i += m[0].length; return parseFloat(m[0]); }
+  function primary(){
+    const c = t[i];
+    if (c === "("){ i++; const v = expr(); if (t[i] === ")") i++; return v; }
+    if (c === "p"){ i++; return Math.PI; }
+    if (c === "r"){ i++; const v = unary(); if (v < 0) throw new Error("sqrt"); return Math.sqrt(v); }
+    if (c !== undefined && /[0-9.]/.test(c)) return num();
+    throw new Error("syntax");
+  }
+  function postfix(){ let v = primary(); while (t[i] === "²"){ v = v * v; i++; } return v; }
+  function power(){ const b = postfix(); if (t[i] === "^"){ i++; return Math.pow(b, unary()); } return b; }
+  function unary(){ if (t[i] === "-"){ i++; return -unary(); } if (t[i] === "+"){ i++; return unary(); } return power(); }
+  function term(){
+    let v = unary();
+    for (;;){
+      const c = t[i];
+      if (c === "*"){ i++; v *= unary(); }
+      else if (c === "/"){ i++; const d = unary(); if (d === 0) throw new Error("div0"); v /= d; }
+      else if (c !== undefined && /[0-9(pr]/.test(c)){ v *= unary(); }
+      else break;
+    }
+    return v;
+  }
+  function expr(){ let v = term(); while (t[i] === "+" || t[i] === "-"){ const c = t[i++]; const w = term(); v = c === "+" ? v + w : v - w; } return v; }
+  const v = expr();
+  if (i < t.length || !isFinite(v)) throw new Error("syntax");
+  return v;
+}
+function fmtNum(v){
+  let s = Math.abs(v) >= 1e12 || (v !== 0 && Math.abs(v) < 1e-6) ? v.toExponential(6) : String(Number(v.toPrecision(10)));
+  if (s === "-0") s = "0";
+  return s.replace(/-/g, "−");
+}
+function drawCalc(err){
+  calcEl.innerHTML = `<div class="sheet calcsheet" role="dialog" aria-modal="true" aria-label="Calculator">
+    <div class="shd"><h2>Calculator</h2><button class="iconbtn" data-act="calcclose" aria-label="Close calculator">${I.close}</button></div>
+    <div class="cdisp"><div id="cexpr">${cx || "0"}</div><div id="cres" class="${err ? "err" : ""}">${err ? "Check your entry" : ""}</div></div>
+    <div class="keys">${["C", "(", ")", "⌫", "x²", "√", "^", "÷", "7", "8", "9", "×", "4", "5", "6", "−", "1", "2", "3", "+", "0", ".", "π", "="].map(k =>
+      `<button class="key${"÷×−+^".includes(k) ? " op" : ""}${k === "=" ? " eq" : ""}${["C", "⌫", "(", ")", "x²", "√", "π"].includes(k) ? " fn" : ""}" data-k="${k}" aria-label="${{"⌫":"Delete", "C":"Clear", "x²":"Square", "√":"Square root", "^":"Power"}[k] || k}">${k}</button>`).join("")}</div>
+    <p class="small muted center">Tip: √ and x² work on the number or parentheses next to them.</p>
+  </div>`;
+  preview();
+}
+function preview(){
+  const e = document.getElementById("cexpr"), r = document.getElementById("cres");
+  if (!e || !r) return;
+  e.textContent = cx || "0";
+  if (r.classList.contains("err")) return;
+  let out = "";
+  if (cx){ try { const val = fmtNum(calcEval(cx)); if (val !== cx) out = "= " + val; } catch (err) { out = ""; } }
+  r.textContent = out;
+}
+function press(k){
+  const r = document.getElementById("cres"); if (r) r.classList.remove("err");
+  if (k === "C") cx = "";
+  else if (k === "⌫") cx = Array.from(cx).slice(0, -1).join("");
+  else if (k === "=") { if (!cx) return; try { cx = fmtNum(calcEval(cx)); } catch (e) { drawCalc(true); return; } }
+  else if (k === "x²") cx += "²";
+  else if (k === "√") cx += "√(";
+  else cx += k;
+  preview();
+}
+function openCalc(){ calcEl.hidden = false; drawCalc(false); }
+
+/* ================= render + events ================= */
+const VIEWS = {home:vHome, subject:vSubject, lesson:vLesson, quiz:vQuiz, results:vResults, practice:vPractice, testintro:vTestIntro, test:vTest, tres:vTestResult,
+  tools:vTools, about:vAbout, decks:vDecks, cards:vCards, formulas:vFormulas, essays:vEssays, essay:vEssay, tips:vTips, me:vMe};
+function render(scrollTop){
+  const v = cur(), full = FULL.has(v.v);
+  app.innerHTML = VIEWS[v.v](v) + (full ? "" : tabbar());
+  document.body.classList.toggle("tabbed", !full);
+  if (scrollTop){ stopSpeak(); window.scrollTo(0, 0); const sc = app.querySelector(".screen"); if (sc) sc.classList.add("enter"); }
+  if (v.v === "essay" && v.pane === "write"){ const ta = document.getElementById("essay-text"); if (ta) ta.value = essayState(v.id).text; }
+}
+
+document.addEventListener("click", e => {
+  const t = e.target.closest("[data-act], [data-k]");
+  if (!t) return;
+  if (t.dataset.k){ press(t.dataset.k); return; }
+  if (t.dataset.scrim && e.target !== t) return;
+  const a = t.dataset.act, id = t.dataset.id, v = cur(), A = P.active;
+  switch (a){
+    case "tab": pauseEssay(); if (tab === id) stacks[tab] = [{v:ROOT[tab]}]; tab = id; render(true); break;
+    case "back": pauseEssay(); back(); break;
+    case "open": go({v:id}); break;
+    case "subject": go({v:"subject", id}); break;
+    case "lesson": case "nextlesson": openLesson(id); break;
+    case "start": go(makeQuiz("lesson", findUnit(id).s.id, id)); break;
+    case "mix": go(makeQuiz("mix", id)); break;
+    case "allmix": go(makeQuiz("all")); break;
+    case "missed": if (missedIds().length) go(makeQuiz("miss")); break;
+    case "pick": {
+      if (v.picked !== null) break;
+      const k = +t.dataset.i, q = v.qs[v.i], ok = q.opts[k].ok;
+      v.picked = k;
+      if (ok) v.score++; else v.wrongs.push({q:q.q, a:q.opts.find(o => o.ok).t, why:q.why});
+      record(q, ok); save(); render(false);
+      const nb = document.getElementById("fbnext");
+      if (nb) nb.scrollIntoView({behavior: reduceMotion() ? "auto" : "smooth", block:"end"});
+      break;
+    }
+    case "next": {
+      if (v.i < v.qs.length - 1){ v.i++; v.picked = null; render(true); break; }
+      const n = v.qs.length;
+      if (v.mode === "lesson"){ const r = P.u[v.uid] || {}; r.done = true; r.best = Math.max(r.best || 0, v.score); r.of = n; P.u[v.uid] = r; }
+      else if (v.mode === "mix"){ const r = P.mix[v.sid] || {}; r.best = Math.max(r.best || 0, v.score); r.of = n; P.mix[v.sid] = r; }
+      save();
+      replace({v:"results", mode:v.mode, sid:v.sid, uid:v.uid, title:v.title, score:v.score, n, wrongs:v.wrongs});
+      break;
+    }
+    case "retry": replace(makeQuiz(v.mode, v.sid, v.uid)); break;
+    case "tosubject": stacks[tab] = [{v:ROOT[tab]}, {v:"subject", id}]; render(true); break;
+    case "toroot": stacks[tab] = [{v:ROOT[tab]}]; render(true); break;
+    case "testintro": go({v:"testintro", id}); break;
+    case "settimed": v.timed = id === "1"; render(false); break;
+    case "starttest": startTest(id, v.timed !== false); break;
+    case "resume": resumeTest(); break;
+    case "tpick": if (A){ A.ans[A.i] = +t.dataset.i; save(); render(false); } break;
+    case "tflag": if (A){ A.flag[A.i] = !A.flag[A.i]; save(); render(false); } break;
+    case "tprev": if (A && A.i > 0){ A.i--; render(true); } break;
+    case "tnext": if (A && A.i < TESTS[A.sid].qs.length - 1){ A.i++; save(); render(true); } break;
+    case "tnav": v.sheet = "nav"; render(false); break;
+    case "tjump": if (A){ A.i = +t.dataset.i; v.sheet = null; render(true); } break;
+    case "tsheetclose": v.sheet = null; if (A && !A.run){ A.run = true; A.lt = Date.now(); } render(false); break;
+    case "tpause": if (A){ commit(); A.run = false; save(); render(false); } break;
+    case "tresume": if (A){ A.run = true; A.lt = Date.now(); render(false); } break;
+    case "texit": if (A){ commit(); A.run = false; save(); } v.sheet = "exit"; render(false); break;
+    case "texitgo": if (A){ commit(); A.run = false; save(); } tab = "practice"; stacks.practice = [{v:"practice"}]; render(true); break;
+    case "tsubmitask": v.sheet = "submit"; render(false); break;
+    case "tsubmit": submitTest(false); break;
+    case "rfilter": v.filter = id; render(false); break;
+    case "tres": go({v:"tres", sid:id, k:+t.dataset.n, filter:"miss"}); break;
+    case "deck": startDeck(id); break;
+    case "deckagain": stacks[tab].pop(); startDeck(id); break;
+    case "cflip": v.flip = !v.flip; render(false); break;
+    case "cgot": case "cagain": {
+      const known = P.cards[v.sid] || (P.cards[v.sid] = {}), idx = v.queue[v.i];
+      if (a === "cgot"){ known[idx] = 1; v.got++; } else delete known[idx];
+      v.i++; v.flip = false; save(); render(false);
+      break;
+    }
+    case "essay": go({v:"essay", id, pane:"read"}); break;
+    case "epane": v.pane = id; v.ask = false; render(true); break;
+    case "etimer": {
+      const st = essayState(v.id);
+      if (essayRun && essayRun.id === v.id) pauseEssay();
+      else if (ELIMIT - st.used <= 0){ st.used = 0; save(); }
+      else { pauseEssay(); essayRun = {id:v.id, lt:Date.now()}; }
+      render(false);
+      break;
+    }
+    case "eoutline": { const st = essayState(v.id); st.text = st.text.trim() ? st.text.replace(/\s+$/, "") + "\n\n" + OUTLINE : OUTLINE; save(); render(false); break; }
+    case "eclear": v.ask = true; render(false); break;
+    case "eclearyes": essayState(v.id).text = ""; v.ask = false; save(); render(false); break;
+    case "eclearno": v.ask = false; render(false); break;
+    case "welcomed": P.seen = true; save(); render(false); break;
+    case "safaritip": P.set.safariTip = true; save(); render(false); break;
+    case "quick5": go(makeQuiz("quick")); break;
+    case "listen": if (speaking) stopSpeak(); else speak(readText(v)); syncListen(); break;
+    case "cleardate": delete P.set.date; save(); render(false); break;
+    case "bkexport": v.bk = "export"; v.bkok = false; render(false); break;
+    case "bkimport": v.bk = "import"; v.bkok = false; render(false); break;
+    case "bkclose": v.bk = null; render(false); break;
+    case "bkcopy": {
+      const ta = document.getElementById("bkcode"), msg = document.getElementById("bkmsg");
+      const fallback = () => { ta.focus(); ta.select(); msg.textContent = "Your code is selected. Tap Copy in the menu to copy it."; };
+      try { navigator.clipboard.writeText(ta.value).then(() => { msg.textContent = "Copied! Paste it somewhere safe."; msg.className = "small okmsg"; }, fallback); } catch (err) { fallback(); }
+      break;
+    }
+    case "bkrestore": {
+      const ta = document.getElementById("bkin");
+      try { importCode(ta.value); stacks.learn = [{v:"home"}]; stacks.practice = [{v:"practice"}]; stacks.tools = [{v:"tools"}]; stacks.me = [{v:"me", bkok:true}]; render(true); }
+      catch (err) { const msg = document.getElementById("bkmsg"); msg.textContent = "That code didn't work. Make sure you copied the whole thing, starting with SC1."; msg.className = "small errmsg"; }
+      break;
+    }
+    case "calc": openCalc(); break;
+    case "calcclose": calcEl.hidden = true; break;
+    case "fs": P.set.fs = id; applyFS(); save(); render(false); break;
+    case "reset": v.ask = true; render(false); break;
+    case "resetno": v.ask = false; render(false); break;
+    case "resetyes": { essayRun = null; const fs = P.set.fs; P = fresh(); P.set.fs = fs; save(); v.ask = false;
+      stacks.learn = [{v:"home"}]; stacks.practice = [{v:"practice"}]; stacks.tools = [{v:"tools"}]; render(false); break; }
+  }
+});
+
+let saveTimer = null;
+document.addEventListener("input", e => {
+  if (e.target.id !== "essay-text") return;
+  const st = essayState(cur().id); st.text = e.target.value;
+  const w = document.getElementById("wc"); if (w) w.textContent = wc(st.text) + " words";
+  clearTimeout(saveTimer); saveTimer = setTimeout(save, 500);
+});
+document.addEventListener("change", e => {
+  if (e.target.id === "tdate"){ if (e.target.value) P.set.date = e.target.value; else delete P.set.date; save(); render(false); return; }
+  const k = e.target.dataset && e.target.dataset.check;
+  if (!k) return;
+  const st = essayState(cur().id);
+  if (e.target.checked) st.checks[k] = 1; else delete st.checks[k];
+  save();
+  const c = document.getElementById("ckcount");
+  if (c) c.textContent = Object.keys(st.checks).length + " of " + CHECKS.reduce((a, g) => a + g.items.length, 0) + " checked";
+});
+document.addEventListener("keydown", e => {
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  if (!calcEl.hidden){
+    const map = {"*":"×", "x":"×", "/":"÷", "-":"−", "+":"+", "^":"^", "(":"(", ")":")", ".":".", "Enter":"=", "=":"=", "Backspace":"⌫", "c":"C", "C":"C", "p":"π"};
+    if (e.key === "Escape"){ calcEl.hidden = true; return; }
+    const k = /^[0-9]$/.test(e.key) ? e.key : map[e.key];
+    if (k){ e.preventDefault(); press(k); }
+    return;
+  }
+  if (e.target.matches && e.target.matches("input, textarea, select")) return;
+  const v = cur(), key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+  const idx = "abcd".indexOf(key) > -1 && key.length === 1 ? "abcd".indexOf(key) : ("1234".indexOf(key) > -1 && key.length === 1 ? "1234".indexOf(key) : -1);
+  const tap = sel => { const el = document.querySelector(sel); if (el && !el.disabled){ e.preventDefault(); el.click(); } };
+  if (v.v === "quiz"){
+    if (idx > -1 && v.picked === null) tap(`[data-act="pick"][data-i="${idx}"]`);
+    else if (key === "Enter" && v.picked !== null) tap("#fbnext");
+  } else if (v.v === "test" && !v.sheet && P.active && P.active.run){
+    if (idx > -1) tap(`[data-act="tpick"][data-i="${idx}"]`);
+    else if (key === "ArrowRight") tap('[data-act="tnext"]');
+    else if (key === "ArrowLeft") tap('[data-act="tprev"]');
+    else if (key === "f") tap('[data-act="tflag"]');
+  } else if (v.v === "cards"){
+    if (key === " " || key === "Enter") tap('[data-act="cflip"]');
+    else if (v.flip && key === "ArrowRight") tap('[data-act="cgot"]');
+    else if (v.flip && key === "ArrowLeft") tap('[data-act="cagain"]');
+  }
+});
+
+let tickN = 0;
+setInterval(() => {
+  tickN++;
+  const A = P.active;
+  if (A && A.run){
+    commit();
+    if (A.limit && A.used >= A.limit){ submitTest(true); return; }
+    const el = document.getElementById("timer");
+    if (el){ el.textContent = A.limit ? fmtTime(A.limit - A.used) : fmtTime(A.used); if (A.limit && A.limit - A.used < 300000) el.parentNode.classList.add("low"); }
+    if (tickN % 5 === 0) save();
+  }
+  if (essayRun){
+    const st = essayState(essayRun.id), now = Date.now();
+    st.used += now - essayRun.lt; essayRun.lt = now;
+    const el = document.getElementById("etimer");
+    if (st.used >= ELIMIT){
+      st.used = ELIMIT; essayRun = null; save();
+      if (cur().v === "essay") render(false);
+    } else if (el) el.textContent = fmtTime(ELIMIT - st.used);
+    if (tickN % 10 === 0) save();
+  }
+}, 1000);
+
+function pauseAll(){
+  const A = P.active;
+  if (A && A.run){ commit(); A.run = false; if (cur().v === "test") render(false); }
+  pauseEssay(); save();
+}
+document.addEventListener("visibilitychange", () => { if (document.hidden) pauseAll(); });
+window.addEventListener("pagehide", pauseAll);
+
+applyFS();
+render(false);
+try {
+  if ("serviceWorker" in navigator && location.protocol === "https:" && window.self === window.top) navigator.serviceWorker.register("sw.js").catch(() => {});
+} catch (e) {}
+
+</script>
+</body>
+</html>
