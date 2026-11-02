@@ -311,6 +311,14 @@ textarea.code{width:100%;min-height:110px;font-family:ui-monospace,Menlo,Consola
 .warnnote{border-style:solid;border-color:color-mix(in srgb,var(--flag) 55%,var(--line));background:color-mix(in srgb,var(--flag) 10%,var(--surface))}
 .warnnote .btn{align-self:flex-start;margin-top:4px}
 
+/* feedback */
+a.btn{text-decoration:none}
+.copyrow{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:10px 12px;border-radius:14px;background:var(--bg)}
+.mono{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.9rem;word-break:break-all;user-select:all;-webkit-user-select:all}
+.fb .linkbtn{display:inline-flex;align-items:center;gap:6px;color:var(--muted);font-weight:400;text-decoration:underline;align-self:flex-start;text-align:left;padding:4px 0}
+.rev .linkbtn{display:inline-flex;align-items:center;gap:6px;color:var(--muted);font-weight:400;font-size:.82rem}
+.linkbtn svg{width:14px;height:14px}
+
 /* tab bar */
 .tabs{position:fixed;left:0;right:0;bottom:0;z-index:8;background:color-mix(in srgb,var(--surface) 94%,transparent);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);padding-left:max(8px,env(safe-area-inset-left,0px));padding-right:max(8px,env(safe-area-inset-right,0px))}
 .tabs .in{max-width:640px;margin:0 auto;display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
@@ -882,7 +890,8 @@ const TIPS = [
 </script>
 <script>
 "use strict";
-const APP_VERSION = "2.1 · November 2026";
+const APP_VERSION = "2.2 · November 2026";
+const FEEDBACK_EMAIL = "freestudycoach@proton.me";
 /* ================= question registry ================= */
 const QMAP = {};
 SUBJECTS.forEach(s => s.units.forEach(u => u.quiz.forEach((q, i) => { q.id = u.id + "." + i; q.sid = s.id; q.uid = u.id; QMAP[q.id] = q; })));
@@ -959,6 +968,7 @@ const I = {
   speaker: svg(`<path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/>`),
   stop: svg(`<rect x="7" y="7" width="10" height="10" rx="1.5"/>`),
   bolt: svg(`<path d="M13 3L5 13.5h6L10 21l8-10.5h-6z"/>`),
+  mail: svg(`<rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M3.5 7l8.5 6 8.5-6"/>`),
   cal: svg(`<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/>`),
   flame: svg(`<path d="M12 3c.8 3 4.5 4.8 4.5 9a4.5 4.5 0 0 1-9 0c0-2.2 1.1-3.6 2-4.5.3 1.6 1.2 2.5 2.4 2.5C12 7.6 10.8 5.6 12 3z"/>`)
 };
@@ -1167,7 +1177,7 @@ function vQuiz(v){
   let fb = "";
   if (answered){
     const ok = q.opts[v.picked].ok, right = q.opts.find(o => o.ok).t;
-    fb = `<div class="fb ${ok ? "good" : "bad"}" aria-live="polite"><h4>${ok ? "Correct!" : "Not quite"}</h4>${ok ? "" : `<p><b>Answer:</b> ${right}</p>`}<p>${q.why}</p></div>
+    fb = `<div class="fb ${ok ? "good" : "bad"}" aria-live="polite"><h4>${ok ? "Correct!" : "Not quite"}</h4>${ok ? "" : `<p><b>Answer:</b> ${right}</p>`}<p>${q.why}</p><button class="linkbtn sm" data-act="report" data-id="${q.id}">${I.flag} Think this question has a mistake? Report it</button></div>
       <button class="btn" id="fbnext" data-act="next">${v.i < n - 1 ? `Next question ${I.arrow}` : "See my results"}</button>`;
   }
   const tag = (v.mode === "all" || v.mode === "miss") ? `<span class="eyebrow">${s.name}</span>` : "";
@@ -1179,7 +1189,7 @@ function vQuiz(v){
     <div class="opts">${opts}</div>
     <p class="kbd small muted">Keyboard: press A–D to answer${answered ? ", then Enter for the next question" : ""}.</p>
     ${fb}
-  </main>`);
+  </main>${v.rep ? reportSheet(v.rep) : ""}`);
 }
 
 function vResults(v){
@@ -1353,7 +1363,8 @@ function vTestResult(v){
       ${x.q.p ? `<details class="pd"><summary>Show passage</summary><div>${x.q.p}</div></details>` : ""}
       <p><b>${x.q.q}</b></p>
       ${!x.ok && x.j !== null ? `<p class="yours">Your answer: ${x.q.o[att.ord[x.i][x.j]]}</p>` : ""}
-      <p class="ans">${I.check}<span>${x.q.o[0]}</span></p><p class="small muted">${x.q.why}</p></div>`).join("")
+      <p class="ans">${I.check}<span>${x.q.o[0]}</span></p><p class="small muted">${x.q.why}</p>
+      <button class="linkbtn sm" data-act="report" data-id="${x.q.id}">${I.flag} Report a mistake</button></div>`).join("")
     : `<p class="center muted">No missed questions. Perfect score!</p>`;
   const missCount = all.filter(x => !x.ok).length;
   return page(cvar(s), topbar(s.name + " test results") + `<main class="screen">
@@ -1368,7 +1379,7 @@ function vTestResult(v){
     <div class="label">Answer review</div>
     <div class="chips"><button class="chipbtn${v.filter !== "all" ? " on" : ""}" data-act="rfilter" data-id="miss">Missed (${missCount})</button><button class="chipbtn${v.filter === "all" ? " on" : ""}" data-act="rfilter" data-id="all">All ${att.n}</button></div>
     <div class="list">${list}</div>
-  </main>`);
+  </main>${v.rep ? reportSheet(v.rep) : ""}`);
 }
 
 /* ================= TOOLS ================= */
@@ -1539,14 +1550,35 @@ function backupHTML(v){
 }
 
 /* ================= ABOUT ================= */
-function ghIssues(){
-  const h = location.hostname;
-  if (!/\.github\.io$/.test(h)) return null;
-  const owner = h.split(".")[0], repo = location.pathname.split("/").filter(Boolean)[0];
-  return `https://github.com/${owner}/${repo && repo !== "index.html" ? repo : owner + ".github.io"}/issues`;
+/* Feedback: email works for everyone; GitHub issues need a free GitHub account. */
+function repoFor(host, path){
+  if (!/\.github\.io$/i.test(host)) return null;
+  const owner = host.split(".")[0], first = path.split("/").filter(Boolean)[0];
+  return `https://github.com/${owner}/${first && !/\.html?$/i.test(first) ? first : owner + ".github.io"}`;
+}
+function reportLinks(title, body){
+  const enc = encodeURIComponent, repo = repoFor(location.hostname, location.pathname);
+  return {
+    issue: repo ? `${repo}/issues/new?title=${enc(title)}&body=${enc(body)}` : null,
+    mail: `mailto:${FEEDBACK_EMAIL}?subject=${enc(title)}&body=${enc(body.replace(/\*\*/g, ""))}`
+  };
+}
+function generalReport(){
+  return reportLinks("Study Coach feedback", "**What happened, or what's your idea?**\n\n\n**Where in the app?** (lesson, question or screen)\n\n\n**Device and browser** (for example, iPhone Safari)\n\n\n---\nStudy Coach version " + APP_VERSION);
+}
+function questionReport(q){
+  return reportLinks("Possible mistake in question " + q.id, "**Question " + q.id + ":** " + strip(q.q) + "\n\n**Answer the app gives:** " + strip(q.o[0]) + "\n\n**What looks wrong?**\n\n\n---\nStudy Coach version " + APP_VERSION);
+}
+function reportSheet(qid){
+  const q = QMAP[qid]; if (!q) return "";
+  const L = questionReport(q);
+  return overlay(`<h2>Report a mistake</h2><p class="muted">Think something's wrong with this question? Reporting it helps fix it for everyone who studies with Study Coach.</p>
+    <div class="stack"><a class="btn" href="${L.mail}">${I.mail} Email us (no account needed)</a>${L.issue ? `<a class="btn ghost" href="${L.issue}" target="_blank" rel="noopener">Report on GitHub</a>` : ""}
+    <button class="btn ghost" data-act="reportclose">Cancel</button></div>
+    <p class="small muted">The email or report opens with the question already filled in. Just add what looks wrong. Replies can take a while, since this is a one-person volunteer project.</p>`, "reportclose");
 }
 function vAbout(){
-  const gh = ghIssues();
+  const L = generalReport();
   return page("--c:var(--math)", topbar("About") + `<main class="screen">
     <div><h1>About Study Coach</h1><p class="muted" style="margin-top:6px">A free study app for the GED® test · Version ${APP_VERSION}</p></div>
     <section class="sec"><h3>Who it's for</h3><p>Anyone working toward a GED® credential, especially people fitting study into full lives: between shifts, on the bus, after the kids are asleep. Every lesson is short, every answer is explained, and nothing is locked or for sale. If school didn't work for you the first time, that says nothing about what you can do now.</p></section>
@@ -1563,7 +1595,11 @@ function vAbout(){
       <li>Links to other sites, like GED.com, are covered by those sites' own privacy policies.</li></ul></section>
     <section class="sec"><h3>Accessibility</h3><p>Study Coach follows your device's light or dark setting, has a large-text option in the Progress tab, labels its controls for screen readers, can read lessons and questions out loud (tap Listen), works with a keyboard on computers and is designed to meet WCAG 2.2 AA color contrast. If anything is hard to use, please say so using the feedback option below.</p></section>
     <section class="sec"><h3>Terms of use</h3><p>Study Coach is free to use and is provided “as is,” without warranties of any kind. It's a study aid, not a guarantee of any test result, and shouldn't be your only source of information about the GED® test.</p></section>
-    <section class="sec"><h3>Feedback</h3><p>${gh ? `Spotted a mistake or have an idea? <a href="${gh}" target="_blank" rel="noopener">Report it on GitHub</a>.` : `Spotted a mistake or have an idea? Let the person who shared this app with you know.`}</p></section>
+    <section class="sec" id="feedback"><h3>Feedback</h3><p>Spotted a mistake, got stuck or have an idea? Send it in. You don't need an account to email.</p>
+      <p class="small muted">Study Coach is a one-person volunteer project, so replies can take a while. Every report still helps, even if you don't hear back right away.</p>
+      <div class="copyrow"><span class="mono" id="fbemail">${FEEDBACK_EMAIL}</span><button class="btn sm ghost" data-act="copyemail">Copy</button></div>
+      <div class="${L.issue ? "two" : "stack"}"><a class="btn" href="${L.mail}">${I.mail} Email feedback</a>${L.issue ? `<a class="btn ghost" href="${L.issue}" target="_blank" rel="noopener">Report on GitHub</a>` : ""}</div>
+      <p class="small muted" id="fbmsg" aria-live="polite">${L.issue ? "GitHub reports are public and need a free GitHub account. Email is private. " : ""}Please don't include personal details you don't want to share.</p></section>
     <p class="small muted center">© 2026 Study Coach</p>
   </main>`);
 }
@@ -1748,6 +1784,14 @@ document.addEventListener("click", e => {
       catch (err) { const msg = document.getElementById("bkmsg"); msg.textContent = "That code didn't work. Make sure you copied the whole thing, starting with SC1."; msg.className = "small errmsg"; }
       break;
     }
+    case "report": v.rep = id; render(false); break;
+    case "reportclose": v.rep = null; render(false); break;
+    case "copyemail": {
+      const msg = document.getElementById("fbmsg"), el = document.getElementById("fbemail");
+      const fallback = () => { const r = document.createRange(); r.selectNodeContents(el); const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r); msg.textContent = "The address is selected. Tap Copy in the menu to copy it."; };
+      try { navigator.clipboard.writeText(FEEDBACK_EMAIL).then(() => { msg.textContent = "Email address copied."; msg.className = "small okmsg"; }, fallback); } catch (err) { fallback(); }
+      break;
+    }
     case "calc": openCalc(); break;
     case "calcclose": calcEl.hidden = true; break;
     case "fs": P.set.fs = id; applyFS(); save(); render(false); break;
@@ -1788,6 +1832,7 @@ document.addEventListener("keydown", e => {
   const v = cur(), key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
   const idx = "abcd".indexOf(key) > -1 && key.length === 1 ? "abcd".indexOf(key) : ("1234".indexOf(key) > -1 && key.length === 1 ? "1234".indexOf(key) : -1);
   const tap = sel => { const el = document.querySelector(sel); if (el && !el.disabled){ e.preventDefault(); el.click(); } };
+  if (v.rep) return;
   if (v.v === "quiz"){
     if (idx > -1 && v.picked === null) tap(`[data-act="pick"][data-i="${idx}"]`);
     else if (key === "Enter" && v.picked !== null) tap("#fbnext");
