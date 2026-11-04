@@ -8,8 +8,8 @@ Study Coach for the GED® Test: a free, mobile-first study web app. It's for adu
 
 ## Where things stand (Nov 3, 2026)
 
-- **Live version:** 2.2.3 at https://freeforgood-apps.github.io/study-coach/
-- Passed its self-test on a real iPhone (Nov 3, 2026). Full test history is in README.md under "Tested on".
+- **Live version:** 2.3 at https://freeforgood-apps.github.io/study-coach/
+- 2.3 passed its self-test in headless Chrome (Nov 3, 2026). Still to do: run it on a real iPhone. Full test history is in README.md under "Tested on".
 - Every past version is kept in GitHub's history. To roll back, find the version in CHANGELOG.md and restore that upload.
 
 ## Where it lives
@@ -19,7 +19,8 @@ Study Coach for the GED® Test: a free, mobile-first study web app. It's for adu
 - `selftest.html`: the same app plus an automated self-test, on its own storage (`study-coach-selftest-v1`).
 - `sw.js`: offline support (network-first). It only clears caches whose names start with `study-coach-`, because the address is shared with other free apps.
 - `README.md`: the public project page.
-- **Claude copies:** two Claude pages, named "Study Coach for the GED® Test" and "Study Coach Self-Test". Find them by name in the Claude artifacts list. Their links stay out of this repo. Republish both with every release. To make them from `index.html` and `selftest.html`: start at the `<title>` line, add `<meta name="claude:viewport-fit-sides" content="cover">` right after it, then remove the `</head>` and `<body>` lines and the closing `</body>` and `</html>` lines.
+- `manifest.webmanifest` and `icon-192.png`, `icon-512.png`, `icon-maskable-512.png`: install details and icons, so Android phones and computers can install it as an app. Its id, start and scope all stay inside /study-coach/, since the address is shared.
+- **Claude copies:** two Claude pages, named "Study Coach for the GED® Test" and "Study Coach Self-Test". Find them by name in the Claude artifacts list. Their links stay out of this repo. Republish both with every release. To make them from `index.html` and `selftest.html`: start at the `<title>` line, add `<meta name="claude:viewport-fit-sides" content="cover">` right after it, then remove the `</head>` and `<body>` lines and the closing `</body>` and `</html>` lines. The manifest link sits above the `<title>` line on purpose, so the copies leave it out.
 - **Old address:** freestudycoach.github.io/study-coach holds only a "we've moved" page that forwards people here and helps anyone with progress saved there bring it along. Never put the app back there.
 
 ## Next up
