@@ -1,5 +1,9 @@
 # Study Coach: changelog
 
+## 2.4.1 (Nov 3, 2026)
+- About now has a "Run the self-test" link under Feedback, worded like Till Payday's. In the Claude copies it opens the website's self-test.
+- The self-test checks that the link is there and points to the right place.
+
 ## 2.4 (Nov 3, 2026)
 Keeping progress safe now works and reads the same as in Till Payday:
 - **About** has a new "Keep your progress safe" section: how to add Study Coach to the Home Screen on iPhone, iPad and Android, Safari's 7-day note, and "back up now and then". The Claude copies show only the backup tip.

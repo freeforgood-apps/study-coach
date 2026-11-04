@@ -1,7 +1,7 @@
 // Study Coach offline helper.
 // Saves a copy of the app the first time it loads, so it keeps working without internet.
 // Always tries the network first, so updates show up as soon as you're back online.
-const CACHE = "study-coach-v2.4";
+const CACHE = "study-coach-v2.4.1";
 
 self.addEventListener("install", event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(["./"])).then(() => self.skipWaiting()));

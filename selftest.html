@@ -899,8 +899,9 @@ const TIPS = [
 </script>
 <script>
 "use strict";
-const APP_VERSION = "2.4 · November 2026";
+const APP_VERSION = "2.4.1 · November 2026";
 const FEEDBACK_EMAIL = "freeforgood-apps+study@proton.me";
+const SITE = "https://freeforgood-apps.github.io/study-coach/";   // the website, for links from the Claude copies
 /* ================= question registry ================= */
 const QMAP = {};
 SUBJECTS.forEach(s => s.units.forEach(u => u.quiz.forEach((q, i) => { q.id = u.id + "." + i; q.sid = s.id; q.uid = u.id; QMAP[q.id] = q; })));
@@ -1686,6 +1687,7 @@ function vAbout(){
     <section class="sec"><h3>Accessibility</h3><p>Study Coach follows your device's light or dark setting, has a large-text option in the Progress tab, labels its controls for screen readers, can read lessons and questions out loud (tap Listen), works with a keyboard on computers and is designed to meet WCAG 2.2 AA color contrast. If anything is hard to use, please say so using the feedback option below.</p></section>
     <section class="sec"><h3>Terms of use</h3><p>Study Coach is free to use and is provided “as is,” without warranties of any kind. It's a study aid, not a guarantee of any test result, and shouldn't be your only source of information about the GED® test.</p></section>
     <section class="sec" id="feedback"><h3>Feedback</h3><p>Spotted a mistake, got stuck or have an idea? Send it in. You don't need an account to email.</p>
+      <p>Something not working right on your phone? <a id="selftestlink" href="${WEB ? "selftest.html" : SITE + "selftest.html"}" target="_blank" rel="noopener">Run the self-test</a>. It taps through Study Coach on your phone and makes a report you can paste into an email.</p>
       <p class="small muted">Study Coach is a one-person volunteer project, so replies can take a while. Every report still helps, even if you don't hear back right away.</p>
       <div class="copyrow"><span class="mono" id="fbemail">${FEEDBACK_EMAIL}</span><button class="btn sm ghost" data-act="copyemail">Copy</button></div>
       <div class="${L.issue ? "two" : "stack"}"><a class="btn" href="${L.mail}">${I.mail} Email feedback</a>${L.issue ? `<a class="btn ghost" href="${L.issue}" target="_blank" rel="noopener">Report on GitHub</a>` : ""}</div>
@@ -2112,7 +2114,10 @@ try {
       const r1 = repoFor("freeforgood-apps.github.io", "/study-coach/"), r2 = repoFor("freeforgood-apps.github.io", "/study-coach/selftest.html"), r3 = repoFor("someone.github.io", "/"), r4 = repoFor("example.com", "/study-coach/");
       if (r1 !== "https://github.com/freeforgood-apps/study-coach" || r2 !== r1 || r3 !== "https://github.com/someone/someone.github.io" || r4 !== null) issues.push("Feedback link address is wrong");
       const QR = questionReport(QMAP["m1.0"]); if (QR.mail.indexOf("mailto:" + FEEDBACK_EMAIL) !== 0 || QR.mail.indexOf("m1.0") < 0) issues.push("Question report email is wrong");
-      act("tab", "tools"); act("open", "about"); check("About feedback"); if (document.body.textContent.indexOf(FEEDBACK_EMAIL) < 0) issues.push("Feedback email missing on About"); act("back");
+      act("tab", "tools"); act("open", "about"); check("About feedback"); if (document.body.textContent.indexOf(FEEDBACK_EMAIL) < 0) issues.push("Feedback email missing on About");
+      // The website links its own self-test; the Claude copies link the website's
+      steps++; const stl = $("#selftestlink"); if (!stl || stl.getAttribute("href") !== (WEB ? "selftest.html" : SITE + "selftest.html") || stl.target !== "_blank") issues.push("The Run the self-test link on About is missing or points to the wrong place");
+      act("back");
       act("tab", "learn"); act("tab", "learn"); act("quick5"); document.querySelectorAll('[data-act="pick"]')[0].click();
       act("report"); if (!app.querySelector(".sheet") || app.querySelector(".sheet").textContent.indexOf("Report a mistake") < 0) issues.push("Report sheet didn't open in a quiz");
       document.dispatchEvent(new KeyboardEvent("keydown", {key:"Enter", bubbles:true})); if (cur().i !== 0) issues.push("Keyboard worked behind the report sheet");
