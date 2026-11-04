@@ -1,5 +1,19 @@
 # Study Coach: changelog
 
+## 2.5 (Nov 3, 2026)
+Saving now has the same safety net as Till Payday:
+- **Save as a file:** Back up can save your backup as a small file through the share sheet (Files app, iCloud Drive or an email to yourself), or as a download on computers. Website only. The Claude copies keep the backup code.
+- **Restore from a file:** Restore has a Choose a backup file button, next to pasting a code.
+- **Automatic copies:** Study Coach keeps a copy of your progress from each of the last 3 days you opened it, on this device. They're listed under Progress → Move your progress. Reset progress leaves them, in case it was a mistake, and Delete these copies removes them.
+- **Two taps to replace progress:** restoring a backup or a copy over existing progress asks you to tap again first. A code that doesn't work is caught before that.
+- **Damaged progress is set aside:** if the progress saved on this device can't be read, Study Coach keeps it aside instead of saving over it, and Home shows See saved copies and Start fresh.
+- **Not saving warning:** if this browser can't save (a private window, or full storage), Home says so and offers Back up now.
+- **Two tabs:** the newest save wins, so an older open tab can't save over newer progress.
+- Study Coach asks the browser to keep its data, where the browser allows that quietly (not Firefox, which would ask).
+- Bringing back an automatic copy doesn't count as a backup, since it's still only on this device, so backup reminders keep counting.
+- Saved progress keeps the same shape (data version 2), so nothing needs upgrading.
+- The self-test checks all of this (1,349 to 1,363 checks in headless Chrome), and the 2.3 backup code check now confirms the restore really happened. It caught all 10 bugs planted on purpose.
+
 ## 2.4.1 (Nov 3, 2026)
 - About now has a "Run the self-test" link under Feedback, worded like Till Payday's. In the Claude copies it opens the website's self-test.
 - The self-test checks that the link is there and points to the right place.

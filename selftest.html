@@ -293,6 +293,16 @@ textarea.essay:focus{outline:3px solid color-mix(in srgb,var(--c) 50%,transparen
 .welcome ol{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:6px}
 textarea.code{width:100%;min-height:110px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.78rem;line-height:1.4;word-break:break-all;padding:12px;border-radius:14px;border:1px solid var(--line);background:var(--bg);color:var(--ink);resize:vertical}
 .okmsg{color:var(--good);font-weight:700}
+.pickfile{position:relative;cursor:pointer}
+.pickfile:focus-within{outline:3px solid var(--ink);outline-offset:2px}
+.filepick{position:absolute;inset:0;width:100%;height:100%;opacity:0;pointer-events:none}
+.copies{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.copies h4{margin:6px 0 0;font-size:1rem}
+.btn.copy{flex-direction:column;gap:2px}
+.btn.copy small{font-weight:400;font-size:.8rem;color:var(--muted)}
+.btn.armed{background:var(--bad);color:var(--onc);border-color:var(--bad)}
+.btn.armed small{color:var(--onc)}
+.linkbtn.armed{color:var(--bad);font-weight:700}
 .errmsg{color:var(--bad);font-weight:700}
 .sec .legal{font-size:.85rem;color:var(--muted)}
 
@@ -899,7 +909,7 @@ const TIPS = [
 </script>
 <script>
 "use strict";
-const APP_VERSION = "2.4.1 · November 2026";
+const APP_VERSION = "2.5 · November 2026";
 const FEEDBACK_EMAIL = "freeforgood-apps+study@proton.me";
 const SITE = "https://freeforgood-apps.github.io/study-coach/";   // the website, for links from the Claude copies
 /* ================= question registry ================= */
@@ -929,16 +939,47 @@ function hydrate(d){
   return p;
 }
 let P = fresh();
-try {
-  const d = JSON.parse(localStorage.getItem(KEY) || "null");
-  if (d && typeof d === "object") {
+// Ask the browser to keep Study Coach's data (granted quietly where supported; Firefox would ask, so not there). Website only.
+let askedToKeep = false;
+function askToKeep(){
+  if (askedToKeep) return;
+  askedToKeep = true;
+  try {
+    if (window.self !== window.top || !navigator.storage || !navigator.storage.persist || /Firefox\//.test(navigator.userAgent)) return;
+    navigator.storage.persisted().then(p => { if (!p) return navigator.storage.persist(); }).catch(() => {});
+  } catch (e) {}
+}
+// Saved progress that can't be read is set aside under KEY-damaged, never saved over (same as Till Payday).
+// holdSave: it couldn't even be set aside, so nothing saves until a copy or backup is restored, or Start fresh.
+let damaged = false, holdSave = false, saveFailed = false, loadedRaw = null;
+function loadSaved(){
+  P = fresh(); damaged = false; holdSave = false; loadedRaw = null;
+  let raw = null;
+  try { raw = localStorage.getItem(KEY); } catch (e) {}
+  if (!raw) return;
+  try {
+    const d = JSON.parse(raw);
+    if (!d || typeof d !== "object" || Array.isArray(d)) throw new Error("not progress");
     // Someone who dismissed 2.3's Safari note has already seen the Home Screen advice
     if (d.set && d.set.safariTip) try { localStorage.setItem(INSTALL_KEY, "done"); } catch (e) {}
     P = hydrate(d);
+    loadedRaw = raw;   // today's automatic copy is taken from this at startup
     if (!(d.dv >= 2)) save();   // save the upgrade once
+  } catch (e) {
+    P = fresh();
+    damaged = true;
+    try { localStorage.setItem(KEY + "-damaged", raw); } catch (e2) { holdSave = true; }
   }
-} catch (e) {}
-function save(){ try { localStorage.setItem(KEY, JSON.stringify(P)); } catch (e) {} }
+}
+loadSaved();
+function save(){
+  if (holdSave) return;
+  const json = JSON.stringify(P);
+  let ok = false;
+  try { localStorage.setItem(KEY, json); ok = localStorage.getItem(KEY) === json; } catch (e) {}
+  saveFailed = !ok;
+  if (ok) askToKeep();
+}
 
 const pad = n => String(n).padStart(2, "0");
 const dayKey = d => d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate());
@@ -1071,8 +1112,12 @@ function backupNeed(){
   return {level, days, n:b.n, card:!!level && !snoozed};
 }
 function markBackedUp(){ P.bk = {at:today(), n:0, snooze:""}; }
-// One card at a time on Home: a due backup comes first, then the Home Screen card (website only, after the welcome card)
+// One card at a time on Home: damaged or unsaved progress comes first, then a due backup, then the Home Screen card (website only, after the welcome card)
 function keepSafeCard(){
+  if (damaged) return `<section class="note warnnote" id="damagedcard" role="alert"><span class="label">Couldn't read your saved progress</span><b>Your progress is set aside, not lost</b><span class="small">Something damaged the copy saved on this device, so Study Coach kept it aside instead of saving over it. Restore one of the automatic copies or a backup, or start fresh.</span>
+      <div class="noteacts"><button class="btn sm" data-act="damagedrestore" style="--c:var(--ink)">See saved copies</button><button class="btn sm ghost" data-act="damagedfresh">Start fresh</button></div></section>`;
+  if (saveFailed) return `<section class="note warnnote" id="savewarn" role="alert"><span class="label">Not saving on this device</span><b>Your progress isn't being saved here</b><span class="small">This can happen in a private browsing window, or when the phone's storage is full. Save a backup now so you don't lose your progress.</span>
+      <div class="noteacts"><button class="btn sm" data-act="bknow" style="--c:var(--ink)">Back up now</button></div></section>`;
   const bk = backupNeed();
   if (bk.card){
     const extra = WEB && isIOS() && !isStandalone() ? " Adding Study Coach to your Home Screen helps too." : "";
@@ -1607,11 +1652,11 @@ function vMe(v){
     <div class="sec"><h3>Your test date</h3><p class="small muted">Pick the day you plan to test, and Study Coach will suggest a weekly pace.</p>
       <input type="date" id="tdate" class="dateinput" value="${P.set.date || ""}" min="${today()}" aria-label="Your test date">
       ${P.set.date ? `<p class="pace">${I.cal}<span>${paceText()}</span></p><button class="linkbtn sm" data-act="cleardate">Clear date</button>` : ""}</div>
-    <div class="sec"><h3>Move your progress</h3><p class="small muted">Progress saves in this browser only. Make a backup code to keep it safe or move it to another phone.</p>
+    <div class="sec"><h3>Move your progress</h3><p class="small muted">Progress saves in this browser only. Save a backup to keep it safe or move it to another phone.</p>
       <p class="small" id="bkline">${P.bk.at ? "Last backup: " + fmtDate(fromDayKey(P.bk.at)) + " (" + agoText(-daysUntil(P.bk.at)) + ")" : "No backup yet"}</p>${backupHTML(v)}</div>
     <button class="unit" data-act="open" data-id="about" style="--c:var(--ink)"><span class="ico">${I.info}</span><span class="mid"><span class="utitle">About, privacy and terms</span><span class="usum">Version ${APP_VERSION}</span></span>${I.chev}</button>
     <div class="foot"><span class="small muted">Your progress saves in this browser on this device.</span>
-      ${v.ask ? `<div class="confirm"><span class="small muted">Erase all progress, scores and drafts?</span><button class="btn sm" data-act="resetyes" style="--c:var(--bad)">Yes, reset</button><button class="btn sm ghost" data-act="resetno">Cancel</button></div>` : `<button class="linkbtn" data-act="reset">Reset progress</button>`}</div>
+      ${v.ask ? `<div class="confirm"><span class="small muted">Erase all progress, scores and drafts?${readCopies().length ? " Your automatic copies stay, in case it was a mistake." : ""}</span><button class="btn sm" data-act="resetyes" style="--c:var(--bad)">Yes, reset</button><button class="btn sm ghost" data-act="resetno">Cancel</button></div>` : `<button class="linkbtn" data-act="reset">Reset progress</button>`}</div>
   </main>`);
 }
 
@@ -1619,24 +1664,136 @@ function vMe(v){
 const b64e = str => { const b = new TextEncoder().encode(str); let bin = ""; b.forEach(x => { bin += String.fromCharCode(x); }); return btoa(bin); };
 const b64d = str => new TextDecoder().decode(Uint8Array.from(atob(str), c => c.charCodeAt(0)));
 function exportCode(){ return "SC1." + b64e(JSON.stringify(P)); }
-function importCode(raw){
+// Reads a backup code without using it, so a bad code is caught before the confirm tap
+function parseCode(raw){
   const str = (raw || "").replace(/\s+/g, "");
   if (str.indexOf("SC1.") !== 0) throw new Error("prefix");
   const d = JSON.parse(b64d(str.slice(4)));
   if (!d || typeof d !== "object" || typeof d.u !== "object") throw new Error("shape");
+  return d;
+}
+function importCode(raw){ applyRestored(parseCode(raw), true); }
+// Every restore (backup code, backup file or automatic copy) comes through here
+function applyRestored(d, isBackup){
   essayRun = null;
   P = hydrate(d);
-  markBackedUp();   // what's on this device now matches a backup code
+  if (isBackup) markBackedUp();   // what's on this device now matches a backup. A copy from this device isn't one, so reminders keep counting
+  damaged = false; holdSave = false;
   save(); applyFS();
 }
+// Anything that replaces progress takes two taps, unless there's nothing here to lose yet
+const hasProgress = () => ["u", "stats", "tests", "essay", "cards"].some(k => P[k] && Object.keys(P[k]).length > 0);
+const needsConfirm = () => hasProgress() && !damaged;
+// First tap: the button's words change for 5 seconds. Returns true once it's armed and tapped again.
+function armed(btn, text){
+  const label = btn.querySelector(".al") || btn;
+  if (btn.classList.contains("armed")) return true;
+  btn.dataset.was = label.textContent; label.textContent = text; btn.classList.add("armed");
+  setTimeout(() => disarm(btn), 5000);
+  return false;
+}
+function disarm(btn){
+  if (!btn || !btn.classList.contains("armed")) return;
+  (btn.querySelector(".al") || btn).textContent = btn.dataset.was;
+  btn.classList.remove("armed");
+}
+function setBkMsg(text, cls){ const m = document.getElementById("bkmsg"); if (m){ m.textContent = text; m.className = "small " + (cls || "muted"); } }
+function refreshBkLine(){ const l = document.getElementById("bkline"); if (l) l.textContent = "Last backup: " + fmtDate(fromDayKey(P.bk.at)) + " (" + agoText(-daysUntil(P.bk.at)) + ")"; }
+
+// Backup file: the same code in a small text file, through the share sheet (Files, iCloud Drive, email) or a download. Website only.
+function saveBackupFile(){
+  const text = exportCode() + "\n", name = "study-coach-backup-" + today() + ".txt";
+  const done = msg => { markBackedUp(); save(); refreshBkLine(); setBkMsg(msg, "okmsg"); };
+  try {
+    const file = new File([text], name, {type:"text/plain"});
+    if (navigator.canShare && navigator.canShare({files:[file]})){
+      navigator.share({files:[file], title:"Study Coach backup"})
+        .then(() => done("Backup saved. Keep it somewhere safe."), e => { if (!e || e.name !== "AbortError") downloadFile(text, name, done); });
+      return;
+    }
+  } catch (e) {}
+  downloadFile(text, name, done);
+}
+function downloadFile(text, name, done){
+  try {
+    const url = URL.createObjectURL(new Blob([text], {type:"text/plain"}));
+    const a = document.createElement("a");
+    a.href = url; a.download = name;
+    document.body.append(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 5000);
+    done("Backup file saved to your downloads.");
+  } catch (e) { setBkMsg("Couldn't save a file here. Copy the code instead.", "errmsg"); }
+}
+function readBackupFile(input){
+  const f = input.files && input.files[0];
+  input.value = "";
+  if (!f) return;
+  if (f.size > 5e6){ setBkMsg("That file is too big to be a Study Coach backup.", "errmsg"); return; }
+  const r = new FileReader();
+  r.onload = () => {
+    const text = String(r.result || "").trim(), ta = document.getElementById("bkin");
+    if (!ta) return;
+    try { parseCode(text); } catch (e) { setBkMsg("That file isn't a Study Coach backup.", "errmsg"); return; }
+    ta.value = text;
+    disarm(document.querySelector('[data-act="bkrestore"]'));
+    setBkMsg("Backup loaded. Tap Restore to use it.");
+  };
+  r.onerror = () => setBkMsg("Couldn't read that file.", "errmsg");
+  r.readAsText(f);
+}
+
+/* Automatic copies: one from each of the last 3 days Study Coach was opened, kept on this device (same as Till Payday) */
+const COPIES_KEY = KEY + "-copies";
+function readCopies(){
+  try {
+    const a = JSON.parse(localStorage.getItem(COPIES_KEY) || "[]");
+    return Array.isArray(a) ? a.filter(c => c && typeof c.p === "string" && isDayKey(c.day)) : [];
+  } catch (e) { return []; }
+}
+function keepDailyCopy(json){
+  try {
+    const day = today();
+    let copies = readCopies();
+    if (copies.some(c => c.day === day) || (copies.length && copies[0].p === json)) return;
+    copies.unshift({day, at:new Date().toISOString(), p:json});
+    copies = copies.slice(0, 3);
+    for (let tries = 0; tries < 3; tries++){   // if storage is full, keep fewer copies
+      try { localStorage.setItem(COPIES_KEY, JSON.stringify(copies)); return; }
+      catch (e) { copies = copies.slice(0, copies.length - 1); if (!copies.length) return; }
+    }
+  } catch (e) {}
+}
+function restoreCopy(i){
+  const c = readCopies()[i];
+  if (!c) throw new Error("missing");
+  const d = JSON.parse(c.p);
+  if (!d || typeof d !== "object" || typeof d.u !== "object") throw new Error("shape");
+  applyRestored(d, false);
+  return c;
+}
+function copiesHTML(){
+  const copies = readCopies();
+  if (!copies.length) return "";
+  const btns = copies.map((c, i) => {
+    const ago = -daysUntil(c.day), at = new Date(c.at);
+    const when = ago === 0 ? "Today" : ago === 1 ? "Yesterday" : fmtDate(fromDayKey(c.day));
+    const time = isNaN(at) ? "" : " at " + at.toLocaleTimeString(undefined, {hour:"numeric", minute:"2-digit"});
+    return `<button class="btn ghost copy" data-act="copyrestore" data-id="${i}"><span class="al">${when}, when you first opened it</span><small>${fmtDate(fromDayKey(c.day))}${time}</small></button>`;
+  }).join("");
+  return `<div class="copies" id="copies"><h4>Automatic copies</h4><p class="small muted">Study Coach keeps a copy of your progress from each of the last 3 days you opened it, right here on this device. Handy if something goes wrong.</p>
+    ${btns}<p class="small muted" id="copymsg" aria-live="polite"></p><button class="linkbtn" data-act="copiesdelete">Delete these copies</button></div>`;
+}
+
 function backupHTML(v){
   if (v.bk === "export") return `<textarea id="bkcode" class="code" readonly aria-label="Your backup code">${exportCode()}</textarea>
-    <div class="two"><button class="btn" data-act="bkcopy">Copy code</button><button class="btn ghost" data-act="bkclose">Done</button></div>
-    <p class="small muted" id="bkmsg" aria-live="polite">Keep this code somewhere safe, like your Notes app. On the other device, open Study Coach, tap Restore and paste it.</p>`;
-  if (v.bk === "import") return `<textarea id="bkin" class="code" placeholder="Paste your backup code here" aria-label="Backup code"></textarea>
+    ${WEB ? `<button class="btn" data-act="bkfile">Save as a file</button>` : ""}
+    <div class="two"><button class="btn${WEB ? " ghost" : ""}" data-act="bkcopy">Copy code</button><button class="btn ghost" data-act="bkclose">Done</button></div>
+    <p class="small muted" id="bkmsg" aria-live="polite">${WEB ? "Keep it somewhere safe, like the Files app, Notes, or an email to yourself. On the other device, open Study Coach, tap Restore, and choose the file or paste the code." : "Keep this code somewhere safe, like your Notes app. On the other device, open Study Coach, tap Restore and paste it."}</p>`;
+  if (v.bk === "import") return `<label class="btn ghost pickfile">Choose a backup file<input type="file" id="bkfile" class="filepick" accept=".txt,.json,text/plain,application/json"></label>
+    <textarea id="bkin" class="code" placeholder="Or paste your backup code here" aria-label="Backup code"></textarea>
     <div class="two"><button class="btn" data-act="bkrestore">Restore</button><button class="btn ghost" data-act="bkclose">Cancel</button></div>
-    <p class="small muted" id="bkmsg" aria-live="polite">Restoring replaces the progress saved on this device.</p>`;
-  return `${v.bkok ? `<p class="okmsg" aria-live="polite">Progress restored.</p>` : ""}<div class="two"><button class="btn ghost" data-act="bkexport">Back up</button><button class="btn ghost" data-act="bkimport">Restore</button></div>`;
+    <p class="small muted" id="bkmsg" aria-live="polite">Restoring replaces the progress saved on this device.</p>${copiesHTML()}`;
+  return `${v.bkok ? `<p class="okmsg" aria-live="polite">${v.bkok === true ? "Progress restored." : v.bkok}</p>` : ""}<div class="two"><button class="btn ghost" data-act="bkexport">Back up</button><button class="btn ghost" data-act="bkimport">Restore</button></div>${copiesHTML()}`;
 }
 
 /* ================= ABOUT ================= */
@@ -1876,10 +2033,25 @@ document.addEventListener("click", e => {
     }
     case "bkrestore": {
       const ta = document.getElementById("bkin");
-      try { importCode(ta.value); stacks.learn = [{v:"home"}]; stacks.practice = [{v:"practice"}]; stacks.tools = [{v:"tools"}]; stacks.me = [{v:"me", bkok:true}]; render(true); }
-      catch (err) { const msg = document.getElementById("bkmsg"); msg.textContent = "That code didn't work. Make sure you copied the whole thing, starting with SC1."; msg.className = "small errmsg"; }
+      if (!ta.value.trim()){ setBkMsg("Choose a backup file or paste a code first.", "errmsg"); break; }
+      let d;
+      try { d = parseCode(ta.value); } catch (err) { setBkMsg("That code didn't work. Make sure you copied the whole thing, starting with SC1.", "errmsg"); break; }
+      if (needsConfirm() && !armed(t, "Tap again to replace your progress")) break;
+      applyRestored(d, true);
+      stacks.learn = [{v:"home"}]; stacks.practice = [{v:"practice"}]; stacks.tools = [{v:"tools"}]; stacks.me = [{v:"me", bkok:true}]; render(true);
       break;
     }
+    case "bkfile": saveBackupFile(); break;
+    case "copyrestore": {
+      if (needsConfirm() && !armed(t, "Tap again to bring back this copy")) break;
+      let c;
+      try { c = restoreCopy(+id); } catch (err) { const m = document.getElementById("copymsg"); if (m){ m.textContent = "That copy couldn't be read."; m.className = "small errmsg"; } break; }
+      stacks.learn = [{v:"home"}]; stacks.practice = [{v:"practice"}]; stacks.tools = [{v:"tools"}]; stacks.me = [{v:"me", bkok:"Copy from " + fmtDate(fromDayKey(c.day)) + " restored."}]; render(true);
+      break;
+    }
+    case "copiesdelete": if (!armed(t, "Tap again to delete the copies")) break; try { localStorage.removeItem(COPIES_KEY); } catch (err) {} render(false); break;
+    case "damagedrestore": tab = "me"; stacks.me = [{v:"me", bk:"import"}]; render(true); { const c = document.getElementById("copies") || document.getElementById("bkin"); if (c) c.scrollIntoView({block:"start"}); } break;
+    case "damagedfresh": damaged = false; holdSave = false; save(); render(false); break;
     case "report": v.rep = id; render(false); break;
     case "reportclose": v.rep = null; render(false); break;
     case "copyemail": {
@@ -1893,19 +2065,21 @@ document.addEventListener("click", e => {
     case "fs": P.set.fs = id; applyFS(); save(); render(false); break;
     case "reset": v.ask = true; render(false); break;
     case "resetno": v.ask = false; render(false); break;
-    case "resetyes": { essayRun = null; const fs = P.set.fs; P = fresh(); P.set.fs = fs; save(); v.ask = false;
+    case "resetyes": { essayRun = null; const fs = P.set.fs; P = fresh(); P.set.fs = fs; damaged = false; holdSave = false; save(); v.ask = false;
       stacks.learn = [{v:"home"}]; stacks.practice = [{v:"practice"}]; stacks.tools = [{v:"tools"}]; render(false); break; }
   }
 });
 
 let saveTimer = null;
 document.addEventListener("input", e => {
+  if (e.target.id === "bkin"){ disarm(document.querySelector('[data-act="bkrestore"]')); return; }
   if (e.target.id !== "essay-text") return;
   const st = essayState(cur().id); st.text = e.target.value;
   const w = document.getElementById("wc"); if (w) w.textContent = wc(st.text) + " words";
   clearTimeout(saveTimer); saveTimer = setTimeout(save, 500);
 });
 document.addEventListener("change", e => {
+  if (e.target.id === "bkfile"){ readBackupFile(e.target); return; }
   if (e.target.id === "tdate"){ if (e.target.value) P.set.date = e.target.value; else delete P.set.date; save(); render(false); return; }
   const k = e.target.dataset && e.target.dataset.check;
   if (!k) return;
@@ -1974,7 +2148,15 @@ function pauseAll(){
 }
 document.addEventListener("visibilitychange", () => { if (document.hidden) pauseAll(); });
 window.addEventListener("pagehide", pauseAll);
+// Two tabs: the newest save wins everywhere, so an older tab can't save over newer progress (same as Till Payday)
+window.addEventListener("storage", e => {
+  if (e.key !== KEY && e.key !== null) return;
+  if (e.newValue == null){ essayRun = null; P = fresh(); render(false); return; }   // cleared in another tab
+  if (e.newValue === JSON.stringify(P)) return;
+  try { const d = JSON.parse(e.newValue); if (d && typeof d === "object"){ essayRun = null; P = hydrate(d); damaged = false; applyFS(); render(false); } } catch (err) {}
+});
 
+if (loadedRaw) keepDailyCopy(loadedRaw);
 applyFS();
 render(false);
 try {
@@ -2137,8 +2319,8 @@ try {
       steps++; if (up.dv !== DATA_VERSION || up.bk.at !== "" || up.bk.n !== 15 || "safariTip" in up.set || up.set.fs !== "lg") issues.push("Older progress didn't upgrade correctly");
       const junk = hydrate({u:{}, dv:2, bk:{at:"soon", n:"lots", snooze:5}});
       steps++; if (junk.bk.at !== "" || junk.bk.n !== 0 || junk.bk.snooze !== "") issues.push("Damaged backup details weren't cleaned up");
-      act("tab", "me"); act("bkimport"); $("#bkin").value = "SC1." + b64e(JSON.stringify({u:{m1:{done:true}}, stats:{math:{seen:4, right:2}}, set:{fs:"md"}})); act("bkrestore");
-      steps++; if (P.dv !== DATA_VERSION || !P.u.m1 || P.bk.at !== today() || P.bk.n !== 0) issues.push("A backup code from 2.3 didn't restore correctly");
+      act("tab", "me"); act("bkimport"); $("#bkin").value = "SC1." + b64e(JSON.stringify({u:{m1:{done:true}}, stats:{math:{seen:4, right:2}}, set:{fs:"md"}})); act("bkrestore"); act("bkrestore");
+      steps++; if (P.dv !== DATA_VERSION || !P.u.m1 || !P.stats.math || P.stats.math.seen !== 4 || P.bk.at !== today() || P.bk.n !== 0) issues.push("A backup code from 2.3 didn't restore correctly");
       const lv = bk => { P.bk = Object.assign({at:"", n:0, snooze:""}, bk); return backupNeed(); };
       for (const [bk, want, card] of [
         [{n:9}, "", false], [{n:10}, "first", true], [{at:dayPlus(-6), n:99}, "", false], [{at:dayPlus(-7), n:25}, "due", true], [{at:dayPlus(-7), n:24}, "", false],
@@ -2180,6 +2362,96 @@ try {
       steps++; if (tips.length !== (WEB ? 4 : 1) || !$("#keepsafe").textContent.includes("Study Coach reminds you")) issues.push("The About tips for keeping progress safe are wrong");
       act("back");
       P = hydrate(JSON.parse(keep)); save(); render(false);
+      await step("Backup file, automatic copies, damaged progress and two tabs");
+      {
+        const keep2 = JSON.stringify(P), CK = KEY + "-copies", DK = KEY + "-damaged";
+        const rb = () => $('[data-act="bkrestore"]'), msg = () => ($("#bkmsg") || {}).textContent || "";
+        const reTab = () => { stacks.learn = [{v:"home"}]; stacks.practice = [{v:"practice"}]; stacks.tools = [{v:"tools"}]; stacks.me = [{v:"me"}]; };
+        // Restore: two taps when there's progress to lose; a bad or missing code is caught before the confirm tap
+        const code2 = "SC1." + b64e(JSON.stringify({u:{m1:{done:true}}, stats:{math:{seen:7, right:5}}, set:{fs:"md"}}));
+        act("tab", "me"); act("bkimport"); $("#bkin").value = code2; act("bkrestore");
+        steps++; if (!rb() || !rb().classList.contains("armed") || rb().textContent !== "Tap again to replace your progress" || P.stats.math.seen === 7) issues.push("Restore didn't ask for a second tap before replacing progress");
+        $("#bkin").dispatchEvent(new Event("input", {bubbles:true}));
+        steps++; if (rb().classList.contains("armed") || rb().textContent !== "Restore") issues.push("Changing the code didn't reset the Restore button");
+        act("bkrestore"); act("bkrestore");
+        steps++; if (!P.stats.math || P.stats.math.seen !== 7 || P.bk.at !== today() || cur().v !== "me" || !$(".okmsg")) issues.push("Restore didn't work on the second tap");
+        act("bkimport"); act("bkrestore");
+        steps++; if (msg().indexOf("Choose a backup file or paste a code first") < 0) issues.push("Restoring with nothing pasted didn't say what to do");
+        $("#bkin").value = "SC1.nope"; act("bkrestore");
+        steps++; if (msg().indexOf("That code didn't work") < 0 || rb().classList.contains("armed")) issues.push("A bad backup code wasn't caught before the confirm tap");
+        // Backup file: a file picker in Restore everywhere; Save as a file only on the website
+        steps++; if (!$("#bkfile") || $("#bkfile").type !== "file") issues.push("Restore has no Choose a backup file button");
+        let dtOK = false; try { const dt = new DataTransfer(); dt.items.add(new File(["x"], "x.txt")); dtOK = dt.files.length === 1; } catch (e) {}
+        const loadFile = async text => {
+          const dt = new DataTransfer(); dt.items.add(new File([text], "study-coach-backup.txt", {type:"text/plain"}));
+          const inp = $("#bkfile"); inp.files = dt.files; $("#bkmsg").textContent = ""; readBackupFile(inp);
+          for (let i = 0; i < 100 && !msg(); i++) await wait(20);
+        };
+        if (dtOK) {   // browsers that can't build a test file skip these two checks quietly
+          await loadFile(code2 + "\n");
+          steps++; if ($("#bkin").value !== code2 || msg() !== "Backup loaded. Tap Restore to use it.") issues.push("A backup file didn't load into Restore");
+          await loadFile("hello");
+          steps++; if (msg() !== "That file isn't a Study Coach backup.") issues.push("A file that isn't a backup wasn't caught");
+        }
+        act("bkclose"); act("bkexport"); check("Back up with Save as a file");
+        steps++; if (WEB ? !$('[data-act="bkfile"]') : !!$('[data-act="bkfile"]')) issues.push(WEB ? "Back up has no Save as a file button" : "This copy shows a Save as a file button it can't use");
+        steps++; if (msg().indexOf(WEB ? "choose the file or paste the code" : "tap Restore and paste it") < 0) issues.push("The backup tip doesn't match where Study Coach is running");
+        act("bkclose");
+        // Automatic copies: one a day, newest first, at most 3
+        localStorage.removeItem(CK);
+        const now = JSON.stringify(P); keepDailyCopy(now); keepDailyCopy(now);
+        steps++; if (readCopies().length !== 1 || readCopies()[0].day !== today()) issues.push("Today's automatic copy wasn't kept exactly once");
+        const mk = (n, seen) => ({day:dayPlus(-n), at:new Date(Date.now() - n * 86400000).toISOString(), p:JSON.stringify(Object.assign(fresh(), {stats:{math:{seen, right:1}}}))});
+        localStorage.setItem(CK, JSON.stringify([mk(1, 11), mk(2, 22), mk(3, 33)])); keepDailyCopy(now);
+        const cs = readCopies();
+        steps++; if (cs.length !== 3 || cs[0].day !== today() || cs[1].day !== dayPlus(-1) || cs[2].day !== dayPlus(-2)) issues.push("Automatic copies didn't keep the newest 3 days");
+        localStorage.setItem(CK, "{broken"); steps++; if (readCopies().length !== 0) issues.push("Broken automatic copies weren't ignored");
+        localStorage.setItem(CK, JSON.stringify(cs));
+        reTab(); render(false); check("Progress with automatic copies");
+        const cb = () => $('[data-act="copyrestore"][data-id="1"]');
+        steps++; if (!$("#copies") || document.querySelectorAll('[data-act="copyrestore"]').length !== 3 || !cb() || cb().textContent.indexOf("Yesterday, when you first opened it") < 0) issues.push("Automatic copies didn't show in Progress");
+        P.bk = {at:dayPlus(-5), n:40, snooze:""}; save();
+        act("copyrestore", 1);
+        steps++; if (!cb() || !cb().classList.contains("armed") || cb().textContent.indexOf("Tap again to bring back this copy") < 0 || P.stats.math.seen === 11) issues.push("Bringing back a copy didn't ask for a second tap");
+        act("copyrestore", 1);
+        steps++; if (!P.stats.math || P.stats.math.seen !== 11) issues.push("Bringing back a copy didn't work");
+        steps++; if (P.bk.at === today()) issues.push("Bringing back a copy from this device counted as a backup");
+        steps++; if (!$(".okmsg") || $(".okmsg").textContent !== "Copy from " + fmtDate(fromDayKey(dayPlus(-1))) + " restored.") issues.push("No message after bringing back a copy");
+        act("reset"); steps++; if (!$(".foot .confirm") || $(".foot .confirm").textContent.indexOf("Your automatic copies stay") < 0) issues.push("Reset doesn't say the automatic copies stay");
+        act("resetyes"); steps++; if (readCopies().length !== 3) issues.push("Reset erased the automatic copies too");
+        act("copiesdelete"); steps++; if (readCopies().length !== 3) issues.push("Delete these copies didn't ask for a second tap");
+        act("copiesdelete"); steps++; if (readCopies().length || $("#copies")) issues.push("Delete these copies didn't work");
+        // Damaged progress is set aside, never saved over
+        localStorage.removeItem(DK); localStorage.setItem(KEY, "{not progress"); loadSaved(); reTab(); act("tab", "learn"); check("Home with damaged progress");
+        steps++; if (!damaged || localStorage.getItem(DK) !== "{not progress" || !$("#damagedcard") || $("#bkcard") || $("#installcard")) issues.push("Damaged progress wasn't set aside with a notice on Home");
+        act("damagedrestore"); steps++; if (tab !== "me" || !$("#bkin")) issues.push("See saved copies didn't open Restore");
+        $("#bkin").value = code2; act("bkrestore");
+        steps++; if (damaged || !P.stats.math || P.stats.math.seen !== 7) issues.push("Restoring over damaged progress didn't work in one tap");
+        localStorage.setItem(KEY, "[1,2]"); loadSaved(); steps++; if (!damaged) issues.push("Saved data that isn't progress wasn't treated as damaged");
+        act("tab", "learn"); act("damagedfresh"); steps++; if (damaged || $("#damagedcard") || localStorage.getItem(DK) !== "[1,2]") issues.push("Start fresh didn't clear the notice and keep the damaged copy aside");
+        // If the damaged copy can't even be set aside, nothing saves over it
+        const realSet = Storage.prototype.setItem;
+        try {
+          Storage.prototype.setItem = function(k, v){ if (k === DK) throw new Error("full"); return realSet.call(this, k, v); };
+          localStorage.setItem(KEY, "{still broken"); loadSaved(); P.stats.math = {seen:1, right:1}; save();
+          steps++; if (!holdSave || localStorage.getItem(KEY) !== "{still broken") issues.push("Damaged progress that couldn't be set aside got saved over");
+          // Not saving on this device: a warning on Home
+          Storage.prototype.setItem = function(k, v){ if (k === KEY) throw new Error("full"); return realSet.call(this, k, v); };
+          holdSave = false; damaged = false; save(); reTab(); act("tab", "learn"); check("Home when saving fails");
+          steps++; if (!saveFailed || !$("#savewarn")) issues.push("No warning when progress can't be saved");
+        } finally { Storage.prototype.setItem = realSet; }
+        save(); render(false); steps++; if (saveFailed || $("#savewarn")) issues.push("The not-saving warning stayed after saving worked again");
+        // Two tabs: the newest save wins
+        const other = Object.assign(JSON.parse(JSON.stringify(P)), {stats:{math:{seen:99, right:50}}});
+        window.dispatchEvent(new StorageEvent("storage", {key:KEY, newValue:JSON.stringify(other)}));
+        steps++; if (!P.stats.math || P.stats.math.seen !== 99) issues.push("A newer save from another tab didn't show up here");
+        window.dispatchEvent(new StorageEvent("storage", {key:"another-app", newValue:"{}"}));
+        steps++; if (P.stats.math.seen !== 99) issues.push("Another app's save changed Study Coach");
+        steps++; if (!askedToKeep) issues.push("Study Coach didn't ask the browser to keep its data");
+        // Put everything back
+        P = hydrate(JSON.parse(keep2)); damaged = false; holdSave = false; save();
+        localStorage.removeItem(CK); localStorage.removeItem(DK); reTab(); tab = "learn"; render(false);
+      }
       await step("Offline cache name");
       if (/^https?:$/.test(location.protocol)) { try { const sw = await fetch("sw.js", {cache:"no-store"}); if (sw.ok) { steps++; const want = '"study-coach-v' + APP_VERSION.split(" ")[0] + '"'; if ((await sw.text()).indexOf(want) < 0) issues.push("Offline cache name in sw.js doesn't match version " + APP_VERSION.split(" ")[0]); } } catch (e) {} }
       await step("App install details");
