@@ -1,5 +1,8 @@
 # Study Coach: changelog
 
+## 2.5.1 (Nov 3, 2026)
+- The backup code boxes use 16px text, so iPhone Safari no longer zooms in when you tap them. The self-test checks it.
+
 ## 2.5 (Nov 3, 2026)
 Saving now has the same safety net as Till Payday:
 - **Save as a file:** Back up can save your backup as a small file through the share sheet (Files app, iCloud Drive or an email to yourself), or as a download on computers. Website only. The Claude copies keep the backup code.
