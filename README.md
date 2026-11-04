@@ -37,6 +37,7 @@ Results are tied to the version and date they were run. When the app changes, th
 
 | Version | Date | Browser and device | Result |
 |---|---|---|---|
+| 2.4.1 | Nov 3, 2026 | Chrome (Blink engine) on Linux: full check at phone size, small phone size in dark mode and desktop size, plus the Claude-style copy inside a frame (adds a Run the self-test link to About) | ✓ Passed, 1,290 to 1,294 automated checks |
 | 2.4 | Nov 3, 2026 | Chrome (Blink engine) on Linux: full check at phone size, small phone size in dark mode and desktop size, plus the Claude-style copy inside a frame (adds backup reminders and the Make it an app card, and matches Till Payday's Home Screen and backup tips) | ✓ Passed, 1,284 to 1,287 automated checks |
 | 2.3 | Nov 3, 2026 | Chrome (Blink engine) on Linux: full check at phone size, plus small phone size in dark mode and desktop size (adds app install details, so Android phones and computers can install it as an app) | ✓ Passed, 1,242 automated checks |
 | 2.3 | Nov 3, 2026 | The published GitHub Pages site, Safari engine (WebKit) on a real iPhone (iOS 18.7) | ✓ Passed, 1,243 automated checks |
@@ -58,7 +59,7 @@ Chrome's engine also powers Microsoft Edge, Chromebooks, Android phones, Samsung
 
 ### Run the self-test yourself
 
-Open **selftest.html** in any browser and tap **Run self-test**. In a few seconds it taps through the whole app and shows a pass/fail report you can copy. It saves to its own separate storage, so it never touches anyone's real progress. If you run it on a browser that isn't listed above, please share the report by email or in this repository's **Issues** tab (see Feedback below).
+Open **selftest.html** in any browser (the app's About screen links to it, under Feedback) and tap **Run self-test**. In a few seconds it taps through the whole app and shows a pass/fail report you can copy. It saves to its own separate storage, so it never touches anyone's real progress. If you run it on a browser that isn't listed above, please share the report by email or in this repository's **Issues** tab (see Feedback below).
 
 ## Privacy
 
