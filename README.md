@@ -37,6 +37,7 @@ Results are tied to the version and date they were run. When the app changes, th
 
 | Version | Date | Browser and device | Result |
 |---|---|---|---|
+| 2.5.1 | Nov 3, 2026 | The published GitHub Pages site, Safari engine (WebKit) on a real iPhone (iOS 18.7) | ✓ Passed, 1,353 automated checks |
 | 2.5.1 | Nov 3, 2026 | Chrome (Blink engine) on Linux: full check at phone size and small phone size in dark mode (backup code boxes use 16px text so iPhone doesn't zoom) | ✓ Passed, 1,355 to 1,358 automated checks |
 | 2.5 | Nov 3, 2026 | Chrome (Blink engine) on Linux: full check at phone size, small phone size in dark mode and desktop size, plus the Claude-style copy inside a frame (adds backup files, automatic copies, two-tap restore, damaged-progress and not-saving protection, and two-tab protection) | ✓ Passed, 1,349 to 1,363 automated checks |
 | 2.4.1 | Nov 3, 2026 | The published GitHub Pages site, Safari engine (WebKit) on a real iPhone (iOS 18.7) | ✓ Passed, 1,291 automated checks |
