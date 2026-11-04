@@ -37,6 +37,7 @@ Results are tied to the version and date they were run. When the app changes, th
 
 | Version | Date | Browser and device | Result |
 |---|---|---|---|
+| 2.4.1 | Nov 3, 2026 | The published GitHub Pages site, Safari engine (WebKit) on a real iPhone (iOS 18.7) | ✓ Passed, 1,291 automated checks |
 | 2.4.1 | Nov 3, 2026 | Chrome (Blink engine) on Linux: full check at phone size, small phone size in dark mode and desktop size, plus the Claude-style copy inside a frame (adds a Run the self-test link to About) | ✓ Passed, 1,290 to 1,294 automated checks |
 | 2.4 | Nov 3, 2026 | Chrome (Blink engine) on Linux: full check at phone size, small phone size in dark mode and desktop size, plus the Claude-style copy inside a frame (adds backup reminders and the Make it an app card, and matches Till Payday's Home Screen and backup tips) | ✓ Passed, 1,284 to 1,287 automated checks |
 | 2.3 | Nov 3, 2026 | Chrome (Blink engine) on Linux: full check at phone size, plus small phone size in dark mode and desktop size (adds app install details, so Android phones and computers can install it as an app) | ✓ Passed, 1,242 automated checks |
