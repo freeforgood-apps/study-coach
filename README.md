@@ -37,6 +37,7 @@ Results are tied to the version and date they were run. When the app changes, th
 | Version | Date | Browser and device | Result |
 |---|---|---|---|
 | 2.2.3 | Nov 3, 2026 | Chrome (Blink engine) on Linux: full check at phone size, plus small phone size in dark mode (new home at freeforgood-apps, new feedback address, and the offline copy now only clears its own files) | ✓ Passed, 1,239 automated checks |
+| 2.2.3 | Nov 3, 2026 | The published GitHub Pages site, Safari engine (WebKit) on a real iPhone | ✓ Passed, 1,239 automated checks |
 | 2.2.2 | Nov 2, 2026 | Chrome (Blink engine) on Linux: full check at phone size, plus layout checks at small phone, tablet, laptop and desktop sizes (updates the offline copy's name to match the version) | ✓ Passed, 1,243 automated checks |
 | 2.2.2 | Nov 2, 2026 | The published GitHub Pages site, Safari engine (WebKit) on a real iPhone | ✓ Passed, 1,244 automated checks |
 | 2.2.1 | Nov 1, 2026 | Chrome (Blink engine) on Linux: full check at phone size, plus layout checks at tablet, laptop and desktop sizes (fixes the feedback email address) | ✓ Passed, 1,240 automated checks |
