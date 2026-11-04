@@ -893,8 +893,8 @@ const TIPS = [
 </script>
 <script>
 "use strict";
-const APP_VERSION = "2.2.2 · November 2026";
-const FEEDBACK_EMAIL = "freestudycoach@protonmail.com";
+const APP_VERSION = "2.2.3 · November 2026";
+const FEEDBACK_EMAIL = "freeforgood-apps+study@proton.me";
 /* ================= question registry ================= */
 const QMAP = {};
 SUBJECTS.forEach(s => s.units.forEach(u => u.quiz.forEach((q, i) => { q.id = u.id + "." + i; q.sid = s.id; q.uid = u.id; QMAP[q.id] = q; })));
@@ -2018,8 +2018,8 @@ try {
       }
       openLesson("m1"); if (!readText(cur()).includes("Fractions")) issues.push("Lesson read-aloud text is empty"); check("Lesson with Listen"); act("back");
       await step("Feedback and reporting");
-      const r1 = repoFor("freestudycoach.github.io", "/study-coach/"), r2 = repoFor("freestudycoach.github.io", "/study-coach/selftest.html"), r3 = repoFor("someone.github.io", "/"), r4 = repoFor("example.com", "/study-coach/");
-      if (r1 !== "https://github.com/freestudycoach/study-coach" || r2 !== r1 || r3 !== "https://github.com/someone/someone.github.io" || r4 !== null) issues.push("Feedback link address is wrong");
+      const r1 = repoFor("freeforgood-apps.github.io", "/study-coach/"), r2 = repoFor("freeforgood-apps.github.io", "/study-coach/selftest.html"), r3 = repoFor("someone.github.io", "/"), r4 = repoFor("example.com", "/study-coach/");
+      if (r1 !== "https://github.com/freeforgood-apps/study-coach" || r2 !== r1 || r3 !== "https://github.com/someone/someone.github.io" || r4 !== null) issues.push("Feedback link address is wrong");
       const QR = questionReport(QMAP["m1.0"]); if (QR.mail.indexOf("mailto:" + FEEDBACK_EMAIL) !== 0 || QR.mail.indexOf("m1.0") < 0) issues.push("Question report email is wrong");
       act("tab", "tools"); act("open", "about"); check("About feedback"); if (document.body.textContent.indexOf(FEEDBACK_EMAIL) < 0) issues.push("Feedback email missing on About"); act("back");
       act("tab", "learn"); act("tab", "learn"); act("quick5"); document.querySelectorAll('[data-act="pick"]')[0].click();

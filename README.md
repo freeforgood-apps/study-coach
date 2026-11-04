@@ -2,9 +2,9 @@
 
 A free study app for the GED® test that works on any phone or computer. No account, no ads, no tracking, nothing locked.
 
-**Open the app:** https://freestudycoach.github.io/study-coach/
+**Open the app:** https://freeforgood-apps.github.io/study-coach/
 
-**Run the self-test:** https://freestudycoach.github.io/study-coach/selftest.html
+**Run the self-test:** https://freeforgood-apps.github.io/study-coach/selftest.html
 
 ## Who it's for
 
@@ -36,6 +36,7 @@ Results are tied to the version and date they were run. When the app changes, th
 
 | Version | Date | Browser and device | Result |
 |---|---|---|---|
+| 2.2.3 | Nov 3, 2026 | Chrome (Blink engine) on Linux: full check at phone size, plus small phone size in dark mode (new home at freeforgood-apps, new feedback address, and the offline copy now only clears its own files) | ✓ Passed, 1,239 automated checks |
 | 2.2.2 | Nov 2, 2026 | Chrome (Blink engine) on Linux: full check at phone size, plus layout checks at small phone, tablet, laptop and desktop sizes (updates the offline copy's name to match the version) | ✓ Passed, 1,243 automated checks |
 | 2.2.2 | Nov 2, 2026 | The published GitHub Pages site, Safari engine (WebKit) on a real iPhone | ✓ Passed, 1,244 automated checks |
 | 2.2.1 | Nov 1, 2026 | Chrome (Blink engine) on Linux: full check at phone size, plus layout checks at tablet, laptop and desktop sizes (fixes the feedback email address) | ✓ Passed, 1,240 automated checks |
@@ -79,7 +80,7 @@ All lessons, questions and essay passages are original and were written with hel
 
 Spotted a mistake, got stuck or have an idea? You don't need an account to reach us.
 
-- **Email:** freestudycoach@protonmail.com (private, no account needed)
+- **Email:** freeforgood-apps+study@proton.me (private, no account needed)
 - **GitHub:** open an issue in this repository's **Issues** tab (public, needs a free GitHub account)
 - **In the app:** after you answer a question, and in your test results, tap **Report a mistake**. It fills in which question you mean. The About screen has a feedback button too.
 
