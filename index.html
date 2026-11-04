@@ -312,6 +312,12 @@ textarea.code{width:100%;min-height:110px;font-family:ui-monospace,Menlo,Consola
 .warnnote{border-style:solid;border-color:color-mix(in srgb,var(--flag) 55%,var(--line));background:color-mix(in srgb,var(--flag) 10%,var(--surface))}
 .warnnote .btn{align-self:flex-start;margin-top:4px}
 
+/* keep your progress safe: Home Screen card, backup reminders */
+.note .label{margin-top:0}
+.noteacts{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.noteacts .btn{margin-top:0}
+#keepsafe{scroll-margin-top:calc(76px + env(safe-area-inset-top,0px))}
+
 /* feedback */
 a.btn{text-decoration:none}
 .copyrow{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:10px 12px;border-radius:14px;background:var(--bg)}
@@ -891,7 +897,7 @@ const TIPS = [
 </script>
 <script>
 "use strict";
-const APP_VERSION = "2.3 · November 2026";
+const APP_VERSION = "2.4 · November 2026";
 const FEEDBACK_EMAIL = "freeforgood-apps+study@proton.me";
 /* ================= question registry ================= */
 const QMAP = {};
@@ -901,18 +907,39 @@ const isTestQ = q => q.id.indexOf(".t") > -1;
 
 /* ================= storage (this browser only) ================= */
 const KEY = (typeof window !== "undefined" && window.STUDY_COACH_KEY) || "ged-study-coach-v1";
-const fresh = () => ({u:{}, mix:{}, last:null, stats:{}, days:{}, miss:{}, tests:{}, active:null, cards:{}, essay:{}, set:{fs:"md"}});
+const INSTALL_KEY = KEY + "-install";   // "done" once the Make it an app card is dismissed. This device only, so it stays out of backup codes
+const DATA_VERSION = 2;   // 2 (Study Coach 2.4): adds bk, for backup reminders
+const fresh = () => ({dv:DATA_VERSION, u:{}, mix:{}, last:null, stats:{}, days:{}, miss:{}, tests:{}, active:null, cards:{}, essay:{}, set:{fs:"md"}, bk:{at:"", n:0, snooze:""}});
+const isDayKey = s => typeof s === "string" && /^\d{4}-\d\d-\d\d$/.test(s);
+// Saved progress and backup codes both come through here, so older data is upgraded the same way and nothing is lost.
+function hydrate(d){
+  const p = Object.assign(fresh(), d);
+  p.set = Object.assign({fs:"md"}, d.set || {});
+  delete p.set.safariTip;   // 2.3's Safari note, replaced by the Make it an app card
+  const b = d.bk && typeof d.bk === "object" ? d.bk : {};
+  p.bk = {at:isDayKey(b.at) ? b.at : "", n:Math.min(Math.max(Math.floor(+b.n) || 0, 0), 9999), snooze:isDayKey(b.snooze) ? b.snooze : ""};
+  // From 2.3 or earlier, no backup is on record, so every answer so far counts as not backed up yet
+  if (!(d.dv >= 2)) p.bk.n = Math.min(Object.values(p.stats && typeof p.stats === "object" ? p.stats : {}).reduce((a, s) => a + ((s && +s.seen) || 0), 0), 9999);
+  p.dv = DATA_VERSION;
+  if (p.active && !TESTS[p.active.sid]) p.active = null;
+  if (p.active) p.active.run = false;
+  return p;
+}
 let P = fresh();
 try {
   const d = JSON.parse(localStorage.getItem(KEY) || "null");
-  if (d && typeof d === "object") { P = Object.assign(fresh(), d); P.set = Object.assign({fs:"md"}, d.set || {}); }
+  if (d && typeof d === "object") {
+    // Someone who dismissed 2.3's Safari note has already seen the Home Screen advice
+    if (d.set && d.set.safariTip) try { localStorage.setItem(INSTALL_KEY, "done"); } catch (e) {}
+    P = hydrate(d);
+    if (!(d.dv >= 2)) save();   // save the upgrade once
+  }
 } catch (e) {}
-if (P.active && !TESTS[P.active.sid]) P.active = null;
-if (P.active) P.active.run = false;
 function save(){ try { localStorage.setItem(KEY, JSON.stringify(P)); } catch (e) {} }
 
 const pad = n => String(n).padStart(2, "0");
 const dayKey = d => d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate());
+const fromDayKey = k => { const [y, m, d] = k.split("-").map(Number); return new Date(y, m - 1, d); };   // local midnight
 const today = () => dayKey(new Date());
 function streak(){
   const d = new Date();
@@ -926,6 +953,7 @@ function record(q, ok){
   st.seen++; if (ok) st.right++;
   const k = today(); P.days[k] = (P.days[k] || 0) + 1;
   if (ok) delete P.miss[q.id]; else P.miss[q.id] = 1;
+  P.bk.n = Math.min(P.bk.n + 1, 9999);   // answers since the last backup, for backup reminders
 }
 const missedIds = () => Object.keys(P.miss).filter(id => QMAP[id]);
 function applyFS(){ document.documentElement.style.fontSize = P.set.fs === "lg" ? "118.75%" : "106.25%"; }
@@ -1000,8 +1028,8 @@ function readText(v){
   return (q.p ? strip(q.p) + " " : "") + strip(q.q) + " " + opts.map((o, j) => "Choice " + "ABCD"[j] + ". " + strip(o) + ".").join(" ");
 }
 
-/* ================= study pace + Safari tip ================= */
-function daysUntil(d){ const [y, m, dd] = d.split("-").map(Number); const t = new Date(y, m - 1, dd), n = new Date(); n.setHours(0, 0, 0, 0); return Math.round((t - n) / 86400000); }
+/* ================= study pace ================= */
+function daysUntil(d){ const n = new Date(); n.setHours(0, 0, 0, 0); return Math.round((fromDayKey(d) - n) / 86400000); }
 function paceText(){
   if (!P.set.date) return "";
   const d = daysUntil(P.set.date);
@@ -1015,15 +1043,74 @@ function paceText(){
   const per = Math.ceil(left / (d / 7));
   return `${when} ${left} lesson${left === 1 ? "" : "s"} left, about ${per} a week.`;
 }
-function safariTab(){
-  try {
-    const ua = navigator.userAgent;
-    const ios = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
-    const macSafari = /Macintosh/.test(ua) && /Version\/[\d.]+.*Safari/.test(ua) && !/Chrome|Chromium|Edg|Firefox/.test(ua);
-    const standalone = navigator.standalone === true || (window.matchMedia && matchMedia("(display-mode: standalone)").matches);
-    return (ios || macSafari) && !standalone && window.self === window.top;
-  } catch (e) { return false; }
+
+/* ================= keep your progress safe: Home Screen card + backup reminders ================= */
+/* Worded and timed like Till Payday's, so the free apps match. */
+// The website itself. The Claude copies run inside a frame, where Home Screen advice doesn't apply.
+const WEB = (() => { try { return window.self === window.top; } catch (e) { return false; } })();
+function isStandalone(){ try { return navigator.standalone === true || matchMedia("(display-mode: standalone)").matches; } catch (e) { return false; } }
+function isIOS(){ const ua = navigator.userAgent || ""; return /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1); }
+let installHidden = false;
+try { installHidden = localStorage.getItem(INSTALL_KEY) === "done"; } catch (e) {}
+function installDone(){ installHidden = true; try { localStorage.setItem(INSTALL_KEY, "done"); } catch (e) {} }
+let installEvt = null;   // Chrome's own install prompt, when it offers one (Android and computers)
+const dayPlus = n => { const d = new Date(); d.setDate(d.getDate() + n); return dayKey(d); };
+const agoText = days => days <= 0 ? "today" : days === 1 ? "yesterday" : days + " days ago";
+// A first nudge once there's progress worth keeping, a reminder after a week of studying (or lots of questions),
+// and a firmer one after a month. "Later" waits 3 days, or 1 day once a backup is overdue.
+function backupNeed(){
+  const b = P.bk, days = b.at ? -daysUntil(b.at) : null;
+  let level = "";
+  if (!b.at) level = b.n >= 10 ? "first" : "";
+  else if (days >= 30 && b.n >= 1) level = "overdue";
+  else if ((days >= 7 && b.n >= 25) || b.n >= 100) level = "due";
+  const snoozed = !!b.snooze && b.snooze > today();
+  return {level, days, n:b.n, card:!!level && !snoozed};
 }
+function markBackedUp(){ P.bk = {at:today(), n:0, snooze:""}; }
+// One card at a time on Home: a due backup comes first, then the Home Screen card (website only, after the welcome card)
+function keepSafeCard(){
+  const bk = backupNeed();
+  if (bk.card){
+    const extra = WEB && isIOS() && !isStandalone() ? " Adding Study Coach to your Home Screen helps too." : "";
+    const [title, head, sub] = bk.level === "first"
+      ? ["Keep your progress safe", "Save a backup of your progress", "Your progress is only on this device. If the browser clears its data or you get a new phone, a backup code brings it right back. It takes a few seconds."]
+      : bk.level === "due"
+      ? ["Backup reminder", "Time for a quick backup", `You've answered ${bk.n === 1 ? "1 question" : bk.n + " questions"} since your last backup ${agoText(bk.days)}.`]
+      : ["Backup reminder", `It's been ${bk.days} days since your last backup`, "Save a fresh one so your recent progress is safe too."];
+    return `<section class="note warnnote" id="bkcard"><span class="label">${title}</span><b>${head}</b><span class="small">${sub}${extra}</span>
+      <div class="noteacts"><button class="btn sm" data-act="bknow" style="--c:var(--ink)">Back up now</button><button class="btn sm ghost" data-act="bklater">Later</button></div></section>`;
+  }
+  if (!WEB || installHidden || isStandalone() || !P.seen) return "";
+  const text = isIOS()
+    ? "Add Study Coach to your Home Screen. It opens like an app, works without internet, and keeps Safari from clearing your progress after a week away."
+    : "Add Study Coach to your Home Screen. It opens like an app and works without internet.";
+  return `<section class="note" id="installcard"><b>Make it an app</b><span class="small muted">${text}</span>
+    <div class="noteacts">${installEvt ? `<button class="btn sm" data-act="install" style="--c:var(--ink)">Install</button>` : `<button class="btn sm ghost" data-act="installhow">Show me how</button>`}<button class="btn sm ghost" data-act="installdone">Got it</button></div></section>`;
+}
+// The About section the card's "Show me how" opens to
+function keepSafeTips(){
+  const backup = ["Back up now and then. ", "The Progress tab has Back up and Restore, and Study Coach reminds you when it's been a while."];
+  const tips = WEB ? [
+    ["iPhone or iPad: ", "open Study Coach in Safari, tap Share, then Add to Home Screen."],
+    ["Android: ", "open it in Chrome, tap the ⋮ menu, then Add to Home screen or Install app."],
+    ["Safari can clear saved data ", "from websites you haven't opened in 7 days. The Home Screen app keeps its own data, so it avoids that."],
+    backup
+  ] : [backup];
+  return `<section class="sec" id="keepsafe"><h3>Keep your progress safe</h3><ul>${tips.map(([b, t]) => `<li><b>${b}</b>${t}</li>`).join("")}</ul></section>`;
+}
+function showKeepSafe(){ go({v:"about"}); const el = document.getElementById("keepsafe"); if (el) el.scrollIntoView({block:"start"}); }
+function promptInstall(){
+  const ev = installEvt; installEvt = null;
+  if (!ev){ showKeepSafe(); return; }
+  try {
+    ev.prompt();
+    Promise.resolve(ev.userChoice).then(c => { if (c && c.outcome === "accepted") installDone(); if (cur().v === "home") render(false); }, () => {});
+  } catch (e) { showKeepSafe(); return; }
+  render(false);
+}
+window.addEventListener("beforeinstallprompt", e => { e.preventDefault(); installEvt = e; if (cur().v === "home") render(false); });
+window.addEventListener("appinstalled", () => { installEvt = null; installDone(); if (cur().v === "home") render(false); });
 
 /* ================= navigation ================= */
 const app = document.getElementById("app");
@@ -1095,7 +1182,7 @@ function vHome(){
       ${P.set.date ? `<p class="pace small">${I.cal}<span>${paceText()}</span></p>` : ""}
       <button class="btn sm" data-act="quick5" style="--c:var(--ink)">${I.bolt} Quick 5 · got five minutes?</button>
     </div>
-    ${safariTab() && !P.set.safariTip ? `<section class="note warnnote"><b>Keep your progress safe</b><span class="small">On iPhones and Macs, Safari can erase saved data for websites you haven't opened in 7 days. Add Study Coach to your Home Screen to keep it, or make a backup code in the Progress tab.</span><button class="btn sm ghost" data-act="safaritip">Got it</button></section>` : ""}
+    ${keepSafeCard()}
     ${P.seen ? "" : `<section class="welcome"><h2>Welcome! Here's how to start</h2><ol><li>Pick a subject below and read a short lesson.</li><li>Answer the practice questions. Every answer is explained.</li><li>When you feel ready, take a full practice test in the Practice tab.</li></ol><button class="btn sm" data-act="welcomed" style="--c:var(--math)">Got it</button></section>`}
     ${cont}
     <div class="label">Subjects</div>
@@ -1109,7 +1196,6 @@ function vHome(){
         <p class="small muted">When you're scoring well here, take the official GED Ready® practice test and schedule your exam at <a href="https://ged.com" target="_blank" rel="noopener">GED.com</a>.</p>
       </div>
     </details>
-    <div class="note"><b>Make it an app</b><span class="small muted"><b>iPhone:</b> open this page in Safari, tap Share, then “Add to Home Screen.”<br><b>Android:</b> open it in Chrome, tap the ⋮ menu, then “Add to Home screen.”</span></div>
     <div class="foot"><span class="small muted">An independent study tool. Not affiliated with ACE or GED Testing Service.</span><button class="linkbtn" data-act="open" data-id="about">About, privacy and terms</button></div>
   </main>`);
 }
@@ -1518,7 +1604,8 @@ function vMe(v){
     <div class="sec"><h3>Your test date</h3><p class="small muted">Pick the day you plan to test, and Study Coach will suggest a weekly pace.</p>
       <input type="date" id="tdate" class="dateinput" value="${P.set.date || ""}" min="${today()}" aria-label="Your test date">
       ${P.set.date ? `<p class="pace">${I.cal}<span>${paceText()}</span></p><button class="linkbtn sm" data-act="cleardate">Clear date</button>` : ""}</div>
-    <div class="sec"><h3>Move your progress</h3><p class="small muted">Progress saves in this browser only. Make a backup code to keep it safe or move it to another phone.</p>${backupHTML(v)}</div>
+    <div class="sec"><h3>Move your progress</h3><p class="small muted">Progress saves in this browser only. Make a backup code to keep it safe or move it to another phone.</p>
+      <p class="small" id="bkline">${P.bk.at ? "Last backup: " + fmtDate(fromDayKey(P.bk.at)) + " (" + agoText(-daysUntil(P.bk.at)) + ")" : "No backup yet"}</p>${backupHTML(v)}</div>
     <button class="unit" data-act="open" data-id="about" style="--c:var(--ink)"><span class="ico">${I.info}</span><span class="mid"><span class="utitle">About, privacy and terms</span><span class="usum">Version ${APP_VERSION}</span></span>${I.chev}</button>
     <div class="foot"><span class="small muted">Your progress saves in this browser on this device.</span>
       ${v.ask ? `<div class="confirm"><span class="small muted">Erase all progress, scores and drafts?</span><button class="btn sm" data-act="resetyes" style="--c:var(--bad)">Yes, reset</button><button class="btn sm ghost" data-act="resetno">Cancel</button></div>` : `<button class="linkbtn" data-act="reset">Reset progress</button>`}</div>
@@ -1535,9 +1622,8 @@ function importCode(raw){
   const d = JSON.parse(b64d(str.slice(4)));
   if (!d || typeof d !== "object" || typeof d.u !== "object") throw new Error("shape");
   essayRun = null;
-  P = Object.assign(fresh(), d); P.set = Object.assign({fs:"md"}, d.set || {});
-  if (P.active && !TESTS[P.active.sid]) P.active = null;
-  if (P.active) P.active.run = false;
+  P = hydrate(d);
+  markBackedUp();   // what's on this device now matches a backup code
   save(); applyFS();
 }
 function backupHTML(v){
@@ -1594,6 +1680,7 @@ function vAbout(){
       <li>Clearing your browser data, or tapping Reset progress, erases them for good. Use Back up in the Progress tab to keep a copy.</li>
       <li>Like any website, the service that hosts this page may log visitors' IP addresses for security.</li>
       <li>Links to other sites, like GED.com, are covered by those sites' own privacy policies.</li></ul></section>
+    ${keepSafeTips()}
     <section class="sec"><h3>Accessibility</h3><p>Study Coach follows your device's light or dark setting, has a large-text option in the Progress tab, labels its controls for screen readers, can read lessons and questions out loud (tap Listen), works with a keyboard on computers and is designed to meet WCAG 2.2 AA color contrast. If anything is hard to use, please say so using the feedback option below.</p></section>
     <section class="sec"><h3>Terms of use</h3><p>Study Coach is free to use and is provided “as is,” without warranties of any kind. It's a study aid, not a guarantee of any test result, and shouldn't be your only source of information about the GED® test.</p></section>
     <section class="sec" id="feedback"><h3>Feedback</h3><p>Spotted a mistake, got stuck or have an idea? Send it in. You don't need an account to email.</p>
@@ -1766,11 +1853,15 @@ document.addEventListener("click", e => {
     case "eclearyes": essayState(v.id).text = ""; v.ask = false; save(); render(false); break;
     case "eclearno": v.ask = false; render(false); break;
     case "welcomed": P.seen = true; save(); render(false); break;
-    case "safaritip": P.set.safariTip = true; save(); render(false); break;
+    case "bknow": markBackedUp(); save(); tab = "me"; stacks.me = [{v:"me", bk:"export"}]; render(true); { const c = document.getElementById("bkcode"); if (c) c.scrollIntoView({block:"center"}); } break;
+    case "bklater": P.bk.snooze = dayPlus(backupNeed().level === "overdue" ? 1 : 3); save(); render(false); break;
+    case "install": promptInstall(); break;
+    case "installhow": showKeepSafe(); break;
+    case "installdone": installDone(); render(false); break;
     case "quick5": go(makeQuiz("quick")); break;
     case "listen": if (speaking) stopSpeak(); else speak(readText(v)); syncListen(); break;
     case "cleardate": delete P.set.date; save(); render(false); break;
-    case "bkexport": v.bk = "export"; v.bkok = false; render(false); break;
+    case "bkexport": markBackedUp(); save(); v.bk = "export"; v.bkok = false; render(false); break;
     case "bkimport": v.bk = "import"; v.bkok = false; render(false); break;
     case "bkclose": v.bk = null; render(false); break;
     case "bkcopy": {

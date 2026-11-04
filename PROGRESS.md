@@ -8,15 +8,17 @@ Study Coach for the GED® Test: a free, mobile-first study web app. It's for adu
 
 ## Where things stand (Nov 3, 2026)
 
-- **Live version:** 2.3 at https://freeforgood-apps.github.io/study-coach/
-- 2.3 passed its self-test in headless Chrome and on the live site on a real iPhone (Nov 3, 2026). Both Claude copies are on 2.3 too (republished Nov 3, 2026; their self-test passed in headless Chrome before publishing, then inside Claude on a real iPhone). Full test history is in README.md under "Tested on".
-- Every past version is kept in GitHub's history. To roll back, find the version in CHANGELOG.md and restore that upload.
+- **Live version:** 2.4 at https://freeforgood-apps.github.io/study-coach/
+- 2.4 (Keep your progress safe, matched with Till Payday) passed its self-test in headless Chrome at phone, small phone (dark) and desktop sizes, and as a Claude-style copy inside a frame (Nov 3, 2026). Still to do: run the self-test on the live site on a real iPhone. Full test history is in README.md under "Tested on".
+- Every past version is kept in GitHub's history. To roll back, find the version in CHANGELOG.md and restore that upload. Claude's workspace couldn't push version tags (GitHub refused them, Nov 3, 2026), so add tags like v2.4 on the GitHub website if wanted.
 
 ## Where it lives
 
 - **This repo is the latest source.** Claude's workspace is temporary, so anything worth keeping gets saved here. Files sit flat at the top of the repo (no folders).
 - `index.html`: the whole app in one self-contained file.
 - `selftest.html`: the same app plus an automated self-test, on its own storage (`study-coach-selftest-v1`).
+- **Keep your progress safe** (2.4) is shared with Till Payday on purpose: the About tips, the one-card-at-a-time Home cards, and the backup reminder timing. Change them in both apps together so they keep matching. Study Coach counts answered questions toward reminders (Till Payday counts edits), so its numbers are scaled to that.
+- **Saved data** carries a data version (`dv`, now 2). Saved progress and backup codes both go through `hydrate()`, which upgrades older data. If the shape changes again, bump DATA_VERSION and add the upgrade there.
 - `sw.js`: offline support (network-first). It only clears caches whose names start with `study-coach-`, because the address is shared with other free apps.
 - `README.md`: the public project page.
 - `manifest.webmanifest` and `icon-192.png`, `icon-512.png`, `icon-maskable-512.png`: install details and icons, so Android phones and computers can install it as an app. Its id, start and scope all stay inside /study-coach/, since the address is shared.
@@ -25,12 +27,13 @@ Study Coach for the GED® Test: a free, mobile-first study web app. It's for adu
 
 ## Next up
 
-- Nothing planned yet.
+- Run the 2.4 self-test on the live site on a real iPhone, and add its row to README.md.
+- Nothing else planned yet.
 
 ## Non-negotiables
 
 1. **Always free:** no ads, paywalls, accounts, or donation or support buttons.
-2. **Private:** no analytics, tracking, cookies or outside requests (no external fonts or CDNs). Progress lives only in the browser, under `ged-study-coach-v1`. Never rename it, and keep every storage key and cache name unique, since other apps share the same address.
+2. **Private:** no analytics, tracking, cookies or outside requests (no external fonts or CDNs). Progress lives only in the browser, under `ged-study-coach-v1` (plus `ged-study-coach-v1-install`, which only remembers that the Make it an app card was dismissed on that device). Never rename them, and keep every storage key and cache name unique, since other apps share the same address.
 3. **Anonymous:** the only public identity is freeforgood-apps and freeforgood-apps+study@proton.me. Never put anyone's real name, personal email, location, workplace, social handles, links to Claude chats or Claude page IDs in any file, commit or post. Commits use the account's private GitHub noreply address.
 4. **Honest:** keep the GED® trademark notice and "Not affiliated with ACE or GED Testing Service". Practice scores are never GED scores. Keep the AI-assisted content disclosure. Never overstate what has been tested.
 5. **Accessible:** WCAG 2.2 AA contrast in light and dark mode, large tap targets, screen-reader labels, Listen (read aloud), keyboard support, a large-text option, and no sideways scrolling at 320px wide.
