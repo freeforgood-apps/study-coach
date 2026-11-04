@@ -8,7 +8,8 @@ Study Coach for the GED® Test: a free, mobile-first study web app. It's for adu
 
 ## Where things stand (Nov 3, 2026)
 
-- **Live version:** 2.4.1 at https://freeforgood-apps.github.io/study-coach/
+- **Live version:** 2.5 at https://freeforgood-apps.github.io/study-coach/
+- 2.5 (Nov 3, 2026) brings Till Payday's saving safety net: backup files, restore from a file, automatic copies, two-tap restore, damaged progress set aside, a not-saving warning and two-tab protection. It passed the self-test in headless Chrome at phone, small phone (dark) and desktop sizes, and as a Claude-style copy inside a frame (1,349 to 1,363 checks), and the self-test caught all 10 bugs planted on purpose. **Still to do:** run the self-test on the live site on a real iPhone, and republish both Claude copies if that wasn't done in the same session (see Claude copies below).
 - 2.4 (Keep your progress safe, matched with Till Payday) and 2.4.1 (a Run the self-test link on About, like Till Payday's) passed the self-test in headless Chrome at phone, small phone (dark) and desktop sizes, and as a Claude-style copy inside a frame (Nov 3, 2026). Both Claude copies are on 2.4.1 too (republished Nov 3, 2026). 2.4.1 also passed on the live site on a real iPhone (Safari engine, iOS 18.7, 1,291 checks, Nov 3, 2026). Full test history is in README.md under "Tested on".
 - Every past version is kept in GitHub's history. To roll back, find the version in CHANGELOG.md and restore that upload. Claude's workspace couldn't push version tags (GitHub refused them, Nov 3, 2026), so add tags like v2.4 on the GitHub website if wanted.
 
@@ -18,6 +19,7 @@ Study Coach for the GED® Test: a free, mobile-first study web app. It's for adu
 - `index.html`: the whole app in one self-contained file.
 - `selftest.html`: the same app plus an automated self-test, on its own storage (`study-coach-selftest-v1`).
 - **Keep your progress safe** (2.4) is shared with Till Payday on purpose: the About tips, the one-card-at-a-time Home cards, and the backup reminder timing. Change them in both apps together so they keep matching. Study Coach counts answered questions toward reminders (Till Payday counts edits), so its numbers are scaled to that.
+- **Saving safety net** (2.5), copied from Till Payday on purpose: Study Coach asks the browser to keep its data; Back up offers Save as a file (share sheet, or a download) on the website and the backup code everywhere; Restore takes a file or a code; restoring over existing progress takes two taps; automatic copies from the last 3 days opened live under `ged-study-coach-v1-copies`; unreadable progress is set aside under `ged-study-coach-v1-damaged` and never saved over; a warning shows when saving fails; and the newest save wins across open tabs. Keep these matching Till Payday. One deliberate difference: bringing back an automatic copy does **not** count as a backup here (it's still only on this device), while Till Payday counts it as one.
 - **Saved data** carries a data version (`dv`, now 2). Saved progress and backup codes both go through `hydrate()`, which upgrades older data. If the shape changes again, bump DATA_VERSION and add the upgrade there.
 - `sw.js`: offline support (network-first). It only clears caches whose names start with `study-coach-`, because the address is shared with other free apps.
 - `README.md`: the public project page.
@@ -27,12 +29,14 @@ Study Coach for the GED® Test: a free, mobile-first study web app. It's for adu
 
 ## Next up
 
-- Nothing planned yet.
+- Run the 2.5 self-test on the live site on a real iPhone, and add a "Tested on" row for it in README.md.
+- Owner to decide: should Till Payday stop counting a restored automatic copy as a backup, to match Study Coach 2.5?
+- Idea, not started: the boxes for pasting a backup code use small text (about 13px), so iPhone Safari zooms in when you tap them. 16px text would stop that.
 
 ## Non-negotiables
 
 1. **Always free:** no ads, paywalls, accounts, or donation or support buttons.
-2. **Private:** no analytics, tracking, cookies or outside requests (no external fonts or CDNs). Progress lives only in the browser, under `ged-study-coach-v1` (plus `ged-study-coach-v1-install`, which only remembers that the Make it an app card was dismissed on that device). Never rename them, and keep every storage key and cache name unique, since other apps share the same address.
+2. **Private:** no analytics, tracking, cookies or outside requests (no external fonts or CDNs). Progress lives only in the browser, under `ged-study-coach-v1` (plus `ged-study-coach-v1-install`, which only remembers that the Make it an app card was dismissed on that device, `ged-study-coach-v1-copies` for the automatic copies, and `ged-study-coach-v1-damaged` for unreadable progress set aside). Never rename them, and keep every storage key and cache name unique, since other apps share the same address.
 3. **Anonymous:** the only public identity is freeforgood-apps and freeforgood-apps+study@proton.me. Never put anyone's real name, personal email, location, workplace, social handles, links to Claude chats or Claude page IDs in any file, commit or post. Commits use the account's private GitHub noreply address.
 4. **Honest:** keep the GED® trademark notice and "Not affiliated with ACE or GED Testing Service". Practice scores are never GED scores. Keep the AI-assisted content disclosure. Never overstate what has been tested.
 5. **Accessible:** WCAG 2.2 AA contrast in light and dark mode, large tap targets, screen-reader labels, Listen (read aloud), keyboard support, a large-text option, and no sideways scrolling at 320px wide.
