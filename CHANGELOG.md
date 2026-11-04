@@ -1,5 +1,10 @@
 # Study Coach: changelog
 
+## 2.3 (Nov 3, 2026)
+- Android phones and computers can now install Study Coach as an app, with its own icon, opening full screen. iPhones already could, with Add to Home Screen.
+- New files: manifest.webmanifest (the install details) and three icons, redrawn sharp from the existing icon.
+- The self-test checks the install details and icons on the website. The Claude copies have no such files, so it skips that check there.
+
 ## 2.2.3 (Nov 3, 2026)
 - Moved to its new home at freeforgood-apps.github.io/study-coach.
 - New feedback address: freeforgood-apps+study@proton.me.

@@ -893,7 +893,7 @@ const TIPS = [
 </script>
 <script>
 "use strict";
-const APP_VERSION = "2.2.3 · November 2026";
+const APP_VERSION = "2.3 · November 2026";
 const FEEDBACK_EMAIL = "freeforgood-apps+study@proton.me";
 /* ================= question registry ================= */
 const QMAP = {};
@@ -2035,6 +2035,17 @@ try {
       act("reset"); act("resetyes"); act("bkimport"); $("#bkin").value = code; act("bkrestore"); if (JSON.stringify(P) !== snap) issues.push("Backup didn't restore exactly");
       await step("Offline cache name");
       if (/^https?:$/.test(location.protocol)) { try { const sw = await fetch("sw.js", {cache:"no-store"}); if (sw.ok) { steps++; const want = '"study-coach-v' + APP_VERSION.split(" ")[0] + '"'; if ((await sw.text()).indexOf(want) < 0) issues.push("Offline cache name in sw.js doesn't match version " + APP_VERSION.split(" ")[0]); } } catch (e) {} }
+      await step("App install details");
+      // Website only, like the offline check. The Claude copy has no manifest file: if it can't be fetched,
+      // or the host answers with a web page instead, skip quietly. Once a real manifest loads, any problem counts.
+      let mf = null, txt = ""; if (/^https?:$/.test(location.protocol)) { try { mf = await fetch("manifest.webmanifest", {cache:"no-store"}); txt = mf.ok ? await mf.text() : ""; } catch (e) { mf = null; } }
+      if (mf && mf.ok && !/^\s*</.test(txt)) { try { steps++;
+        const m = JSON.parse(txt), home = new URL("./", mf.url).href;
+        if (!m.name || !m.short_name || m.display !== "standalone" || [m.id, m.start_url, m.scope].some(u => new URL(u || "", mf.url).href !== home)) issues.push("App install details (manifest) are missing something or point outside Study Coach");
+        if (!(m.icons || []).some(ic => ic.purpose === "maskable")) issues.push("App install details have no maskable icon");
+        for (const ic of m.icons || []) { steps++; const got = await new Promise(res => { const img = new Image(); img.onload = () => res(img.naturalWidth + "x" + img.naturalHeight); img.onerror = () => res("missing"); img.src = new URL(ic.src, mf.url).href; }); if (got !== ic.sizes) issues.push("App icon " + ic.src + " is " + got + ", expected " + ic.sizes); }
+        steps++; const page = await fetch("./", {cache:"no-store"}); if (page.ok && (await page.text()).indexOf('<link rel="manifest" href="manifest.webmanifest">') < 0) issues.push("The app page doesn't link its install details (manifest)");
+      } catch (e) { issues.push("App install details couldn't be checked: " + (e && e.message)); } }
       await step("Saving to the device");
       const saved = JSON.parse(localStorage.getItem(KEY) || "null"); if (!saved || Object.keys(saved.u).length !== 19) issues.push("Progress didn't save to the device");
     } catch (e) { issues.push("Test stopped early: " + (e && e.message)); }
