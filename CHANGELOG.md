@@ -1,5 +1,13 @@
 # Study Coach: changelog
 
+## 2.4 (Nov 3, 2026)
+Keeping progress safe now works and reads the same as in Till Payday:
+- **About** has a new "Keep your progress safe" section: how to add Study Coach to the Home Screen on iPhone, iPad and Android, Safari's 7-day note, and "back up now and then". The Claude copies show only the backup tip.
+- **Home** has one "Make it an app" card in place of the two old notes. It shows only on the website in a browser tab, after the welcome card, and goes away once Study Coach is installed or you tap Got it. "Show me how" opens the About tips, and on Android and computers it becomes an Install button when the browser offers one.
+- **Backup reminders:** a first nudge once you've answered 10 questions, a reminder after a week and 25 answers (or 100 answers), and a firmer one after 30 days. Later waits 3 days, or 1 day when overdue. The Progress tab shows when you last backed up.
+- Saved progress has a data version now. Progress and backup codes from 2.3 carry over: answers so far count as not backed up yet, and anyone who dismissed the old Safari note won't see the Make it an app card.
+- The self-test checks the upgrade, every reminder rule, both cards and the About tips (1,287 checks in headless Chrome). It caught 7 bugs planted on purpose.
+
 ## 2.3 (Nov 3, 2026)
 - Android phones and computers can now install Study Coach as an app, with its own icon, opening full screen. iPhones already could, with Add to Home Screen.
 - New files: manifest.webmanifest (the install details) and three icons, redrawn sharp from the existing icon.

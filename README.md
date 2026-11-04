@@ -21,7 +21,7 @@ Anyone working toward a GED® credential, especially people fitting study into f
 - **Formula sheet**, **calculator** and **test-day tips**, including tips for test nerves
 - **Your test date:** pick a date and get a suggested weekly pace
 - **Progress tracking:** daily goal, study streak, accuracy by subject and test history
-- **Backup and restore codes**, so you can move your progress to a new phone
+- **Backup and restore codes**, so you can move your progress to a new phone, with a reminder when it's been a while since your last backup
 
 ## Add it to your home screen
 
@@ -29,7 +29,7 @@ Anyone working toward a GED® credential, especially people fitting study into f
 - **Android:** open the link in Chrome → tap **⋮** → **Install app** (or **Add to Home screen**)
 - **Computer:** in Chrome or Edge, click the install icon at the right end of the address bar
 
-On iPhones and Macs, Safari can erase saved data for websites you haven't opened in 7 days. Apps added to the Home Screen are kept, so adding it is the best way to protect your progress. A backup code from the Progress tab works too.
+On iPhones and Macs, Safari can erase saved data for websites you haven't opened in 7 days. Apps added to the Home Screen keep their own data, so adding it is the best way to protect your progress. Back up now and then too: the Progress tab has **Back up** and **Restore**, and Study Coach reminds you when it's been a while. The same tips are in the app, under About → Keep your progress safe.
 
 ## Tested on
 
@@ -37,6 +37,7 @@ Results are tied to the version and date they were run. When the app changes, th
 
 | Version | Date | Browser and device | Result |
 |---|---|---|---|
+| 2.4 | Nov 3, 2026 | Chrome (Blink engine) on Linux: full check at phone size, small phone size in dark mode and desktop size, plus the Claude-style copy inside a frame (adds backup reminders and the Make it an app card, and matches Till Payday's Home Screen and backup tips) | ✓ Passed, 1,284 to 1,287 automated checks |
 | 2.3 | Nov 3, 2026 | Chrome (Blink engine) on Linux: full check at phone size, plus small phone size in dark mode and desktop size (adds app install details, so Android phones and computers can install it as an app) | ✓ Passed, 1,242 automated checks |
 | 2.3 | Nov 3, 2026 | The published GitHub Pages site, Safari engine (WebKit) on a real iPhone (iOS 18.7) | ✓ Passed, 1,243 automated checks |
 | 2.2.3 | Nov 3, 2026 | Chrome (Blink engine) on Linux: full check at phone size, plus small phone size in dark mode (new home at freeforgood-apps, new feedback address, and the offline copy now only clears its own files) | ✓ Passed, 1,239 automated checks |
@@ -51,7 +52,7 @@ Results are tied to the version and date they were run. When the app changes, th
 | 2.1 | Nov 1, 2026 | The published GitHub Pages site, Safari engine on a real iPhone | ✓ Passed, 1,227 automated checks |
 | — | — | Firefox | Not tested yet |
 
-**What the automated checks cover:** every lesson and quiz, all four full practice tests (answering, flagging, jumping between questions, pausing, saving and resuming, and finishing when time runs out), score math, missed-question review, Quick 5, flashcards, essay practice, the calculator's answers, read-aloud, keyboard shortcuts, the test-date planner, backup and restore, saving to the device, feedback and mistake reporting, that the offline copy's name matches the app version, the app's install details and icons, and checks that no screen scrolls sideways or shows broken text. The exact number of checks varies a little between runs because practice questions are shuffled.
+**What the automated checks cover:** every lesson and quiz, all four full practice tests (answering, flagging, jumping between questions, pausing, saving and resuming, and finishing when time runs out), score math, missed-question review, Quick 5, flashcards, essay practice, the calculator's answers, read-aloud, keyboard shortcuts, the test-date planner, backup and restore, backup reminders and the Make it an app card, upgrading progress saved by older versions, saving to the device, feedback and mistake reporting, that the offline copy's name matches the app version, the app's install details and icons, and checks that no screen scrolls sideways or shows broken text. The exact number of checks varies a little between runs because practice questions are shuffled.
 
 Chrome's engine also powers Microsoft Edge, Chromebooks, Android phones, Samsung Internet, Brave and Opera. Safari's engine powers Safari and nearly every other browser on iPhone and iPad.
 
