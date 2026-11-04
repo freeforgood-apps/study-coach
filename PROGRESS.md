@@ -9,7 +9,7 @@ Study Coach for the GED® Test: a free, mobile-first study web app. It's for adu
 ## Where things stand (Nov 3, 2026)
 
 - **Live version:** 2.4 at https://freeforgood-apps.github.io/study-coach/
-- 2.4 (Keep your progress safe, matched with Till Payday) passed its self-test in headless Chrome at phone, small phone (dark) and desktop sizes, and as a Claude-style copy inside a frame (Nov 3, 2026). Still to do: run the self-test on the live site on a real iPhone. Full test history is in README.md under "Tested on".
+- 2.4 (Keep your progress safe, matched with Till Payday) passed its self-test in headless Chrome at phone, small phone (dark) and desktop sizes, and as a Claude-style copy inside a frame (Nov 3, 2026). Both Claude copies are on 2.4 too (republished Nov 3, 2026). Still to do: run the self-test on the live site on a real iPhone. Full test history is in README.md under "Tested on".
 - Every past version is kept in GitHub's history. To roll back, find the version in CHANGELOG.md and restore that upload. Claude's workspace couldn't push version tags (GitHub refused them, Nov 3, 2026), so add tags like v2.4 on the GitHub website if wanted.
 
 ## Where it lives
