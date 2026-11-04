@@ -95,10 +95,12 @@ Free to use. Provided "as is," without warranties of any kind. Study Coach is a 
 
 | File | What it does |
 |---|---|
-| `index.html` | The whole app in one file (about 190 KB, light on data plans) |
+| `index.html` | The whole app in one file (about 200 KB, light on data plans) |
 | `selftest.html` | The automated self-test. Uses separate storage, so it's safe to share |
 | `sw.js` | Lets the app work offline after the first visit. Keep it next to `index.html` |
 | `README.md` | This page |
+| `CHANGELOG.md` | What changed in each version |
+| `PROGRESS.md` | Where the project stands, and the rules for working on it |
 
 ## Updating the app
 
