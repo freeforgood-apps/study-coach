@@ -29,6 +29,8 @@ Study Coach for the GED® Test: a free, mobile-first study web app. It's for adu
 
 ## Next up
 
+- Restore checks, for the next release (found Nov 5, 2026, comparing with the shared kit in freeforgood-apps/toolkit): `parseCode()` checks the prefix and shape, but `hydrate()` merges the backup straight in with `Object.assign`, so unknown keys (including `__proto__`) come along. Rebuild from known fields only, like Till Payday's `sanitize()`, and add a size cap and a "this backup is from a newer version" message.
+- Check the 4 `innerHTML` spots (`syncListen`, `strip`, the calculator sheet, and the main screen render) to confirm no saved or typed text reaches them unescaped. Not confirmed as a problem yet; a security-audit Full audit would settle it.
 - Till Payday 1.1.2 matches: restoring an automatic copy no longer counts as a backup there either (Nov 3, 2026).
 
 ## Non-negotiables
