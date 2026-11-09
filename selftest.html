@@ -910,7 +910,7 @@ const TIPS = [
 </script>
 <script>
 "use strict";
-const APP_VERSION = "2.5.2 · November 2026";
+const APP_VERSION = "2.5.3";   // plain X.Y.Z: the tagging workflow and the release check read it
 const FEEDBACK_EMAIL = "freeforgood-apps+study@proton.me";
 const SITE = "https://freeforgood-apps.github.io/study-coach/";   // the website, for links from the Claude copies
 /* ================= question registry ================= */
@@ -2488,7 +2488,7 @@ try {
         localStorage.removeItem(CK); localStorage.removeItem(DK); reTab(); tab = "learn"; render(false);
       }
       await step("Offline cache name");
-      if (/^https?:$/.test(location.protocol)) { try { const sw = await fetch("sw.js", {cache:"no-store"}); if (sw.ok) { steps++; const want = '"study-coach-v' + APP_VERSION.split(" ")[0] + '"'; if ((await sw.text()).indexOf(want) < 0) issues.push("Offline cache name in sw.js doesn't match version " + APP_VERSION.split(" ")[0]); } } catch (e) {} }
+      if (/^https?:$/.test(location.protocol)) { try { const sw = await fetch("sw.js", {cache:"no-store"}); if (sw.ok) { steps++; const want = '"study-coach-' + APP_VERSION + '"'; if ((await sw.text()).indexOf(want) < 0) issues.push("Offline cache name in sw.js doesn't match version " + APP_VERSION); } } catch (e) {} }
       await step("App install details");
       // Website only, like the offline check. The Claude copy has no manifest file: if it can't be fetched,
       // or the host answers with a web page instead, skip quietly. Once a real manifest loads, any problem counts.

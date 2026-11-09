@@ -1,5 +1,11 @@
 # Study Coach: changelog
 
+## 2.5.3 (Nov 9, 2026)
+- About now shows the version as a plain number (like "Version 2.5.3"), the same as Till Payday.
+- Version tags (like v2.5.3) are now added on GitHub automatically when a new version goes live, with the same small workflow Till Payday uses. It uses no outside actions and can only add tags.
+- Nothing else changed. Your progress isn't affected.
+- Tested: the self-test passed in headless Chrome at phone size, small phone size in dark mode and desktop size (1,507 to 1,510 checks), and inside a frame like the Claude copy (1,511 to 1,515 checks), including its check that the offline copy's name matches the version. The release check's versions line now passes. The new workflow was reviewed: no outside actions, no checkout, and it can only add tags. On updating, the old offline copies (named like study-coach-v2.5.2) are cleared and other apps' copies are left alone. The Claude copies stay on 2.5.2, since they're retired.
+
 ## 2.5.2 (Nov 9, 2026)
 - Fixed: the calculator display could get squashed on small phones, with Large text, or with a long sum. Its top line got cut in half and the start of the sum disappeared. Now it never gets squashed. A long sum shows its newest part, you can scroll up inside the display to see the start, and the keys stay where they are.
 - Every sheet (the question list, pause, finish, leave and Report a mistake) now keeps each item at its full size, like Till Payday 1.1.7, so nothing in them can get squashed later.
