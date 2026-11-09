@@ -1,5 +1,10 @@
 # Study Coach: changelog
 
+## 2.5.4 (Nov 9, 2026)
+- iPhone: the calculator display's height limit, and the sheets' height limit, are now measured from the part of the screen you can see. Safari measures "screen height" as if its toolbars were hidden, so before this they could come out a little taller than meant.
+- Self-test fix: on a real iPhone, 2.5.3's self-test reported "The calculator display grew past its cap with a long sum". The check assumed the cap was a quarter of the visible screen, which Safari measures differently. It now measures the display's real cap the way the browser does, and if it ever fails it shows the sizes it saw.
+- Tested: the self-test passed in headless Chrome at phone size, small phone size in dark mode and desktop size (1,505 to 1,508 checks), and inside a frame like the Claude copy (1,505 to 1,510 checks). With the cap set taller than a quarter of the screen on purpose (like iPhone Safari), the fixed check passed. With the cap removed on purpose, it failed at all three sizes and showed the sizes it saw. A browser check of every sheet and the calculator at three screen sizes, three text sizes and both themes found nothing squashed or spilling, and the moved note check passed 63 of 63. Headless Chrome can't show Safari's toolbars, so the real test is on an iPhone. Still to do: run the self-test on a real iPhone on the live site.
+
 ## 2.5.3 (Nov 9, 2026)
 - About now shows the version as a plain number (like "Version 2.5.3"), the same as Till Payday.
 - Version tags (like v2.5.3) are now added on GitHub automatically when a new version goes live, with the same small workflow Till Payday uses. It uses no outside actions and can only add tags.

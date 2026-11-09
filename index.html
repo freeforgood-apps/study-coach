@@ -219,7 +219,7 @@ details.info[open] summary .chev svg{transform:rotate(90deg)}
 
 /* sheets */
 .overlay{position:fixed;inset:0;z-index:20;background:var(--scrim);display:flex;align-items:flex-end;justify-content:center;animation:fade .18s ease-out}
-.sheet{background:var(--surface);width:100%;max-width:640px;border-radius:24px 24px 0 0;padding:20px max(18px,env(safe-area-inset-right,0px)) calc(20px + env(safe-area-inset-bottom,0px)) max(18px,env(safe-area-inset-left,0px));max-height:88vh;overflow:auto;display:flex;flex-direction:column;gap:14px;animation:up .22s ease-out}
+.sheet{background:var(--surface);width:100%;max-width:640px;border-radius:24px 24px 0 0;padding:20px max(18px,env(safe-area-inset-right,0px)) calc(20px + env(safe-area-inset-bottom,0px)) max(18px,env(safe-area-inset-left,0px));max-height:88vh;max-height:88dvh;overflow:auto;display:flex;flex-direction:column;gap:14px;animation:up .22s ease-out}
 .sheet > *{flex-shrink:0}   /* sheets scroll as flex columns: without this an item with a min-height gets squashed and its contents spill or get cut off */
 @keyframes fade{from{opacity:0}to{opacity:1}}
 @keyframes up{from{transform:translateY(24px)}to{transform:none}}
@@ -280,7 +280,7 @@ textarea.essay:focus{outline:3px solid color-mix(in srgb,var(--c) 50%,transparen
 /* calculator */
 .calc{z-index:30}
 .calcsheet{max-width:440px}
-.cdisp{padding:14px 16px;border-radius:16px;background:var(--bg);text-align:right;min-height:92px;max-height:max(25vh,7.5rem);display:flex;flex-direction:column;gap:4px;overflow-y:auto;overscroll-behavior:contain}   /* long sums scroll inside it, so the keys stay put */
+.cdisp{padding:14px 16px;border-radius:16px;background:var(--bg);text-align:right;min-height:92px;max-height:max(25vh,7.5rem);max-height:max(25dvh,7.5rem);display:flex;flex-direction:column;gap:4px;overflow-y:auto;overscroll-behavior:contain}   /* long sums scroll inside it, so the keys stay put */
 #cexpr{margin-top:auto;font-size:1.6rem;font-weight:700;word-break:break-all;font-variant-numeric:tabular-nums;line-height:1.25}
 #cres{color:var(--muted);min-height:1.4em;font-variant-numeric:tabular-nums}
 #cres.err{color:var(--bad)}
@@ -908,7 +908,7 @@ const TIPS = [
 </script>
 <script>
 "use strict";
-const APP_VERSION = "2.5.3";   // plain X.Y.Z: the tagging workflow and the release check read it
+const APP_VERSION = "2.5.4";   // plain X.Y.Z: the tagging workflow and the release check read it
 const FEEDBACK_EMAIL = "freeforgood-apps+study@proton.me";
 const SITE = "https://freeforgood-apps.github.io/study-coach/";   // the website, for links from the Claude copies
 /* ================= question registry ================= */

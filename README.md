@@ -37,6 +37,8 @@ Results are tied to the version and date they were run. When the app changes, th
 
 | Version | Date | Browser and device | Result |
 |---|---|---|---|
+| 2.5.4 | Nov 9, 2026 | Chrome (Blink engine) on Linux: full check at phone size, small phone size in dark mode and desktop size, plus the Claude-style copy inside a frame (heights measured from the visible screen; fixed calculator cap check) | ✓ Passed, 1,505 to 1,510 automated checks |
+| 2.5.3 | Nov 9, 2026 | The published GitHub Pages site, Safari engine (WebKit) on a real iPhone (iOS 18.7) | ✗ 1 issue in 1,512 checks: the self-test's calculator cap check assumed the wrong screen height (fixed in 2.5.4) |
 | 2.5.3 | Nov 9, 2026 | Chrome (Blink engine) on Linux: full check at phone size, small phone size in dark mode and desktop size, plus the Claude-style copy inside a frame (version shown as a plain number) | ✓ Passed, 1,507 to 1,515 automated checks |
 | 2.5.2 | Nov 9, 2026 | Chrome (Blink engine) on Linux: full check at phone size, small phone size in dark mode and desktop size, plus the Claude-style copy inside a frame (adds checks that sheets and the calculator display can't get squashed, and the Claude copy's "moved" note) | ✓ Passed, 1,506 to 1,512 automated checks |
 | 2.5.1 | Nov 3, 2026 | The published GitHub Pages site, Safari engine (WebKit) on a real iPhone (iOS 18.7) | ✓ Passed, 1,353 automated checks |
