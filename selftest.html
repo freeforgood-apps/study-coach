@@ -3,6 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-pK2ndcSxlr7lm999NbPbhfy22PB0hRrvEABKc7GQVWc=' 'sha256-5niRDldQjQLwEmgNH9g2Sr6rHb2FLS5yAxF5CwNBDC4=' 'sha256-h8FIo8stfE9t1G5Y2JsT6sY9uQeoe3bDl1sOTq+xEh8=' 'sha256-FRStbCI96HQBjgehf8Te1fl6kOesp6zCtjGrHVBCweQ=' 'sha256-Socr05aDGP+tLU4g9qtJSFiS9xlt4W8+vqkUOh5cduc=' 'sha256-NvK6jXVQms8jG1IsXAJvkSrYy7sg1frNZp+lAoX0SbM='; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src data:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'; frame-src 'none'; media-src 'none'">
+<meta name="referrer" content="no-referrer">
+<!-- The self-test's lock matches the app's, except it may read its own site's files (connect-src 'self') to check sw.js, the manifest and the app page's own lock. The app page itself can't send or fetch anything. -->
 <title>Study Coach Self-Test</title>
 <meta name="description" content="Runs an automated check of Study Coach in your browser. Uses its own separate storage.">
 <meta name="robots" content="noindex">
@@ -123,7 +126,7 @@ details.info[open] summary .chev svg{transform:rotate(90deg)}
 .scale small{display:block;font-weight:400;color:var(--muted)}
 .note{border:2px dashed var(--line);border-radius:20px;padding:16px 18px;display:flex;flex-direction:column;gap:6px}
 .foot{display:flex;flex-direction:column;align-items:center;gap:10px;padding-top:8px;text-align:center}
-.linkbtn{border:0;background:none;color:var(--muted);text-decoration:underline;cursor:pointer;padding:8px;font-size:.88rem;align-self:flex-start}
+.linkbtn{border:0;background:none;color:var(--muted);text-decoration:underline;cursor:pointer;padding:8px;font-size:.88rem;align-self:flex-start;min-height:44px}
 .foot .linkbtn{align-self:center}
 .linkbtn.sm{color:var(--c);padding:4px 0;font-weight:700}
 .confirm{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;align-items:center}
@@ -910,7 +913,7 @@ const TIPS = [
 </script>
 <script>
 "use strict";
-const APP_VERSION = "2.5.4";   // plain X.Y.Z: the tagging workflow and the release check read it
+const APP_VERSION = "2.6.0";   // plain X.Y.Z: the tagging workflow and the release check read it
 const FEEDBACK_EMAIL = "freeforgood-apps+study@proton.me";
 const SITE = "https://freeforgood-apps.github.io/study-coach/";   // the website, for links from the Claude copies
 /* ================= question registry ================= */
@@ -1846,7 +1849,8 @@ function vAbout(){
       <p>Test rules, prices and policies change and can vary by state. Always check <a href="https://ged.com" target="_blank" rel="noopener">GED.com</a> for official information.</p></section>
     <section class="sec"><h3>Privacy</h3><ul>
       <li>No accounts, ads, analytics or tracking cookies.</li>
-      <li>Your progress, scores and essay drafts are saved only in this browser on your device. The app never sends them anywhere.</li>
+      <li>Your progress, scores and essay drafts are saved only in this browser on your device. The app never sends them anywhere.</li>${WEB ? `
+      <li>A privacy lock is built into this page: your browser blocks it from sending anything over the internet, even if it tried. The self-test under Feedback shows the lock working on your phone.</li>` : ""}
       <li>Clearing your browser data, or tapping Reset progress, erases them for good. Use Back up in the Progress tab to keep a copy.</li>
       <li>Like any website, the service that hosts this page may log visitors' IP addresses for security.</li>
       <li>Links to other sites, like GED.com, are covered by those sites' own privacy policies.</li></ul></section>
@@ -1906,7 +1910,7 @@ function drawCalc(err){
     <div class="shd"><h2>Calculator</h2><button class="iconbtn" data-act="calcclose" aria-label="Close calculator">${I.close}</button></div>
     <div class="cdisp" tabindex="0" role="group" aria-label="Calculator display"><div id="cexpr">${cx || "0"}</div><div id="cres" class="${err ? "err" : ""}">${err ? "Check your entry" : ""}</div></div>
     <div class="keys">${["C", "(", ")", "⌫", "x²", "√", "^", "÷", "7", "8", "9", "×", "4", "5", "6", "−", "1", "2", "3", "+", "0", ".", "π", "="].map(k =>
-      `<button class="key${"÷×−+^".includes(k) ? " op" : ""}${k === "=" ? " eq" : ""}${["C", "⌫", "(", ")", "x²", "√", "π"].includes(k) ? " fn" : ""}" data-k="${k}" aria-label="${{"⌫":"Delete", "C":"Clear", "x²":"Square", "√":"Square root", "^":"Power"}[k] || k}">${k}</button>`).join("")}</div>
+      `<button class="key${"÷×−+^".includes(k) ? " op" : ""}${k === "=" ? " eq" : ""}${["C", "⌫", "(", ")", "x²", "√", "π"].includes(k) ? " fn" : ""}" data-k="${k}" aria-label="${{"⌫":"Delete", "C":"Clear", "x²":"x squared", "√":"Square root", "^":"Power"}[k] || k}">${k}</button>`).join("")}</div>
     <p class="small muted center">Tip: √ and x² work on the number or parentheses next to them.</p>
   </div>`;
   preview();
@@ -2209,10 +2213,11 @@ try {
     if (/Android/.test(ua)) return "Android"; if (/CrOS/.test(ua)) return "ChromeOS"; if (/Windows/.test(ua)) return "Windows";
     if (/Macintosh/.test(ua)) return "macOS"; if (/Linux/.test(ua)) return "Linux"; return "Unknown";
   }
+  let lockOK = null;   // set by the privacy lock step
   function features(){
     const sup = (p, v) => { try { return CSS.supports(p, v); } catch (e) { return false; } };
     let ls = false; try { localStorage.setItem("st-probe", "1"); ls = localStorage.getItem("st-probe") === "1"; localStorage.removeItem("st-probe"); } catch (e) {}
-    return [["Saving progress (local storage)", ls, true], ["Color tints (color-mix)", sup("color", "color-mix(in srgb, red 50%, blue)"), false],
+    return [["Saving progress (local storage)", ls, true], ["Privacy lock (nothing can be sent out)", lockOK === true, true], ["Color tints (color-mix)", sup("color", "color-mix(in srgb, red 50%, blue)"), false],
       ["Balanced headings (text-wrap)", sup("text-wrap", "balance"), false], ["Blurred tab bar", sup("backdrop-filter", "blur(4px)") || sup("-webkit-backdrop-filter", "blur(4px)"), false],
       ["Offline support (service worker)", "serviceWorker" in navigator, false], ["Text encoding (backup codes)", typeof TextEncoder === "function", true]];
   }
@@ -2229,7 +2234,7 @@ try {
     box.innerHTML = `<div class="in"><h2>Running…</h2><p id="st-step" class="small muted">Starting</p></div>`;
     const stepEl = document.getElementById("st-step");
     const t0 = Date.now();
-    const issues = []; let steps = 0;
+    const issues = []; let steps = 0; lockOK = null;
     const errs = []; const onErr = e => errs.push(String(e.message || e.reason || e)); window.addEventListener("error", onErr); window.addEventListener("unhandledrejection", onErr);
     const wait = ms => new Promise(r => setTimeout(r, ms));
     const $ = s => document.querySelector(s);
@@ -2502,6 +2507,27 @@ try {
         for (const ic of m.icons || []) { steps++; const got = await new Promise(res => { const img = new Image(); img.onload = () => res(img.naturalWidth + "x" + img.naturalHeight); img.onerror = () => res("missing"); img.src = new URL(ic.src, mf.url).href; }); if (got !== ic.sizes) issues.push("App icon " + ic.src + " is " + got + ", expected " + ic.sizes); }
         steps++; const page = await fetch("./", {cache:"no-store"}); if (page.ok && (await page.text()).indexOf('<link rel="manifest" href="manifest.webmanifest">') < 0) issues.push("The app page doesn't link its install details (manifest)");
       } catch (e) { issues.push("App install details couldn't be checked: " + (e && e.message)); } }
+      await step("Privacy lock");
+      // A real block shows up as the browser's own security report; a plain network failure doesn't count (same check as Till Payday)
+      { const seen = [], onV = e => seen.push(e.violatedDirective || e.effectiveDirective || ""); let sent = false;
+        document.addEventListener("securitypolicyviolation", onV);
+        try { await fetch("https://example.com/study-coach-self-test", {method:"POST", body:"test", mode:"no-cors"}); sent = true; } catch (e) {}
+        await new Promise(r => { const i = new Image(); i.onload = () => { sent = true; r(); }; i.onerror = r; i.src = "https://example.com/study-coach-self-test.png?" + Date.now(); });
+        await wait(150); document.removeEventListener("securitypolicyviolation", onV);
+        steps++; lockOK = !sent && seen.some(d => /connect-src/.test(d)) && seen.some(d => /img-src/.test(d));
+        if (!lockOK) issues.push("The privacy lock didn't block a test request to another website"); }
+      // The app page has its own lock. Website only (this reads the page from the site): it must block everything,
+      // and list the fingerprint of each of its scripts, or the app won't start.
+      if (WEB && /^https?:$/.test(location.protocol)) { steps++; try {
+        const pg = await fetch("./", {cache:"no-store"}), html = pg.ok ? await pg.text() : "";
+        const csp = (html.match(/<meta http-equiv="Content-Security-Policy" content="([^"]*)"/) || [])[1] || "";
+        const has = d => csp.split(";").some(x => x.trim() === d), scripts = (csp.match(/script-src([^;]*)/) || ["", ""])[1];
+        if (!pg.ok) issues.push("The app page couldn't be loaded to check its privacy lock");
+        else if (!has("default-src 'none'") || !has("connect-src 'none'") || !scripts || /unsafe/.test(scripts)) issues.push("The app page's privacy lock is missing or lets things through");
+        else if (window.crypto && crypto.subtle) for (const m of html.matchAll(/<script>([\s\S]*?)<\/script>/g)) { steps++;
+          const h = btoa(String.fromCharCode(...new Uint8Array(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(m[1])))));
+          if (scripts.indexOf("'sha256-" + h + "'") < 0) { issues.push("The app page's privacy lock is out of date (a script's fingerprint isn't listed), so the app won't start"); break; } }
+      } catch (e) { issues.push("The app page's privacy lock couldn't be checked: " + (e && e.message)); } }
       await step("Saving to the device");
       const saved = JSON.parse(localStorage.getItem(KEY) || "null"); if (!saved || Object.keys(saved.u).length !== 19) issues.push("Progress didn't save to the device");
     } catch (e) { issues.push("Test stopped early: " + (e && e.message)); }

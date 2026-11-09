@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-5niRDldQjQLwEmgNH9g2Sr6rHb2FLS5yAxF5CwNBDC4=' 'sha256-h8FIo8stfE9t1G5Y2JsT6sY9uQeoe3bDl1sOTq+xEh8=' 'sha256-FRStbCI96HQBjgehf8Te1fl6kOesp6zCtjGrHVBCweQ=' 'sha256-Socr05aDGP+tLU4g9qtJSFiS9xlt4W8+vqkUOh5cduc='; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src data:; connect-src 'none'; manifest-src 'self'; worker-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'; frame-src 'none'; media-src 'none'">
+<meta name="referrer" content="no-referrer">
 <link rel="manifest" href="manifest.webmanifest">
 <title>Study Coach for the GED® Test</title>
 <meta name="description" content="A free study app for the GED® test: lessons, full practice tests, flashcards, essay practice and a calculator. Not affiliated with ACE or GED Testing Service.">
@@ -124,7 +126,7 @@ details.info[open] summary .chev svg{transform:rotate(90deg)}
 .scale small{display:block;font-weight:400;color:var(--muted)}
 .note{border:2px dashed var(--line);border-radius:20px;padding:16px 18px;display:flex;flex-direction:column;gap:6px}
 .foot{display:flex;flex-direction:column;align-items:center;gap:10px;padding-top:8px;text-align:center}
-.linkbtn{border:0;background:none;color:var(--muted);text-decoration:underline;cursor:pointer;padding:8px;font-size:.88rem;align-self:flex-start}
+.linkbtn{border:0;background:none;color:var(--muted);text-decoration:underline;cursor:pointer;padding:8px;font-size:.88rem;align-self:flex-start;min-height:44px}
 .foot .linkbtn{align-self:center}
 .linkbtn.sm{color:var(--c);padding:4px 0;font-weight:700}
 .confirm{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;align-items:center}
@@ -908,7 +910,7 @@ const TIPS = [
 </script>
 <script>
 "use strict";
-const APP_VERSION = "2.5.4";   // plain X.Y.Z: the tagging workflow and the release check read it
+const APP_VERSION = "2.6.0";   // plain X.Y.Z: the tagging workflow and the release check read it
 const FEEDBACK_EMAIL = "freeforgood-apps+study@proton.me";
 const SITE = "https://freeforgood-apps.github.io/study-coach/";   // the website, for links from the Claude copies
 /* ================= question registry ================= */
@@ -1844,7 +1846,8 @@ function vAbout(){
       <p>Test rules, prices and policies change and can vary by state. Always check <a href="https://ged.com" target="_blank" rel="noopener">GED.com</a> for official information.</p></section>
     <section class="sec"><h3>Privacy</h3><ul>
       <li>No accounts, ads, analytics or tracking cookies.</li>
-      <li>Your progress, scores and essay drafts are saved only in this browser on your device. The app never sends them anywhere.</li>
+      <li>Your progress, scores and essay drafts are saved only in this browser on your device. The app never sends them anywhere.</li>${WEB ? `
+      <li>A privacy lock is built into this page: your browser blocks it from sending anything over the internet, even if it tried. The self-test under Feedback shows the lock working on your phone.</li>` : ""}
       <li>Clearing your browser data, or tapping Reset progress, erases them for good. Use Back up in the Progress tab to keep a copy.</li>
       <li>Like any website, the service that hosts this page may log visitors' IP addresses for security.</li>
       <li>Links to other sites, like GED.com, are covered by those sites' own privacy policies.</li></ul></section>
@@ -1904,7 +1907,7 @@ function drawCalc(err){
     <div class="shd"><h2>Calculator</h2><button class="iconbtn" data-act="calcclose" aria-label="Close calculator">${I.close}</button></div>
     <div class="cdisp" tabindex="0" role="group" aria-label="Calculator display"><div id="cexpr">${cx || "0"}</div><div id="cres" class="${err ? "err" : ""}">${err ? "Check your entry" : ""}</div></div>
     <div class="keys">${["C", "(", ")", "⌫", "x²", "√", "^", "÷", "7", "8", "9", "×", "4", "5", "6", "−", "1", "2", "3", "+", "0", ".", "π", "="].map(k =>
-      `<button class="key${"÷×−+^".includes(k) ? " op" : ""}${k === "=" ? " eq" : ""}${["C", "⌫", "(", ")", "x²", "√", "π"].includes(k) ? " fn" : ""}" data-k="${k}" aria-label="${{"⌫":"Delete", "C":"Clear", "x²":"Square", "√":"Square root", "^":"Power"}[k] || k}">${k}</button>`).join("")}</div>
+      `<button class="key${"÷×−+^".includes(k) ? " op" : ""}${k === "=" ? " eq" : ""}${["C", "⌫", "(", ")", "x²", "√", "π"].includes(k) ? " fn" : ""}" data-k="${k}" aria-label="${{"⌫":"Delete", "C":"Clear", "x²":"x squared", "√":"Square root", "^":"Power"}[k] || k}">${k}</button>`).join("")}</div>
     <p class="small muted center">Tip: √ and x² work on the number or parentheses next to them.</p>
   </div>`;
   preview();

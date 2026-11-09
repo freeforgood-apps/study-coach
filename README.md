@@ -37,6 +37,7 @@ Results are tied to the version and date they were run. When the app changes, th
 
 | Version | Date | Browser and device | Result |
 |---|---|---|---|
+| 2.6.0 | Nov 9, 2026 | Chrome (Blink engine) on Linux: full check at phone size, small phone size in dark mode and desktop size, plus the Claude-style copy inside a frame (adds the privacy lock checks) | ✓ Passed, 1,511 to 1,519 automated checks |
 | 2.5.4 | Nov 9, 2026 | The published GitHub Pages site, Safari engine (WebKit) on a real iPhone (iOS 18.7) | ✓ Passed, 1,515 automated checks |
 | 2.5.4 | Nov 9, 2026 | Chrome (Blink engine) on Linux: full check at phone size, small phone size in dark mode and desktop size, plus the Claude-style copy inside a frame (heights measured from the visible screen; fixed calculator cap check) | ✓ Passed, 1,505 to 1,510 automated checks |
 | 2.5.3 | Nov 9, 2026 | The published GitHub Pages site, Safari engine (WebKit) on a real iPhone (iOS 18.7) | ✗ 1 issue in 1,512 checks: the self-test's calculator cap check assumed the wrong screen height (fixed in 2.5.4) |
@@ -74,6 +75,7 @@ Open **selftest.html** in any browser (the app's About screen links to it, under
 
 - No accounts, ads, analytics or tracking cookies.
 - Progress, scores and essay drafts are saved only in the visitor's own browser (local storage). The app never sends them anywhere.
+- A built-in privacy lock: the browser blocks the page from sending anything over the internet or loading anything from other sites. The self-test shows the lock working in your browser.
 - Clearing browser data or tapping **Reset progress** erases them. **Back up** in the Progress tab creates a code you can keep.
 - The app loads nothing from other websites. Like any site, GitHub Pages logs visitors' IP addresses for security; see the [GitHub Privacy Statement](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement).
 

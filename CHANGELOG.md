@@ -1,5 +1,12 @@
 # Study Coach: changelog
 
+## 2.6.0 (Nov 9, 2026)
+- Security: a privacy lock is now built into the page, the same one Till Payday uses. Your browser blocks Study Coach from sending anything over the internet, or loading anything from other sites, even if it tried. It only runs Study Coach's own code. About → Privacy says so, and the self-test checks the lock in your browser. The page also stops sharing its address with sites you open from its links.
+- Accessibility: the "About, privacy and terms" and "Reset progress" links (and the other small text links) are now at least 44px tall, so they're easier to tap. They look the same.
+- Accessibility: the calculator's x² key is now read aloud as "x squared" instead of "Square", so it matches what's on the key.
+- Nothing else changed. Your progress isn't affected.
+- Tested: the toolkit's release check passed every line: versions agree, the privacy lock is up to date on both pages, the self-test passed in headless Chrome at phone size, small phone size in dark mode and desktop size (1,511 to 1,519 checks), and the accessibility checker found nothing on Home at 4 sizes in light and dark mode. The self-test also passed inside a frame like the Claude copy (1,512 checks). With the lock on, the app page reported nothing blocked and no errors at three sizes, and a local copy still opened offline at all three. The accessibility checker found nothing new on About, the calculator or the Progress tab (an older heading-order note on About and Progress is the same as in 2.5.4). The self-test caught all 4 lock problems planted on purpose: an out-of-date fingerprint, the app page allowing connections, no lock on the app page, and the self-test's own lock opened up. Not yet run on a real iPhone.
+
 ## 2.5.4 (Nov 9, 2026)
 - iPhone: the calculator display's height limit, and the sheets' height limit, are now measured from the part of the screen you can see. Safari measures "screen height" as if its toolbars were hidden, so before this they could come out a little taller than meant.
 - Self-test fix: on a real iPhone, 2.5.3's self-test reported "The calculator display grew past its cap with a long sum". The check assumed the cap was a quarter of the visible screen, which Safari measures differently. It now measures the display's real cap the way the browser does, and if it ever fails it shows the sizes it saw.
