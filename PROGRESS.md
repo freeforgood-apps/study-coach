@@ -6,9 +6,11 @@ New chat? Read this first. It replaces the old Claude Project instructions.
 
 Study Coach for the GED® Test: a free, mobile-first study web app. It's for adults working toward a GED around jobs and families, mostly on phones, often in short breaks, and sometimes anxious about tests or school. README.md lists the features.
 
-## Where things stand (Nov 3, 2026)
+## Where things stand (Nov 9, 2026)
 
-- **Live version:** 2.5.1 at https://freeforgood-apps.github.io/study-coach/
+- **Live version:** 2.5.2 at https://freeforgood-apps.github.io/study-coach/
+- 2.5.2 (Nov 9, 2026): the calculator display can't get squashed anymore (a long sum scrolls inside it and the keys stay put), every sheet keeps its items at full size (Till Payday 1.1.7's fix), and the Claude copy shows a "Study Coach has moved" note. It passed the self-test in headless Chrome at phone, small phone (dark) and desktop sizes, and inside a frame like the Claude copy (1,506 to 1,512 checks), and the self-test caught all 4 bugs planted on purpose. **Still to do:** on a real iPhone on the live site, run the self-test and try the calculator with a long sum, then record it here, in CHANGELOG.md and in README.md.
+- **The Claude copies are retired** (Nov 9, 2026). Both were republished one last time on 2.5.2 and get no more updates. See "Where it lives".
 - 2.5 (Nov 3, 2026) brings Till Payday's saving safety net: backup files, restore from a file, automatic copies, two-tap restore, damaged progress set aside, a not-saving warning and two-tab protection. It passed the self-test in headless Chrome at phone, small phone (dark) and desktop sizes, and as a Claude-style copy inside a frame (1,349 to 1,363 checks), and the self-test caught all 10 bugs planted on purpose. Both Claude copies are on 2.5 too (republished Nov 3, 2026). 2.5.1 (Nov 3, 2026) makes the backup code boxes 16px so iPhone Safari stops zooming, and passed the self-test at phone and small phone (dark) sizes. Both Claude copies are on 2.5.1 (republished Nov 3, 2026). 2.5.1 also passed on the live site on a real iPhone (Safari engine, iOS 18.7, 1,353 checks, Nov 3, 2026).
 - 2.4 (Keep your progress safe, matched with Till Payday) and 2.4.1 (a Run the self-test link on About, like Till Payday's) passed the self-test in headless Chrome at phone, small phone (dark) and desktop sizes, and as a Claude-style copy inside a frame (Nov 3, 2026). Both Claude copies are on 2.4.1 too (republished Nov 3, 2026). 2.4.1 also passed on the live site on a real iPhone (Safari engine, iOS 18.7, 1,291 checks, Nov 3, 2026). Full test history is in README.md under "Tested on".
 - Every past version is kept in GitHub's history. To roll back, find the version in CHANGELOG.md and restore that upload. Claude's workspace couldn't push version tags (GitHub refused them, Nov 3, 2026), so add tags like v2.4 on the GitHub website if wanted.
@@ -24,14 +26,24 @@ Study Coach for the GED® Test: a free, mobile-first study web app. It's for adu
 - `sw.js`: offline support (network-first). It only clears caches whose names start with `study-coach-`, because the address is shared with other free apps.
 - `README.md`: the public project page.
 - `manifest.webmanifest` and `icon-192.png`, `icon-512.png`, `icon-maskable-512.png`: install details and icons, so Android phones and computers can install it as an app. Its id, start and scope all stay inside /study-coach/, since the address is shared.
-- **Claude copies:** two Claude pages, named "Study Coach for the GED® Test" and "Study Coach Self-Test". Find them by name in the Claude artifacts list. Their links stay out of this repo. Republish both with every release. To make them from `index.html` and `selftest.html`: start at the `<title>` line, add `<meta name="claude:viewport-fit-sides" content="cover">` right after it, then remove the `</head>` and `<body>` lines and the closing `</body>` and `</html>` lines. The manifest link sits above the `<title>` line on purpose, so the copies leave it out.
+- **Claude copies (retired Nov 9, 2026):** two Claude pages, named "Study Coach for the GED® Test" and "Study Coach Self-Test". Find them by name in the Claude artifacts list. Their links stay out of this repo. Both stay up on 2.5.2, which shows a "Study Coach has moved" note pointing to the website, with steps to bring progress along by backup code. **Don't republish them on releases.** People's progress lives in the app copy, so never delete it without asking. Only touch them again for a safety or data fix. To make them from `index.html` and `selftest.html`: start at the `<title>` line, add `<meta name="claude:viewport-fit-sides" content="cover">` right after it, then remove the `</head>` and `<body>` lines and the closing `</body>` and `</html>` lines. The manifest link sits above the `<title>` line on purpose, so the copies leave it out.
 - **Old address:** freestudycoach.github.io/study-coach holds only a "we've moved" page that forwards people here and helps anyone with progress saved there bring it along. Never put the app back there.
 
 ## Next up
 
+- Add the privacy lock from the toolkit's Baseline kit (`templates/privacy-lock.html` and `lock.py`). Study Coach doesn't have one yet, so the toolkit's release check fails its privacy lock line (Nov 9, 2026).
+- Two older accessibility items the checker found (they were already in 2.5.1): the calculator's x² key is read aloud as "Square", so its spoken name doesn't include its visible words (WCAG 2.5.3); and the "About, privacy and terms" link at the bottom of Home is 39px tall, under the 44px rule.
+- The toolkit's release check reads APP_VERSION as the plain number, but Study Coach's is "2.5.2 · November 2026" and its cache is `study-coach-v2.5.2`, so the versions line fails even when they agree. Either teach the toolkit this format or change Study Coach's (the self-test report shows APP_VERSION, so check that first). Checked by hand for 2.5.2.
 - Restore checks, for the next release (found Nov 5, 2026, comparing with the shared kit in freeforgood-apps/toolkit): `parseCode()` checks the prefix and shape, but `hydrate()` merges the backup straight in with `Object.assign`, so unknown keys (including `__proto__`) come along. Rebuild from known fields only, like Till Payday's `sanitize()`, and add a size cap and a "this backup is from a newer version" message.
 - Check the 4 `innerHTML` spots (`syncListen`, `strip`, the calculator sheet, and the main screen render) to confirm no saved or typed text reaches them unescaped. Not confirmed as a problem yet; a security-audit Full audit would settle it.
 - Till Payday 1.1.2 matches: restoring an automatic copy no longer counts as a backup there either (Nov 3, 2026).
+
+## Decisions
+
+Why some things are the way they are, so nobody "fixes" them by mistake:
+- **Everything directly inside a sheet has `flex-shrink: 0`** (2.5.2, matching Till Payday 1.1.7). Sheets scroll as flex columns, and without it an item with a `min-height` gets squashed and its contents spill out or get cut off. The calculator sheet is a `.sheet` too. The self-test checks every sheet it opens.
+- **The calculator display is capped and scrolls inside** (2.5.2): `max-height: max(25vh, 7.5rem)`, with `#cexpr` pushed down by `margin-top: auto` (not `justify-content: flex-end`, which can make the start of a long sum unreachable). Each update scrolls it to the newest part. It's focusable (`tabindex="0"`, "Calculator display") so keyboard users can scroll it. This keeps the keys still while typing a long sum.
+- **The Claude copies are retired** (2.5.2), because republishing and checking them on every release cost Claude usage for little gain: the website does more (file backups, offline, Home Screen). `movedCard()` shows only when `WEB` is false (inside a frame), so the website never shows it. Same as Till Payday 1.1.8.
 
 ## Non-negotiables
 

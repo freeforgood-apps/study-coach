@@ -220,6 +220,7 @@ details.info[open] summary .chev svg{transform:rotate(90deg)}
 /* sheets */
 .overlay{position:fixed;inset:0;z-index:20;background:var(--scrim);display:flex;align-items:flex-end;justify-content:center;animation:fade .18s ease-out}
 .sheet{background:var(--surface);width:100%;max-width:640px;border-radius:24px 24px 0 0;padding:20px max(18px,env(safe-area-inset-right,0px)) calc(20px + env(safe-area-inset-bottom,0px)) max(18px,env(safe-area-inset-left,0px));max-height:88vh;overflow:auto;display:flex;flex-direction:column;gap:14px;animation:up .22s ease-out}
+.sheet > *{flex-shrink:0}   /* sheets scroll as flex columns: without this an item with a min-height gets squashed and its contents spill or get cut off */
 @keyframes fade{from{opacity:0}to{opacity:1}}
 @keyframes up{from{transform:translateY(24px)}to{transform:none}}
 .shd{display:flex;justify-content:space-between;align-items:center;gap:12px}
@@ -279,8 +280,8 @@ textarea.essay:focus{outline:3px solid color-mix(in srgb,var(--c) 50%,transparen
 /* calculator */
 .calc{z-index:30}
 .calcsheet{max-width:440px}
-.cdisp{padding:14px 16px;border-radius:16px;background:var(--bg);text-align:right;min-height:92px;display:flex;flex-direction:column;justify-content:flex-end;gap:4px;overflow:hidden}
-#cexpr{font-size:1.6rem;font-weight:700;word-break:break-all;font-variant-numeric:tabular-nums;line-height:1.25}
+.cdisp{padding:14px 16px;border-radius:16px;background:var(--bg);text-align:right;min-height:92px;max-height:max(25vh,7.5rem);display:flex;flex-direction:column;gap:4px;overflow-y:auto;overscroll-behavior:contain}   /* long sums scroll inside it, so the keys stay put */
+#cexpr{margin-top:auto;font-size:1.6rem;font-weight:700;word-break:break-all;font-variant-numeric:tabular-nums;line-height:1.25}
 #cres{color:var(--muted);min-height:1.4em;font-variant-numeric:tabular-nums}
 #cres.err{color:var(--bad)}
 .keys{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
@@ -907,7 +908,7 @@ const TIPS = [
 </script>
 <script>
 "use strict";
-const APP_VERSION = "2.5.1 · November 2026";
+const APP_VERSION = "2.5.2 · November 2026";
 const FEEDBACK_EMAIL = "freeforgood-apps+study@proton.me";
 const SITE = "https://freeforgood-apps.github.io/study-coach/";   // the website, for links from the Claude copies
 /* ================= question registry ================= */
@@ -1145,6 +1146,14 @@ function keepSafeTips(){
   ] : [backup];
   return `<section class="sec" id="keepsafe"><h3>Keep your progress safe</h3><ul>${tips.map(([b, t]) => `<li><b>${b}</b>${t}</li>`).join("")}</ul></section>`;
 }
+// The Claude copies are retired (Nov 2026): point people to the website. Only shows outside the website (WEB is false in a frame).
+function movedCard(){
+  if (WEB) return "";
+  return `<section class="note" id="movedcard"><b>Study Coach has moved</b><span class="small">This copy inside Claude won't get updates anymore. Your progress is still here, and it keeps working.</span>
+    <span class="small">The free website gets every update, works without internet, and can go on your Home Screen: freeforgood-apps.github.io/study-coach</span>
+    <span class="small">To bring your progress along, copy a backup code here. Then open the website, go to the Progress tab, tap Restore, and paste the code.</span>
+    <div class="noteacts"><button class="btn sm" data-act="bknow" style="--c:var(--ink)">Get my backup code</button><a class="btn sm ghost" href="${SITE}" target="_blank" rel="noopener">Open the website</a></div></section>`;
+}
 function showKeepSafe(){ go({v:"about"}); const el = document.getElementById("keepsafe"); if (el) el.scrollIntoView({block:"start"}); }
 function promptInstall(){
   const ev = installEvt; installEvt = null;
@@ -1214,6 +1223,7 @@ function vHome(){
   }).join("");
   const times = SUBJECTS.map(s => `<div class="time" style="${cvar(s)}"><b>${s.time}</b><span>${s.full}</span></div>`).join("");
   return page("--c:var(--ink)", topbar("", {brand:true}) + `<main class="screen">
+    ${movedCard()}
     <section class="hero">
       <div><h1>Pass the GED® test, one subject at a time.</h1>
       <p>Short lessons, full practice tests and tools that explain every answer. Study for five minutes or an hour. Your progress saves as you go.</p></div>
@@ -1892,7 +1902,7 @@ function fmtNum(v){
 function drawCalc(err){
   calcEl.innerHTML = `<div class="sheet calcsheet" role="dialog" aria-modal="true" aria-label="Calculator">
     <div class="shd"><h2>Calculator</h2><button class="iconbtn" data-act="calcclose" aria-label="Close calculator">${I.close}</button></div>
-    <div class="cdisp"><div id="cexpr">${cx || "0"}</div><div id="cres" class="${err ? "err" : ""}">${err ? "Check your entry" : ""}</div></div>
+    <div class="cdisp" tabindex="0" role="group" aria-label="Calculator display"><div id="cexpr">${cx || "0"}</div><div id="cres" class="${err ? "err" : ""}">${err ? "Check your entry" : ""}</div></div>
     <div class="keys">${["C", "(", ")", "⌫", "x²", "√", "^", "÷", "7", "8", "9", "×", "4", "5", "6", "−", "1", "2", "3", "+", "0", ".", "π", "="].map(k =>
       `<button class="key${"÷×−+^".includes(k) ? " op" : ""}${k === "=" ? " eq" : ""}${["C", "⌫", "(", ")", "x²", "√", "π"].includes(k) ? " fn" : ""}" data-k="${k}" aria-label="${{"⌫":"Delete", "C":"Clear", "x²":"Square", "√":"Square root", "^":"Power"}[k] || k}">${k}</button>`).join("")}</div>
     <p class="small muted center">Tip: √ and x² work on the number or parentheses next to them.</p>
@@ -1903,10 +1913,12 @@ function preview(){
   const e = document.getElementById("cexpr"), r = document.getElementById("cres");
   if (!e || !r) return;
   e.textContent = cx || "0";
-  if (r.classList.contains("err")) return;
-  let out = "";
-  if (cx){ try { const val = fmtNum(calcEval(cx)); if (val !== cx) out = "= " + val; } catch (err) { out = ""; } }
-  r.textContent = out;
+  if (!r.classList.contains("err")){
+    let out = "";
+    if (cx){ try { const val = fmtNum(calcEval(cx)); if (val !== cx) out = "= " + val; } catch (err) { out = ""; } }
+    r.textContent = out;
+  }
+  e.parentNode.scrollTop = e.parentNode.scrollHeight;   // a long sum shows its newest part; scroll up inside the display for the start
 }
 function press(k){
   const r = document.getElementById("cres"); if (r) r.classList.remove("err");

@@ -219,6 +219,7 @@ details.info[open] summary .chev svg{transform:rotate(90deg)}
 /* sheets */
 .overlay{position:fixed;inset:0;z-index:20;background:var(--scrim);display:flex;align-items:flex-end;justify-content:center;animation:fade .18s ease-out}
 .sheet{background:var(--surface);width:100%;max-width:640px;border-radius:24px 24px 0 0;padding:20px max(18px,env(safe-area-inset-right,0px)) calc(20px + env(safe-area-inset-bottom,0px)) max(18px,env(safe-area-inset-left,0px));max-height:88vh;overflow:auto;display:flex;flex-direction:column;gap:14px;animation:up .22s ease-out}
+.sheet > *{flex-shrink:0}   /* sheets scroll as flex columns: without this an item with a min-height gets squashed and its contents spill or get cut off */
 @keyframes fade{from{opacity:0}to{opacity:1}}
 @keyframes up{from{transform:translateY(24px)}to{transform:none}}
 .shd{display:flex;justify-content:space-between;align-items:center;gap:12px}
@@ -278,8 +279,8 @@ textarea.essay:focus{outline:3px solid color-mix(in srgb,var(--c) 50%,transparen
 /* calculator */
 .calc{z-index:30}
 .calcsheet{max-width:440px}
-.cdisp{padding:14px 16px;border-radius:16px;background:var(--bg);text-align:right;min-height:92px;display:flex;flex-direction:column;justify-content:flex-end;gap:4px;overflow:hidden}
-#cexpr{font-size:1.6rem;font-weight:700;word-break:break-all;font-variant-numeric:tabular-nums;line-height:1.25}
+.cdisp{padding:14px 16px;border-radius:16px;background:var(--bg);text-align:right;min-height:92px;max-height:max(25vh,7.5rem);display:flex;flex-direction:column;gap:4px;overflow-y:auto;overscroll-behavior:contain}   /* long sums scroll inside it, so the keys stay put */
+#cexpr{margin-top:auto;font-size:1.6rem;font-weight:700;word-break:break-all;font-variant-numeric:tabular-nums;line-height:1.25}
 #cres{color:var(--muted);min-height:1.4em;font-variant-numeric:tabular-nums}
 #cres.err{color:var(--bad)}
 .keys{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
@@ -909,7 +910,7 @@ const TIPS = [
 </script>
 <script>
 "use strict";
-const APP_VERSION = "2.5.1 · November 2026";
+const APP_VERSION = "2.5.2 · November 2026";
 const FEEDBACK_EMAIL = "freeforgood-apps+study@proton.me";
 const SITE = "https://freeforgood-apps.github.io/study-coach/";   // the website, for links from the Claude copies
 /* ================= question registry ================= */
@@ -1147,6 +1148,14 @@ function keepSafeTips(){
   ] : [backup];
   return `<section class="sec" id="keepsafe"><h3>Keep your progress safe</h3><ul>${tips.map(([b, t]) => `<li><b>${b}</b>${t}</li>`).join("")}</ul></section>`;
 }
+// The Claude copies are retired (Nov 2026): point people to the website. Only shows outside the website (WEB is false in a frame).
+function movedCard(){
+  if (WEB) return "";
+  return `<section class="note" id="movedcard"><b>Study Coach has moved</b><span class="small">This copy inside Claude won't get updates anymore. Your progress is still here, and it keeps working.</span>
+    <span class="small">The free website gets every update, works without internet, and can go on your Home Screen: freeforgood-apps.github.io/study-coach</span>
+    <span class="small">To bring your progress along, copy a backup code here. Then open the website, go to the Progress tab, tap Restore, and paste the code.</span>
+    <div class="noteacts"><button class="btn sm" data-act="bknow" style="--c:var(--ink)">Get my backup code</button><a class="btn sm ghost" href="${SITE}" target="_blank" rel="noopener">Open the website</a></div></section>`;
+}
 function showKeepSafe(){ go({v:"about"}); const el = document.getElementById("keepsafe"); if (el) el.scrollIntoView({block:"start"}); }
 function promptInstall(){
   const ev = installEvt; installEvt = null;
@@ -1216,6 +1225,7 @@ function vHome(){
   }).join("");
   const times = SUBJECTS.map(s => `<div class="time" style="${cvar(s)}"><b>${s.time}</b><span>${s.full}</span></div>`).join("");
   return page("--c:var(--ink)", topbar("", {brand:true}) + `<main class="screen">
+    ${movedCard()}
     <section class="hero">
       <div><h1>Pass the GED® test, one subject at a time.</h1>
       <p>Short lessons, full practice tests and tools that explain every answer. Study for five minutes or an hour. Your progress saves as you go.</p></div>
@@ -1894,7 +1904,7 @@ function fmtNum(v){
 function drawCalc(err){
   calcEl.innerHTML = `<div class="sheet calcsheet" role="dialog" aria-modal="true" aria-label="Calculator">
     <div class="shd"><h2>Calculator</h2><button class="iconbtn" data-act="calcclose" aria-label="Close calculator">${I.close}</button></div>
-    <div class="cdisp"><div id="cexpr">${cx || "0"}</div><div id="cres" class="${err ? "err" : ""}">${err ? "Check your entry" : ""}</div></div>
+    <div class="cdisp" tabindex="0" role="group" aria-label="Calculator display"><div id="cexpr">${cx || "0"}</div><div id="cres" class="${err ? "err" : ""}">${err ? "Check your entry" : ""}</div></div>
     <div class="keys">${["C", "(", ")", "⌫", "x²", "√", "^", "÷", "7", "8", "9", "×", "4", "5", "6", "−", "1", "2", "3", "+", "0", ".", "π", "="].map(k =>
       `<button class="key${"÷×−+^".includes(k) ? " op" : ""}${k === "=" ? " eq" : ""}${["C", "⌫", "(", ")", "x²", "√", "π"].includes(k) ? " fn" : ""}" data-k="${k}" aria-label="${{"⌫":"Delete", "C":"Clear", "x²":"Square", "√":"Square root", "^":"Power"}[k] || k}">${k}</button>`).join("")}</div>
     <p class="small muted center">Tip: √ and x² work on the number or parentheses next to them.</p>
@@ -1905,10 +1915,12 @@ function preview(){
   const e = document.getElementById("cexpr"), r = document.getElementById("cres");
   if (!e || !r) return;
   e.textContent = cx || "0";
-  if (r.classList.contains("err")) return;
-  let out = "";
-  if (cx){ try { const val = fmtNum(calcEval(cx)); if (val !== cx) out = "= " + val; } catch (err) { out = ""; } }
-  r.textContent = out;
+  if (!r.classList.contains("err")){
+    let out = "";
+    if (cx){ try { const val = fmtNum(calcEval(cx)); if (val !== cx) out = "= " + val; } catch (err) { out = ""; } }
+    r.textContent = out;
+  }
+  e.parentNode.scrollTop = e.parentNode.scrollHeight;   // a long sum shows its newest part; scroll up inside the display for the start
 }
 function press(k){
   const r = document.getElementById("cres"); if (r) r.classList.remove("err");
@@ -2226,6 +2238,11 @@ try {
     const act = (a, id) => click(`[data-act="${a}"]` + (id !== undefined ? `[data-id="${id}"]` : ""));
     const check = label => { steps++; const h = app.innerHTML; for (const bad of ["undefined", "NaN", "[object", ">null<", "Infinity"]) if (h.includes(bad)) issues.push(label + " shows “" + bad + "”");
       if (document.documentElement.scrollWidth > innerWidth + 1) issues.push(label + " scrolls sideways"); };
+    // Every item inside a sheet keeps its full height, so nothing gets squashed or cut off (2.5.2, like Till Payday 1.1.7)
+    const sheetFits = label => { const all = document.querySelectorAll(".sheet"); steps++; if (!all.length) issues.push(label + ": no sheet open");
+      for (const sh of all) for (const c of sh.children) { steps++; const cs = getComputedStyle(c);
+        if (cs.flexShrink !== "0") issues.push(label + ": an item in the sheet can get squashed");
+        else if (c.scrollHeight > c.clientHeight + 1 && !/auto|scroll/.test(cs.overflowY)) issues.push(label + ": something spills out of its box in the sheet"); } };
     const pickRight = () => { const v = cur(); const k = v.qs[v.i].opts.findIndex(o => o.ok); document.querySelectorAll('[data-act="pick"]')[k].click(); };
     try {
       // fresh state for this copy
@@ -2254,11 +2271,11 @@ try {
         const n = TESTS[sid].qs.length;
         document.dispatchEvent(new KeyboardEvent("keydown", {key:"c", bubbles:true})); if (P.active.ans[0] !== 2) issues.push("Keyboard answer (C) didn't work in test " + sid);
         for (let i = 0; i < n; i++) { check(sid + " test Q" + (i + 1)); if (i === 2) act("tflag"); const o = document.querySelectorAll('[data-act="tpick"]'); if (o.length !== 4) issues.push("Test options " + sid); if (i !== 5) o[(i * 7) % 4].click(); if (i < n - 1) act("tnext"); }
-        act("tprev"); act("tnext"); act("tnav"); check(sid + " question list"); click('[data-act="tjump"][data-i="5"]'); if (P.active.i !== 5) issues.push("Jump failed " + sid);
-        act("tpause"); check(sid + " paused"); act("tresume"); act("texit"); act("tsheetclose"); act("tnav"); act("tsubmitask"); act("tsubmit");
+        act("tprev"); act("tnext"); act("tnav"); check(sid + " question list"); sheetFits(sid + " question list"); click('[data-act="tjump"][data-i="5"]'); if (P.active.i !== 5) issues.push("Jump failed " + sid);
+        act("tpause"); check(sid + " paused"); sheetFits(sid + " paused"); act("tresume"); act("texit"); act("tsheetclose"); act("tnav"); act("tsubmitask"); act("tsubmit");
         if (cur().v !== "tres") { issues.push("No test results " + sid); continue; }
         check(sid + " results"); act("rfilter", "all"); check(sid + " review all");
-        act("report"); if (!app.querySelector(".sheet") || app.querySelector(".sheet").textContent.indexOf("Report a mistake") < 0) issues.push("Report sheet didn't open in " + sid + " results"); act("reportclose"); if (app.querySelector(".sheet")) issues.push("Report sheet didn't close");
+        act("report"); sheetFits(sid + " report sheet"); if (!app.querySelector(".sheet") || app.querySelector(".sheet").textContent.indexOf("Report a mistake") < 0) issues.push("Report sheet didn't open in " + sid + " results"); act("reportclose"); if (app.querySelector(".sheet")) issues.push("Report sheet didn't close");
         const att = P.tests[sid][P.tests[sid].length - 1]; let sc = 0; att.ans.forEach((j, i) => { if (j !== null && att.ord[i][j] === 0) sc++; }); if (sc !== att.score) issues.push("Score math wrong " + sid);
       }
       await step("Pause, save, resume and timer");
@@ -2280,6 +2297,14 @@ try {
       for (const [ks, want] of [[["2","+","3","×","4","="],"14"], [["(","2","+","3",")","x²","="],"25"], [["√","9",")","="],"3"], [["2","^","1","0","="],"1024"], [["−","5","+","2","="],"−3"], [["0",".","1","+","0",".","2","="],"0.3"], [["−","2","x²","="],"−4"]]) {
         const got = keys(ks); if (got !== want) issues.push("Calculator " + ks.join("") + " gave " + got);
       }
+      // A long sum scrolls inside the display: it stays capped, shows the newest part, and the keys go back after clearing (2.5.2)
+      { sheetFits("Calculator"); click('[data-k="C"]'); const d = $("#calc .cdisp"), k7 = () => $('#calc [data-k="7"]').getBoundingClientRect().top, top0 = k7();
+        for (let i = 0; i < 80; i++) click(`[data-k="${"1234567890"[i % 10]}"]`);
+        steps++; const cap = Math.max(innerHeight * 0.25, 7.5 * parseFloat(getComputedStyle(document.documentElement).fontSize));
+        if (d.getBoundingClientRect().height > cap + 1) issues.push("The calculator display grew past its cap with a long sum");
+        steps++; if (Math.abs(d.scrollTop + d.clientHeight - d.scrollHeight) > 1) issues.push("The calculator display doesn't show the newest part of a long sum");
+        sheetFits("Calculator with a long sum");
+        click('[data-k="C"]'); steps++; if (Math.abs(k7() - top0) > 1) issues.push("The calculator keys didn't go back after clearing a long sum"); }
       click('#calc .iconbtn');
       await step("Quick 5, read aloud and keyboard");
       act("tab", "learn"); act("tab", "learn"); act("quick5");
@@ -2314,6 +2339,14 @@ try {
       steps++; if (P.bk.at !== today() || P.bk.n !== 0) issues.push("Restoring didn't count as a fresh backup");
       await step("Keep your progress safe: backup reminders and Make it an app");
       const keep = JSON.stringify(P);   // put back afterwards
+      // The Claude copies are retired (2.5.2): the moved card shows only outside the website, first on Home, and opens a backup code
+      tab = "learn"; stacks.learn = [{v:"home"}]; render(false); check("Home");
+      steps++; if (!!$("#movedcard") === WEB) issues.push(WEB ? "The website shows the Study Coach has moved card" : "The Claude copy doesn't show the Study Coach has moved card");
+      if (!WEB && $("#movedcard")) {
+        steps++; const a = $("#movedcard a"); if (!a || a.href !== SITE || $("main.screen").firstElementChild.id !== "movedcard") issues.push("The moved card's link or place is wrong");
+        click('#movedcard [data-act="bknow"]'); steps++; if (tab !== "me" || !$("#bkcode") || $("#bkcode").value.indexOf("SC1.") !== 0) issues.push("Get my backup code didn't open a backup code");
+        act("bkclose");
+      }
       // Progress from 2.3: every answer so far counts as not backed up, and the old Safari note's flag is dropped
       const up = hydrate({u:{}, stats:{math:{seen:12, right:6}, sci:{seen:3, right:1}}, set:{fs:"lg", safariTip:true}});
       steps++; if (up.dv !== DATA_VERSION || up.bk.at !== "" || up.bk.n !== 15 || "safariTip" in up.set || up.set.fs !== "lg") issues.push("Older progress didn't upgrade correctly");

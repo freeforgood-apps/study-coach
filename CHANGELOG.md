@@ -1,5 +1,11 @@
 # Study Coach: changelog
 
+## 2.5.2 (Nov 9, 2026)
+- Fixed: the calculator display could get squashed on small phones, with Large text, or with a long sum. Its top line got cut in half and the start of the sum disappeared. Now it never gets squashed. A long sum shows its newest part, you can scroll up inside the display to see the start, and the keys stay where they are.
+- Every sheet (the question list, pause, finish, leave and Report a mistake) now keeps each item at its full size, like Till Payday 1.1.7, so nothing in them can get squashed later.
+- Claude copy only: Study Coach inside Claude now says Study Coach has moved to the website. It explains how to bring your progress along with a backup code, with buttons that open the backup code and the website. This is the last update to the Claude copies, so the website is the one to use from now on. Progress saved in the Claude copy stays there and keeps working. The website doesn't show this note.
+- Tested: the self-test passed in headless Chrome at phone size, small phone size in dark mode and desktop size (1,506 to 1,512 checks), and inside a frame like the Claude copy at the same sizes (1,507 to 1,512 checks). It caught all 4 bugs planted on purpose. A browser check opened every sheet and the calculator, with and without a long sum, at three screen sizes, three text sizes and both themes (18 runs): before the fix, the calculator display was squashed in 22 cases; after it, nothing was squashed or spilling out, and the display always showed the newest part of the sum. A browser check of the moved note passed 63 of 63: it shows only in the Claude-style copy, first on Home, at a small phone size with Large and bigger text, and its buttons open the backup code and the website. Progress made there (made-up answers) restored exactly on the website. An automated accessibility check (axe-core 4.14 at four sizes in light and dark mode) found no new problems on Home, the moved note or the calculator.
+
 ## 2.5.1 (Nov 3, 2026)
 - The backup code boxes use 16px text, so iPhone Safari no longer zooms in when you tap them. The self-test checks it.
 
