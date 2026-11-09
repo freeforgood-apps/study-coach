@@ -37,6 +37,7 @@ Results are tied to the version and date they were run. When the app changes, th
 
 | Version | Date | Browser and device | Result |
 |---|---|---|---|
+| 2.6.1 | Nov 9, 2026 | Chrome (Blink engine) on Linux: full check at phone size, small phone size in dark mode and desktop size (adds a heading-level check on every screen) | ✓ Passed, 1,916 to 1,928 automated checks |
 | 2.6.0 | Nov 9, 2026 | Chrome (Blink engine) on Linux: full check at phone size, small phone size in dark mode and desktop size, plus the Claude-style copy inside a frame (adds the privacy lock checks) | ✓ Passed, 1,511 to 1,519 automated checks |
 | 2.5.4 | Nov 9, 2026 | The published GitHub Pages site, Safari engine (WebKit) on a real iPhone (iOS 18.7) | ✓ Passed, 1,515 automated checks |
 | 2.5.4 | Nov 9, 2026 | Chrome (Blink engine) on Linux: full check at phone size, small phone size in dark mode and desktop size, plus the Claude-style copy inside a frame (heights measured from the visible screen; fixed calculator cap check) | ✓ Passed, 1,505 to 1,510 automated checks |
@@ -119,6 +120,8 @@ Free to use. Provided "as is," without warranties of any kind. Study Coach is a 
 | `README.md` | This page |
 | `CHANGELOG.md` | What changed in each version |
 | `PROGRESS.md` | Where the project stands, and the rules for working on it |
+| `SECURITY.md` | How to report a security problem privately |
+| `.gitignore` | Keeps private files, like keys, from being uploaded by mistake |
 
 ## Updating the app
 

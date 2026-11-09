@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-5niRDldQjQLwEmgNH9g2Sr6rHb2FLS5yAxF5CwNBDC4=' 'sha256-h8FIo8stfE9t1G5Y2JsT6sY9uQeoe3bDl1sOTq+xEh8=' 'sha256-FRStbCI96HQBjgehf8Te1fl6kOesp6zCtjGrHVBCweQ=' 'sha256-Socr05aDGP+tLU4g9qtJSFiS9xlt4W8+vqkUOh5cduc='; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src data:; connect-src 'none'; manifest-src 'self'; worker-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'; frame-src 'none'; media-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-5niRDldQjQLwEmgNH9g2Sr6rHb2FLS5yAxF5CwNBDC4=' 'sha256-h8FIo8stfE9t1G5Y2JsT6sY9uQeoe3bDl1sOTq+xEh8=' 'sha256-FRStbCI96HQBjgehf8Te1fl6kOesp6zCtjGrHVBCweQ=' 'sha256-vlktQ5HokI9sh4sCdNrek/kxijs10myH03/kP8wGzDM='; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src data:; connect-src 'none'; manifest-src 'self'; worker-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'; frame-src 'none'; media-src 'none'">
 <meta name="referrer" content="no-referrer">
 <link rel="manifest" href="manifest.webmanifest">
 <title>Study Coach for the GED® Test</title>
@@ -158,7 +158,7 @@ details.info[open] summary .chev svg{transform:rotate(90deg)}
 
 /* lesson */
 .sec{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:18px;display:flex;flex-direction:column;gap:10px}
-.sec h3{font-family:var(--display);font-weight:600;font-size:1.18rem;line-height:1.25;margin:0;text-wrap:balance}
+.sec>h2,.sec>h3{font-family:var(--display);font-weight:600;font-size:1.18rem;line-height:1.25;margin:0;text-wrap:balance}
 .sec ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
 .ex{background:color-mix(in srgb,var(--c) 9%,var(--surface));border-radius:14px;padding:12px 14px;font-variant-numeric:tabular-nums;line-height:1.7}
 .tip{border-radius:20px;padding:16px 18px;background:color-mix(in srgb,var(--c) 12%,var(--bg));display:flex;flex-direction:column;gap:4px}
@@ -301,7 +301,7 @@ textarea.code{width:100%;min-height:110px;font-family:ui-monospace,Menlo,Consola
 .pickfile:focus-within{outline:3px solid var(--ink);outline-offset:2px}
 .filepick{position:absolute;inset:0;width:100%;height:100%;opacity:0;pointer-events:none}
 .copies{display:flex;flex-direction:column;gap:8px;margin-top:8px}
-.copies h4{margin:6px 0 0;font-size:1rem}
+.copies h3{margin:6px 0 0;font-size:1rem}
 .btn.copy{flex-direction:column;gap:2px}
 .btn.copy small{font-weight:400;font-size:.8rem;color:var(--muted)}
 .btn.armed{background:var(--bad);color:var(--onc);border-color:var(--bad)}
@@ -910,7 +910,7 @@ const TIPS = [
 </script>
 <script>
 "use strict";
-const APP_VERSION = "2.6.0";   // plain X.Y.Z: the tagging workflow and the release check read it
+const APP_VERSION = "2.6.1";   // plain X.Y.Z: the tagging workflow and the release check read it
 const FEEDBACK_EMAIL = "freeforgood-apps+study@proton.me";
 const SITE = "https://freeforgood-apps.github.io/study-coach/";   // the website, for links from the Claude copies
 /* ================= question registry ================= */
@@ -1146,7 +1146,7 @@ function keepSafeTips(){
     ["Safari can clear saved data ", "from websites you haven't opened in 7 days. The Home Screen app keeps its own data, so it avoids that."],
     backup
   ] : [backup];
-  return `<section class="sec" id="keepsafe"><h3>Keep your progress safe</h3><ul>${tips.map(([b, t]) => `<li><b>${b}</b>${t}</li>`).join("")}</ul></section>`;
+  return `<section class="sec" id="keepsafe"><h2>Keep your progress safe</h2><ul>${tips.map(([b, t]) => `<li><b>${b}</b>${t}</li>`).join("")}</ul></section>`;
 }
 // The Claude copies are retired (Nov 2026): point people to the website. Only shows outside the website (WEB is false in a frame).
 function movedCard(){
@@ -1286,7 +1286,7 @@ function vSubject(v){
 
 function vLesson(v){
   const f = findUnit(v.id), s = f.s, u = f.u;
-  const secs = u.lesson.map(x => `<section class="sec"><h3>${x.h}</h3>${x.html}</section>`).join("");
+  const secs = u.lesson.map(x => `<section class="sec"><h2>${x.h}</h2>${x.html}</section>`).join("");
   return page(cvar(s), topbar(s.name, {right:`<div class="topright">Lesson ${f.i + 1} of ${s.units.length}</div>`}) + `<main class="screen">
     <div><span class="eyebrow">${s.full}</span><h1 style="margin-top:4px">${u.title}</h1></div>
     ${listenBtn()}
@@ -1389,7 +1389,7 @@ function vTestIntro(v){
   const s = subj(v.id), T = TESTS[v.id], A = P.active, timed = v.timed !== false, h = P.tests[s.id] || [];
   let body;
   if (A && A.sid === v.id){
-    body = `<div class="sec"><h3>This test is in progress</h3><p>${A.ans.filter(x => x !== null).length} of ${A.ans.length} answered${A.limit ? ` · ${fmtTime(A.limit - A.used)} left` : " · untimed"}.</p></div>
+    body = `<div class="sec"><h2>This test is in progress</h2><p>${A.ans.filter(x => x !== null).length} of ${A.ans.length} answered${A.limit ? ` · ${fmtTime(A.limit - A.used)} left` : " · untimed"}.</p></div>
       <div class="stack"><button class="btn" data-act="resume">Resume test</button><button class="btn ghost" data-act="starttest" data-id="${s.id}">Start over</button></div>`;
   } else {
     body = `<div class="label">Timer</div>
@@ -1401,7 +1401,7 @@ function vTestIntro(v){
   return page(cvar(s), topbar(s.name + " test") + `<main class="screen">
     <section class="shead">${glyph(s)}<div class="mid"><span class="eyebrow">Full practice test</span><h1 class="h1s">${s.full}</h1></div></section>
     <div class="pills"><span class="pill">${T.qs.length} questions</span><span class="pill">${T.mins} minutes</span><span class="pill">Every lesson covered</span></div>
-    <div class="sec"><h3>How it works</h3><ul>
+    <div class="sec"><h2>How it works</h2><ul>
       <li>Like the real test, you'll see answers and explanations when you finish.</li>
       <li>Flag any question to come back to it, and jump around with the question list.</li>
       <li>Pause any time. Your answers and time are saved.</li>
@@ -1579,7 +1579,7 @@ function vCards(v){
 function vFormulas(){
   return page("--c:var(--math)", topbar("Formula sheet") + `<main class="screen">
     <div><h1>Formula sheet</h1><p class="muted" style="margin-top:6px">On test day you get an official formula sheet, but it doesn't list everything. Know the basics, like perimeter and rectangle area, by heart. You can preview the official sheet at <a href="https://ged.com" target="_blank" rel="noopener">GED.com</a>.</p></div>
-    ${FORMULAS.map(g => `<section class="sec"><h3>${g.h}</h3><div>${g.rows.map(r => `<div class="frow"><span>${r[0]}</span><b>${r[1]}</b></div>`).join("")}</div></section>`).join("")}
+    ${FORMULAS.map(g => `<section class="sec"><h2>${g.h}</h2><div>${g.rows.map(r => `<div class="frow"><span>${r[0]}</span><b>${r[1]}</b></div>`).join("")}</div></section>`).join("")}
     <button class="btn ghost" data-act="calc">${I.calc} Open calculator</button>
   </main>`);
 }
@@ -1626,7 +1626,7 @@ function vEssay(v){
 function vTips(){
   return page("--c:var(--ss)", topbar("Test-day tips") + `<main class="screen">
     <div><h1>Test-day tips</h1><p class="muted" style="margin-top:6px">Small habits that add points.</p></div>
-    ${TIPS.map(g => `<section class="sec"><h3>${g.h}</h3><ul>${g.items.map(x => `<li>${x}</li>`).join("")}</ul></section>`).join("")}
+    ${TIPS.map(g => `<section class="sec"><h2>${g.h}</h2><ul>${g.items.map(x => `<li>${x}</li>`).join("")}</ul></section>`).join("")}
   </main>`);
 }
 
@@ -1656,13 +1656,13 @@ function vMe(v){
     <div class="label">Practice test scores</div>
     ${histHTML}
     <div class="label">Settings</div>
-    <div class="sec"><h3>Text size</h3>
+    <div class="sec"><h2>Text size</h2>
       <div class="seg" role="group" aria-label="Text size"><button class="${fs !== "lg" ? "on" : ""}" data-act="fs" data-id="md" aria-pressed="${fs !== "lg"}">Standard</button><button class="${fs === "lg" ? "on" : ""}" data-act="fs" data-id="lg" aria-pressed="${fs === "lg"}" style="font-size:1.1rem">Large</button></div>
     </div>
-    <div class="sec"><h3>Your test date</h3><p class="small muted">Pick the day you plan to test, and Study Coach will suggest a weekly pace.</p>
+    <div class="sec"><h2>Your test date</h2><p class="small muted">Pick the day you plan to test, and Study Coach will suggest a weekly pace.</p>
       <input type="date" id="tdate" class="dateinput" value="${P.set.date || ""}" min="${today()}" aria-label="Your test date">
       ${P.set.date ? `<p class="pace">${I.cal}<span>${paceText()}</span></p><button class="linkbtn sm" data-act="cleardate">Clear date</button>` : ""}</div>
-    <div class="sec"><h3>Move your progress</h3><p class="small muted">Progress saves in this browser only. Save a backup to keep it safe or move it to another phone.</p>
+    <div class="sec"><h2>Move your progress</h2><p class="small muted">Progress saves in this browser only. Save a backup to keep it safe or move it to another phone.</p>
       <p class="small" id="bkline">${P.bk.at ? "Last backup: " + fmtDate(fromDayKey(P.bk.at)) + " (" + agoText(-daysUntil(P.bk.at)) + ")" : "No backup yet"}</p>${backupHTML(v)}</div>
     <button class="unit" data-act="open" data-id="about" style="--c:var(--ink)"><span class="ico">${I.info}</span><span class="mid"><span class="utitle">About, privacy and terms</span><span class="usum">Version ${APP_VERSION}</span></span>${I.chev}</button>
     <div class="foot"><span class="small muted">Your progress saves in this browser on this device.</span>
@@ -1790,7 +1790,7 @@ function copiesHTML(){
     const time = isNaN(at) ? "" : " at " + at.toLocaleTimeString(undefined, {hour:"numeric", minute:"2-digit"});
     return `<button class="btn ghost copy" data-act="copyrestore" data-id="${i}"><span class="al">${when}, when you first opened it</span><small>${fmtDate(fromDayKey(c.day))}${time}</small></button>`;
   }).join("");
-  return `<div class="copies" id="copies"><h4>Automatic copies</h4><p class="small muted">Study Coach keeps a copy of your progress from each of the last 3 days you opened it, right here on this device. Handy if something goes wrong.</p>
+  return `<div class="copies" id="copies"><h3>Automatic copies</h3><p class="small muted">Study Coach keeps a copy of your progress from each of the last 3 days you opened it, right here on this device. Handy if something goes wrong.</p>
     ${btns}<p class="small muted" id="copymsg" aria-live="polite"></p><button class="linkbtn" data-act="copiesdelete">Delete these copies</button></div>`;
 }
 
@@ -1838,13 +1838,13 @@ function vAbout(){
   const L = generalReport();
   return page("--c:var(--math)", topbar("About") + `<main class="screen">
     <div><h1>About Study Coach</h1><p class="muted" style="margin-top:6px">A free study app for the GED® test · Version ${APP_VERSION}</p></div>
-    <section class="sec"><h3>Who it's for</h3><p>Anyone working toward a GED® credential, especially people fitting study into full lives: between shifts, on the bus, after the kids are asleep. Every lesson is short, every answer is explained, and nothing is locked or for sale. If school didn't work for you the first time, that says nothing about what you can do now.</p></section>
-    <section class="sec"><h3>What's inside</h3><p>19 short lessons across Math, Language Arts, Science and Social Studies, four full practice tests, flashcards, essay practice, a formula sheet and a calculator. It works on any phone or computer${navigator.serviceWorker && navigator.serviceWorker.controller ? ", and keeps working without an internet connection once it has loaded" : ""}.</p></section>
-    <section class="sec"><h3>Not an official GED® product</h3><p>Study Coach is an independent study tool. It is not affiliated with, endorsed by or sponsored by the American Council on Education (ACE) or GED Testing Service LLC. Practice scores are for studying only and are not GED® scores.</p>
+    <section class="sec"><h2>Who it's for</h2><p>Anyone working toward a GED® credential, especially people fitting study into full lives: between shifts, on the bus, after the kids are asleep. Every lesson is short, every answer is explained, and nothing is locked or for sale. If school didn't work for you the first time, that says nothing about what you can do now.</p></section>
+    <section class="sec"><h2>What's inside</h2><p>19 short lessons across Math, Language Arts, Science and Social Studies, four full practice tests, flashcards, essay practice, a formula sheet and a calculator. It works on any phone or computer${navigator.serviceWorker && navigator.serviceWorker.controller ? ", and keeps working without an internet connection once it has loaded" : ""}.</p></section>
+    <section class="sec"><h2>Not an official GED® product</h2><p>Study Coach is an independent study tool. It is not affiliated with, endorsed by or sponsored by the American Council on Education (ACE) or GED Testing Service LLC. Practice scores are for studying only and are not GED® scores.</p>
       <p class="legal">GED® and GED Testing Service® are registered trademarks of the American Council on Education. They may not be used or reproduced without the express written permission of ACE or GED Testing Service. The GED® and GED Testing Service® brands are administered by GED Testing Service LLC under license from the American Council on Education. GED Ready® is a trademark of its owner. These names are used here only to describe the test this app helps you prepare for.</p></section>
-    <section class="sec"><h3>About the content</h3><p>All lessons, questions and essay passages are original and were written with help from AI (Claude, made by Anthropic), then reviewed for accuracy. Mistakes are still possible. The essay passages, and the people and studies in them, are made up for practice.</p>
+    <section class="sec"><h2>About the content</h2><p>All lessons, questions and essay passages are original and were written with help from AI (Claude, made by Anthropic), then reviewed for accuracy. Mistakes are still possible. The essay passages, and the people and studies in them, are made up for practice.</p>
       <p>Test rules, prices and policies change and can vary by state. Always check <a href="https://ged.com" target="_blank" rel="noopener">GED.com</a> for official information.</p></section>
-    <section class="sec"><h3>Privacy</h3><ul>
+    <section class="sec"><h2>Privacy</h2><ul>
       <li>No accounts, ads, analytics or tracking cookies.</li>
       <li>Your progress, scores and essay drafts are saved only in this browser on your device. The app never sends them anywhere.</li>${WEB ? `
       <li>A privacy lock is built into this page: your browser blocks it from sending anything over the internet, even if it tried. The self-test under Feedback shows the lock working on your phone.</li>` : ""}
@@ -1852,9 +1852,9 @@ function vAbout(){
       <li>Like any website, the service that hosts this page may log visitors' IP addresses for security.</li>
       <li>Links to other sites, like GED.com, are covered by those sites' own privacy policies.</li></ul></section>
     ${keepSafeTips()}
-    <section class="sec"><h3>Accessibility</h3><p>Study Coach follows your device's light or dark setting, has a large-text option in the Progress tab, labels its controls for screen readers, can read lessons and questions out loud (tap Listen), works with a keyboard on computers and is designed to meet WCAG 2.2 AA color contrast. If anything is hard to use, please say so using the feedback option below.</p></section>
-    <section class="sec"><h3>Terms of use</h3><p>Study Coach is free to use and is provided “as is,” without warranties of any kind. It's a study aid, not a guarantee of any test result, and shouldn't be your only source of information about the GED® test.</p></section>
-    <section class="sec" id="feedback"><h3>Feedback</h3><p>Spotted a mistake, got stuck or have an idea? Send it in. You don't need an account to email.</p>
+    <section class="sec"><h2>Accessibility</h2><p>Study Coach follows your device's light or dark setting, has a large-text option in the Progress tab, labels its controls for screen readers, can read lessons and questions out loud (tap Listen), works with a keyboard on computers and is designed to meet WCAG 2.2 AA color contrast. If anything is hard to use, please say so using the feedback option below.</p></section>
+    <section class="sec"><h2>Terms of use</h2><p>Study Coach is free to use and is provided “as is,” without warranties of any kind. It's a study aid, not a guarantee of any test result, and shouldn't be your only source of information about the GED® test.</p></section>
+    <section class="sec" id="feedback"><h2>Feedback</h2><p>Spotted a mistake, got stuck or have an idea? Send it in. You don't need an account to email.</p>
       <p>Something not working right on your phone? <a id="selftestlink" href="${WEB ? "selftest.html" : SITE + "selftest.html"}" target="_blank" rel="noopener">Run the self-test</a>. It taps through Study Coach on your phone and makes a report you can paste into an email.</p>
       <p class="small muted">Study Coach is a one-person volunteer project, so replies can take a while. Every report still helps, even if you don't hear back right away.</p>
       <div class="copyrow"><span class="mono" id="fbemail">${FEEDBACK_EMAIL}</span><button class="btn sm ghost" data-act="copyemail">Copy</button></div>

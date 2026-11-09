@@ -1,5 +1,12 @@
 # Study Coach: changelog
 
+## 2.6.1 (Nov 9, 2026)
+- Accessibility: section headings on About, Progress, Formula sheet, Test-day tips, every lesson and the practice test intro are now the right level, so screen reader users moving by heading don't hit a skipped level. They look exactly the same.
+- The self-test now checks that headings never skip a level on every screen it visits.
+- Security: added a SECURITY.md (how to report a problem privately) and a .gitignore, from the shared Baseline kit.
+- Nothing else changed. Your progress isn't affected.
+- Tested: the toolkit's release check passed every line: versions agree, the privacy lock is up to date on both pages, the self-test passed in headless Chrome at phone size, small phone size in dark mode and desktop size (1,916 to 1,928 checks, about 400 more than before because of the new heading check), the accessibility checker found nothing on Home at 4 sizes in light and dark mode, and there were no security leads since 2.6.0. A screen-by-screen accessibility scan in light and dark mode found no heading-level problems left on the six fixed screens and nothing new anywhere. On those screens, every heading's font, size, weight, color and spacing measured the same before and after at 390px and 320px with standard and large text, and before-and-after screenshots of About and Progress match except for the version number. The self-test caught both heading bugs planted on purpose (Formula sheet headings back at the old level, and a skipped level on About). Not yet run on a real iPhone.
+
 ## 2.6.0 (Nov 9, 2026)
 - Security: a privacy lock is now built into the page, the same one Till Payday uses. Your browser blocks Study Coach from sending anything over the internet, or loading anything from other sites, even if it tried. It only runs Study Coach's own code. About → Privacy says so, and the self-test checks the lock in your browser. The page also stops sharing its address with sites you open from its links.
 - Accessibility: the "About, privacy and terms" and "Reset progress" links (and the other small text links) are now at least 44px tall, so they're easier to tap. They look the same.
