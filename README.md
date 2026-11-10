@@ -37,6 +37,7 @@ Results are tied to the version and date they were run. When the app changes, th
 
 | Version | Date | Browser and device | Result |
 |---|---|---|---|
+| 2.6.6 | Nov 10, 2026 | The published GitHub Pages site (opened as selftest.html?v=2.6.6), Safari engine (WebKit) on a real iPhone (iOS 18.7), in Safari | ✓ Passed, 2,913 automated checks |
 | 2.6.6 | Nov 10, 2026 | Chrome (Blink engine) on Linux: full check at phone size, small phone size in dark mode and desktop size (adds a check that buttons are spoken with the words showing on them) | ✓ Passed, 2,909 to 2,915 automated checks |
 | 2.6.5 | Nov 10, 2026 | The published GitHub Pages site (opened as selftest.html?v=2.6.5), Safari engine (WebKit) on a real iPhone (iOS 18.7), in Safari | ✓ Passed, 2,363 automated checks |
 | 2.6.5 | Nov 10, 2026 | Chrome (Blink engine) on Linux: full check at phone size, small phone size in dark mode and desktop size (adds a check that every screen has one main heading, first on the screen) | ✓ Passed, 2,364 to 2,370 automated checks |
