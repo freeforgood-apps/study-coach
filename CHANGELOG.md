@@ -1,5 +1,11 @@
 # Study Coach: changelog
 
+## 2.6.8 (Nov 10, 2026)
+- Accessibility: "Show passage" on test results is easier to tap. It was only 23px tall, so it was easy to miss with a thumb. Now it's 44px tall, like every other button in the app, with a little more space above and below it.
+- Accessibility: the essay checklist rows are easier to tap. A one-line row was 42px tall. Now every row is at least 44px.
+- Your progress isn't affected.
+- Tested: the toolkit's release check passed every line: versions agree, the privacy lock is up to date on both pages, the self-test passed in headless Chrome at phone size, small phone size in dark mode and desktop size (3,377 to 3,389 steps), accessibility clean on Home, and no security leads. The self-test now measures every "Show passage" in all four practice tests' results and every essay checklist row, fails anything under 44px, and fails if it couldn't find them to measure. It caught all 4 size bugs planted on purpose. The accessibility checker ran on Math test results, Language Arts test results (missed and all) and the essay's Check step: both old 44px findings are gone and nothing new showed up. Before and after screenshots (phone, small phone in dark mode, iPad) match apart from the added height. Not yet run on a real iPhone.
+
 ## 2.6.7 (Nov 10, 2026)
 - Accessibility: VoiceOver now reads times the right way. It used to read a time under an hour, like the essay timer's "45:00", as 45 hours. Now screen readers hear the time in words: "45 minutes left, start timer", "1 hour 29 minutes left, pause test", and "42 seconds left" in the last minute. The same goes for every other place a time shows: the Unfinished practice test card, the test in progress note, the Test paused sheet, and the time used on test results.
 - Nothing looks different, and your progress isn't affected.

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-pK2ndcSxlr7lm999NbPbhfy22PB0hRrvEABKc7GQVWc=' 'sha256-5niRDldQjQLwEmgNH9g2Sr6rHb2FLS5yAxF5CwNBDC4=' 'sha256-h8FIo8stfE9t1G5Y2JsT6sY9uQeoe3bDl1sOTq+xEh8=' 'sha256-FRStbCI96HQBjgehf8Te1fl6kOesp6zCtjGrHVBCweQ=' 'sha256-xMsJeIi0ycKBMjADTeR812aHaJRu5js7o/KAnkRNp/k=' 'sha256-40nJjO/DbmeN3rtKFeaMD3wT3ZvnbSzPRjDCknAGhdw='; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src data:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'; frame-src 'none'; media-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-pK2ndcSxlr7lm999NbPbhfy22PB0hRrvEABKc7GQVWc=' 'sha256-5niRDldQjQLwEmgNH9g2Sr6rHb2FLS5yAxF5CwNBDC4=' 'sha256-h8FIo8stfE9t1G5Y2JsT6sY9uQeoe3bDl1sOTq+xEh8=' 'sha256-FRStbCI96HQBjgehf8Te1fl6kOesp6zCtjGrHVBCweQ=' 'sha256-VTmzg8GJ7NVaXIyR+Y6dWns39477avcsbrE66vSFG9A=' 'sha256-/qL7XQzFv83RS2ErOznYlwQRNvTr7McUY+1M9VKGeDA='; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src data:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'; frame-src 'none'; media-src 'none'">
 <meta name="referrer" content="no-referrer">
 <!-- The self-test's lock matches the app's, except it may read its own site's files (connect-src 'self') to check sw.js, the manifest and the app page's own lock. The app page itself can't send or fetch anything. -->
 <title>Study Coach Self-Test</title>
@@ -251,8 +251,8 @@ details.info[open] summary .chev svg{transform:rotate(90deg)}
 .rstat{font-weight:700;font-size:.85rem}
 .rev.ok .rstat{color:var(--good)}
 .rev.no .rstat{color:var(--bad)}
-details.pd summary{cursor:pointer;color:var(--c);font-weight:700;font-size:.88rem}
-details.pd div{margin-top:8px;font-size:.92rem;line-height:1.6;padding:12px;border-radius:12px;background:var(--bg)}
+details.pd summary{cursor:pointer;color:var(--c);font-weight:700;font-size:.88rem;padding:10.5px 0;min-height:44px}
+details.pd div{margin-top:0;font-size:.92rem;line-height:1.6;padding:12px;border-radius:12px;background:var(--bg)}
 .trow{display:flex;flex-direction:column;gap:2px;padding:6px 0}
 .trow-h{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
 .tnum{font-size:.85rem;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
@@ -273,7 +273,7 @@ details.pd div{margin-top:8px;font-size:.92rem;line-height:1.6;padding:12px;bord
 .ebtns{display:flex;gap:8px}
 textarea.essay{width:100%;min-height:55vh;resize:vertical;padding:16px;border-radius:18px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;line-height:1.6}
 textarea.essay:focus{outline:3px solid color-mix(in srgb,var(--c) 50%,transparent);outline-offset:0}
-.ck{display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px;align-items:start;padding:8px 0;cursor:pointer}
+.ck{display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px;align-items:start;padding:9px 0;min-height:44px;cursor:pointer}
 .ck input{width:22px;height:22px;margin:2px 0 0;accent-color:var(--c)}
 .tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .tile{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:14px 16px}
@@ -915,7 +915,7 @@ const TIPS = [
 </script>
 <script>
 "use strict";
-const APP_VERSION = "2.6.7";   // plain X.Y.Z: the tagging workflow and the release check read it
+const APP_VERSION = "2.6.8";   // plain X.Y.Z: the tagging workflow and the release check read it
 const FEEDBACK_EMAIL = "freeforgood-apps+study@proton.me";
 const SITE = "https://freeforgood-apps.github.io/study-coach/";   // the website, for links from the Claude copies
 /* ================= question registry ================= */
@@ -2329,6 +2329,10 @@ try {
     // The buttons that show a time, a count or a card are spoken with what's showing first, then what they do (2.6.6); a time is heard in words (2.6.7)
     const said = (sel, want, label) => { steps++; const b = $(sel); if (!b) { issues.push(label + ": missing " + sel); return; } const t = spoken(b).toLowerCase();
       if (b.hasAttribute("aria-label") || !t.includes(want)) issues.push(label + ": " + sel + " is spoken as “" + (b.getAttribute("aria-label") || t) + "”, not with “" + want + "”"); };
+    // Things to tap are at least 44px tall, so they're easy to hit (2.6.8: Show passage and the essay checklist rows). `measured` proves each one was found.
+    const measured = {};
+    const tall = (sel, label) => { for (const e of document.querySelectorAll(sel)) { steps++; measured[sel] = (measured[sel] || 0) + 1; const h = e.getBoundingClientRect().height;
+      if (h < 43.99) issues.push(label + ": " + sel + " is " + h.toFixed(1) + "px tall, under 44px"); } };
     // Every item inside a sheet keeps its full height, so nothing gets squashed or cut off (2.5.2, like Till Payday 1.1.7)
     const sheetFits = label => { const all = document.querySelectorAll(".sheet"); steps++; if (!all.length) issues.push(label + ": no sheet open");
       // A sheet has a name for screen readers: its aria-label, or the heading it points to (2.6.2)
@@ -2370,7 +2374,7 @@ try {
         said(".timer", " left, pause test", sid + " timer"); agrees("timer", sid + " timer"); said('[data-act="tnav"]', " answered, all questions", sid + " questions button"); act("tprev"); act("tnext"); act("tnav"); check(sid + " question list"); sheetFits(sid + " question list"); click('[data-act="tjump"][data-i="5"]'); if (P.active.i !== 5) issues.push("Jump failed " + sid);
         act("tpause"); check(sid + " paused"); sheetFits(sid + " paused"); act("tresume"); act("texit"); act("tsheetclose"); act("tnav"); act("tsubmitask"); act("tsubmit");
         if (cur().v !== "tres") { issues.push("No test results " + sid); continue; }
-        check(sid + " results"); act("rfilter", "all"); check(sid + " review all");
+        check(sid + " results"); act("rfilter", "all"); check(sid + " review all"); tall("details.pd summary", sid + " review all");
         act("report"); sheetFits(sid + " report sheet"); if (!app.querySelector(".sheet") || app.querySelector(".sheet").textContent.indexOf("Report a mistake") < 0) issues.push("Report sheet didn't open in " + sid + " results"); act("reportclose"); if (app.querySelector(".sheet")) issues.push("Report sheet didn't close");
         const att = P.tests[sid][P.tests[sid].length - 1]; let sc = 0; att.ans.forEach((j, i) => { if (j !== null && att.ord[i][j] === 0) sc++; }); if (sc !== att.score) issues.push("Score math wrong " + sid);
       }
@@ -2392,7 +2396,8 @@ try {
       said(".timer", "44 minutes left, start timer", "Essay timer paused");
       act("epane", "write"); const ta = $("#essay-text"); ta.value = "Passage A is better supported because it uses data."; ta.dispatchEvent(new Event("input", {bubbles:true}));
       if ($("#wc").textContent !== "9 words") issues.push("Word count wrong"); act("eoutline"); if (!$("#essay-text").value.includes("Intro:")) issues.push("Outline didn't insert");
-      act("epane", "check"); document.querySelector("[data-check]").click(); if (!P.essay.e1.checks["0-0"]) issues.push("Checklist didn't save");
+      act("epane", "check"); tall(".ck", "Essay checklist"); document.querySelector("[data-check]").click(); if (!P.essay.e1.checks["0-0"]) issues.push("Checklist didn't save");
+      for (const s of ["details.pd summary", ".ck"]) { steps++; if (!measured[s]) issues.push("The 44px check found no " + s + " to measure"); }
       act("back"); act("back"); act("open", "tips"); check("Tips"); act("back"); act("open", "about"); check("About"); act("back");
       await step("Calculator");
       act("calc"); const keys = ks => { click('[data-k="C"]'); ks.forEach(k => click(`[data-k="${k}"]`)); return cx; };
