@@ -37,6 +37,7 @@ Results are tied to the version and date they were run. When the app changes, th
 
 | Version | Date | Browser and device | Result |
 |---|---|---|---|
+| 2.6.7 | Nov 10, 2026 | The published GitHub Pages site (opened as selftest.html?v=2.6.7), Safari engine (WebKit) on a real iPhone (iOS 18.7), in Safari | ✓ Passed, 3,354 automated checks |
 | 2.6.7 | Nov 10, 2026 | Chrome (Blink engine) on Linux: full check at phone size, small phone size in dark mode and desktop size (adds checks that times are heard in words, not as a clock) | ✓ Passed, 3,353 to 3,359 automated checks |
 | 2.6.6 | Nov 10, 2026 | The published GitHub Pages site (opened as selftest.html?v=2.6.6), Safari engine (WebKit) on a real iPhone (iOS 18.7), in Safari | ✓ Passed, 2,913 automated checks |
 | 2.6.6 | Nov 10, 2026 | Chrome (Blink engine) on Linux: full check at phone size, small phone size in dark mode and desktop size (adds a check that buttons are spoken with the words showing on them) | ✓ Passed, 2,909 to 2,915 automated checks |
