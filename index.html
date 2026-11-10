@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-5niRDldQjQLwEmgNH9g2Sr6rHb2FLS5yAxF5CwNBDC4=' 'sha256-h8FIo8stfE9t1G5Y2JsT6sY9uQeoe3bDl1sOTq+xEh8=' 'sha256-FRStbCI96HQBjgehf8Te1fl6kOesp6zCtjGrHVBCweQ=' 'sha256-ARnsjyQ7Dv4k54jcGT8c5wLfrgLjva6IA/g1gEOgKMk='; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src data:; connect-src 'none'; manifest-src 'self'; worker-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'; frame-src 'none'; media-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-5niRDldQjQLwEmgNH9g2Sr6rHb2FLS5yAxF5CwNBDC4=' 'sha256-h8FIo8stfE9t1G5Y2JsT6sY9uQeoe3bDl1sOTq+xEh8=' 'sha256-FRStbCI96HQBjgehf8Te1fl6kOesp6zCtjGrHVBCweQ=' 'sha256-j8/v3NkArqn48/ro3Z+0TlU8QOk7wTHoylJm2JVOcg8='; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src data:; connect-src 'none'; manifest-src 'self'; worker-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'; frame-src 'none'; media-src 'none'">
 <meta name="referrer" content="no-referrer">
 <link rel="manifest" href="manifest.webmanifest">
 <title>Study Coach for the GED® Test</title>
@@ -910,7 +910,7 @@ const TIPS = [
 </script>
 <script>
 "use strict";
-const APP_VERSION = "2.6.3";   // plain X.Y.Z: the tagging workflow and the release check read it
+const APP_VERSION = "2.6.4";   // plain X.Y.Z: the tagging workflow and the release check read it
 const FEEDBACK_EMAIL = "freeforgood-apps+study@proton.me";
 const SITE = "https://freeforgood-apps.github.io/study-coach/";   // the website, for links from the Claude copies
 /* ================= question registry ================= */
@@ -925,18 +925,67 @@ const INSTALL_KEY = KEY + "-install";   // "done" once the Make it an app card i
 const DATA_VERSION = 2;   // 2 (Study Coach 2.4): adds bk, for backup reminders
 const fresh = () => ({dv:DATA_VERSION, u:{}, mix:{}, last:null, stats:{}, days:{}, miss:{}, tests:{}, active:null, cards:{}, essay:{}, set:{fs:"md"}, bk:{at:"", n:0, snooze:""}});
 const isDayKey = s => typeof s === "string" && /^\d{4}-\d\d-\d\d$/.test(s);
+const ELIMIT = 45 * 60000;   // the essay timer
+/* Restore checks (2.6.4, like Till Payday's sanitize()): saved progress, backups and automatic copies are never merged in as they are.
+   hydrate() builds fresh progress from the fields Study Coach knows, each checked for type and size, so nothing else comes along. */
+const BK_MAX = 5e6;   // the most a pasted code or backup file can be (the shared kit's cap). Real progress is far smaller.
+const SAFE_KEY = /^[\w.-]{1,40}$/, BLOCKED_KEYS = ["__proto__", "constructor", "prototype"];
+const asObj = v => v && typeof v === "object" && !Array.isArray(v) ? v : {};
+const asInt = (v, max) => Math.min(Math.max(Math.floor(+v) || 0, 0), max);
+const safeKeys = (o, limit) => Object.keys(asObj(o)).filter(k => SAFE_KEY.test(k) && !BLOCKED_KEYS.includes(k)).slice(-limit);
+// One test's answers and answer orders, made to fit the test as it is now
+function cleanSheet(T, a){
+  const ans = Array.isArray(a.ans) ? a.ans : [], ord = Array.isArray(a.ord) ? a.ord : [];
+  return {
+    ans: T.qs.map((q, i) => Number.isInteger(ans[i]) && ans[i] >= 0 && ans[i] < q.o.length ? ans[i] : null),
+    ord: T.qs.map((q, i) => { const n = q.o.length, o = ord[i]; return Array.isArray(o) && o.length === n && o.every(k => Number.isInteger(k) && k >= 0 && k < n) && new Set(o).size === n ? o.slice() : q.o.map((_, k) => k); })
+  };
+}
 // Saved progress and backup codes both come through here, so older data is upgraded the same way and nothing is lost.
 function hydrate(d){
-  const p = Object.assign(fresh(), d);
-  p.set = Object.assign({fs:"md"}, d.set || {});
-  delete p.set.safariTip;   // 2.3's Safari note, replaced by the Make it an app card
-  const b = d.bk && typeof d.bk === "object" ? d.bk : {};
-  p.bk = {at:isDayKey(b.at) ? b.at : "", n:Math.min(Math.max(Math.floor(+b.n) || 0, 0), 9999), snooze:isDayKey(b.snooze) ? b.snooze : ""};
+  d = asObj(d);
+  const p = fresh();
+  for (const k of safeKeys(d.u, 500)){ const r = asObj(d.u[k]), o = {}; if (r.done) o.done = true; o.best = asInt(r.best, 999); o.of = asInt(r.of, 999); p.u[k] = o; }
+  for (const k of safeKeys(d.mix, 50)){ const r = asObj(d.mix[k]); p.mix[k] = {best:asInt(r.best, 999), of:asInt(r.of, 999)}; }
+  if (typeof d.last === "string" && SAFE_KEY.test(d.last)) p.last = d.last;
+  for (const k of safeKeys(d.stats, 50)){ const r = asObj(d.stats[k]), seen = asInt(r.seen, 1e7); p.stats[k] = {seen, right:Math.min(asInt(r.right, 1e7), seen)}; }
+  for (const k of Object.keys(asObj(d.days)).filter(isDayKey).slice(-4000)){ const n = asInt(d.days[k], 1e5); if (n) p.days[k] = n; }
+  for (const k of safeKeys(d.miss, 5000)) if (d.miss[k]) p.miss[k] = 1;
+  const tests = asObj(d.tests);
+  for (const sid of Object.keys(TESTS)){
+    if (!Array.isArray(tests[sid])) continue;
+    const T = TESTS[sid];
+    const h = tests[sid].filter(a => a && typeof a === "object" && Number.isFinite(a.d) && a.d >= 0 && a.d <= 8.64e15).slice(-200).map(a => {
+      const n = Math.max(asInt(a.n, 999), 1), s = cleanSheet(T, a);
+      return {d:a.d, score:asInt(a.score, n), n, secs:asInt(a.secs, 864000), ans:s.ans, ord:s.ord, timed:!!a.timed, auto:!!a.auto};
+    });
+    if (h.length) p.tests[sid] = h;
+  }
+  const A = d.active;
+  if (A && typeof A === "object" && typeof A.sid === "string" && Object.prototype.hasOwnProperty.call(TESTS, A.sid)){
+    const T = TESTS[A.sid], s = cleanSheet(T, A), flag = Array.isArray(A.flag) ? A.flag : [];
+    p.active = {sid:A.sid, ord:s.ord, ans:s.ans, flag:T.qs.map((_, i) => !!flag[i]), i:asInt(A.i, T.qs.length - 1), used:asInt(A.used, 864e5),
+      limit:A.limit == null ? null : (asInt(A.limit, 864e5) || null), run:false, lt:asInt(A.lt, 8.64e15)};
+  }
+  const cards = asObj(d.cards);
+  for (const sid of Object.keys(CARDS)){
+    const known = {};
+    for (const k of Object.keys(asObj(cards[sid]))) if (/^\d{1,4}$/.test(k) && +k < CARDS[sid].length && cards[sid][k]) known[+k] = 1;
+    if (cards[sid] && typeof cards[sid] === "object") p.cards[sid] = known;
+  }
+  for (const k of safeKeys(d.essay, 50)){
+    const r = asObj(d.essay[k]), checks = {};
+    for (const c of Object.keys(asObj(r.checks))) if (/^\d{1,2}-\d{1,2}$/.test(c) && r.checks[c]) checks[c] = 1;
+    p.essay[k] = {text:String(typeof r.text === "string" ? r.text : "").slice(0, 100000), used:asInt(r.used, ELIMIT), checks};
+  }
+  const set = asObj(d.set);   // 2.3's safariTip note isn't carried over: the Make it an app card replaced it
+  p.set = {fs:set.fs === "lg" ? "lg" : "md"};
+  if (isDayKey(set.date)) p.set.date = set.date;
+  const b = asObj(d.bk);
+  p.bk = {at:isDayKey(b.at) ? b.at : "", n:asInt(b.n, 9999), snooze:isDayKey(b.snooze) ? b.snooze : ""};
   // From 2.3 or earlier, no backup is on record, so every answer so far counts as not backed up yet
-  if (!(d.dv >= 2)) p.bk.n = Math.min(Object.values(p.stats && typeof p.stats === "object" ? p.stats : {}).reduce((a, s) => a + ((s && +s.seen) || 0), 0), 9999);
-  p.dv = DATA_VERSION;
-  if (p.active && !TESTS[p.active.sid]) p.active = null;
-  if (p.active) p.active.run = false;
+  if (!(d.dv >= 2)) p.bk.n = Math.min(Object.values(p.stats).reduce((a, s) => a + s.seen, 0), 9999);
+  if (d.seen) p.seen = true;   // the Welcome card was dismissed
   return p;
 }
 let P = fresh();
@@ -1586,7 +1635,6 @@ function vFormulas(){
 
 function essayState(id){ return P.essay[id] || (P.essay[id] = {text:"", used:0, checks:{}}); }
 let essayRun = null;
-const ELIMIT = 45 * 60000;
 function pauseEssay(){ if (essayRun){ const st = essayState(essayRun.id); st.used += Date.now() - essayRun.lt; essayRun = null; save(); } }
 function vEssays(){
   return page("--c:var(--rla)", topbar("Essay practice") + `<main class="screen">
@@ -1675,13 +1723,20 @@ const b64e = str => { const b = new TextEncoder().encode(str); let bin = ""; b.f
 const b64d = str => new TextDecoder().decode(Uint8Array.from(atob(str), c => c.charCodeAt(0)));
 function exportCode(){ return "SC1." + b64e(JSON.stringify(P)); }
 // Reads a backup code without using it, so a bad code is caught before the confirm tap
+// Throws "big" for one too big to be real, and "newer" for one from a newer Study Coach (restoring it here would quietly drop what this version doesn't know)
 function parseCode(raw){
-  const str = (raw || "").replace(/\s+/g, "");
+  raw = String(raw || "");
+  if (raw.length > BK_MAX) throw new Error("big");
+  const str = raw.replace(/\s+/g, "");
   if (str.indexOf("SC1.") !== 0) throw new Error("prefix");
-  const d = JSON.parse(b64d(str.slice(4)));
-  if (!d || typeof d !== "object" || typeof d.u !== "object") throw new Error("shape");
+  const d = JSON.parse(b64d(str.slice(4)), (k, v) => BLOCKED_KEYS.includes(k) ? undefined : v);
+  if (!d || typeof d !== "object" || Array.isArray(d) || !d.u || typeof d.u !== "object") throw new Error("shape");
+  if (Number(d.dv) > DATA_VERSION) throw new Error("newer");
   return d;
 }
+// The words for a backup that can't be used. wrong: what to say when it just isn't a Study Coach backup
+const BK_NEWER = "This backup is from a newer version of Study Coach. Close Study Coach and open it again while you're online to update it, then try again.";
+const bkWhy = (err, wrong) => err && err.message === "newer" ? BK_NEWER : err && err.message === "big" ? "That's too big to be a Study Coach backup. Check you have only the backup code." : wrong;
 function importCode(raw){ applyRestored(parseCode(raw), true); }
 // Every restore (backup code, backup file or automatic copy) comes through here
 function applyRestored(d, isBackup){
@@ -1738,12 +1793,12 @@ function readBackupFile(input){
   const f = input.files && input.files[0];
   input.value = "";
   if (!f) return;
-  if (f.size > 5e6){ setBkMsg("That file is too big to be a Study Coach backup.", "errmsg"); return; }
+  if (f.size > BK_MAX){ setBkMsg("That file is too big to be a Study Coach backup.", "errmsg"); return; }
   const r = new FileReader();
   r.onload = () => {
     const text = String(r.result || "").trim(), ta = document.getElementById("bkin");
     if (!ta) return;
-    try { parseCode(text); } catch (e) { setBkMsg("That file isn't a Study Coach backup.", "errmsg"); return; }
+    try { parseCode(text); } catch (e) { setBkMsg(bkWhy(e, "That file isn't a Study Coach backup."), "errmsg"); return; }
     ta.value = text;
     disarm(document.querySelector('[data-act="bkrestore"]'));
     setBkMsg("Backup loaded. Tap Restore to use it.");
@@ -1776,8 +1831,9 @@ function keepDailyCopy(json){
 function restoreCopy(i){
   const c = readCopies()[i];
   if (!c) throw new Error("missing");
+  if (c.p.length > BK_MAX) throw new Error("big");
   const d = JSON.parse(c.p);
-  if (!d || typeof d !== "object" || typeof d.u !== "object") throw new Error("shape");
+  if (!d || typeof d !== "object" || Array.isArray(d) || !d.u || typeof d.u !== "object") throw new Error("shape");
   applyRestored(d, false);
   return c;
 }
@@ -2048,7 +2104,7 @@ document.addEventListener("click", e => {
       const ta = document.getElementById("bkin");
       if (!ta.value.trim()){ setBkMsg("Choose a backup file or paste a code first.", "errmsg"); break; }
       let d;
-      try { d = parseCode(ta.value); } catch (err) { setBkMsg("That code didn't work. Make sure you copied the whole thing, starting with SC1.", "errmsg"); break; }
+      try { d = parseCode(ta.value); } catch (err) { setBkMsg(bkWhy(err, "That code didn't work. Make sure you copied the whole thing, starting with SC1."), "errmsg"); break; }
       if (needsConfirm() && !armed(t, "Tap again to replace your progress")) break;
       applyRestored(d, true);
       stacks.learn = [{v:"home"}]; stacks.practice = [{v:"practice"}]; stacks.tools = [{v:"tools"}]; stacks.me = [{v:"me", bkok:true}]; render(true);
@@ -2093,7 +2149,7 @@ document.addEventListener("input", e => {
 });
 document.addEventListener("change", e => {
   if (e.target.id === "bkfile"){ readBackupFile(e.target); return; }
-  if (e.target.id === "tdate"){ if (e.target.value) P.set.date = e.target.value; else delete P.set.date; save(); render(false); return; }
+  if (e.target.id === "tdate"){ if (isDayKey(e.target.value)) P.set.date = e.target.value; else delete P.set.date; save(); render(false); return; }
   const k = e.target.dataset && e.target.dataset.check;
   if (!k) return;
   const st = essayState(cur().id);
