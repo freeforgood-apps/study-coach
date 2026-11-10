@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-5niRDldQjQLwEmgNH9g2Sr6rHb2FLS5yAxF5CwNBDC4=' 'sha256-h8FIo8stfE9t1G5Y2JsT6sY9uQeoe3bDl1sOTq+xEh8=' 'sha256-FRStbCI96HQBjgehf8Te1fl6kOesp6zCtjGrHVBCweQ=' 'sha256-V3b5JOykhSw3NCMPPlaP+O1xBOovSlRuo3JAzZqrIII='; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src data:; connect-src 'none'; manifest-src 'self'; worker-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'; frame-src 'none'; media-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-5niRDldQjQLwEmgNH9g2Sr6rHb2FLS5yAxF5CwNBDC4=' 'sha256-h8FIo8stfE9t1G5Y2JsT6sY9uQeoe3bDl1sOTq+xEh8=' 'sha256-FRStbCI96HQBjgehf8Te1fl6kOesp6zCtjGrHVBCweQ=' 'sha256-xMsJeIi0ycKBMjADTeR812aHaJRu5js7o/KAnkRNp/k='; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src data:; connect-src 'none'; manifest-src 'self'; worker-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'; frame-src 'none'; media-src 'none'">
 <meta name="referrer" content="no-referrer">
 <link rel="manifest" href="manifest.webmanifest">
 <title>Study Coach for the GED® Test</title>
@@ -912,7 +912,7 @@ const TIPS = [
 </script>
 <script>
 "use strict";
-const APP_VERSION = "2.6.6";   // plain X.Y.Z: the tagging workflow and the release check read it
+const APP_VERSION = "2.6.7";   // plain X.Y.Z: the tagging workflow and the release check read it
 const FEEDBACK_EMAIL = "freeforgood-apps+study@proton.me";
 const SITE = "https://freeforgood-apps.github.io/study-coach/";   // the website, for links from the Claude copies
 /* ================= question registry ================= */
@@ -1062,6 +1062,13 @@ const cvar = s => `--c:var(${s.color})`;
 const glyph = s => `<span class="glyph${s.glyphSm ? " sm" : ""}">${s.glyph}</span>`;
 const pct = (a, b) => b ? Math.round(a / b * 100) : 0;
 function fmtTime(ms){ const t = Math.max(0, Math.round(ms / 1000)), h = Math.floor(t / 3600), m = Math.floor(t % 3600 / 60), s = t % 60; return h ? `${h}:${pad(m)}:${pad(s)}` : `${m}:${pad(s)}`; }
+// VoiceOver reads a clock like "45:00" as 45 hours, so screen readers get the time in words instead (2.6.7): hours and minutes, and seconds only in the last minute
+function sayTime(ms){ const t = Math.max(0, Math.round(ms / 1000)), h = Math.floor(t / 3600), m = Math.floor(t % 3600 / 60), s = t % 60, n = (x, w) => `${x} ${w}${x === 1 ? "" : "s"}`;
+  return h ? n(h, "hour") + (m ? " " + n(m, "minute") : "") : m ? n(m, "minute") : n(s, "second"); }
+// A time as it shows (hidden from screen readers) and in words (heard, not shown). `after` adds more heard-only words; an id lets showTime() update both with the tick.
+function timeHTML(ms, id, after = ""){ return `<span${id ? ` id="${id}"` : ""} aria-hidden="true">${fmtTime(ms)}</span><span class="vh"><span${id ? ` id="${id}-say"` : ""}>${sayTime(ms)}</span>${after}</span>`; }
+function showTime(id, ms){ const a = document.getElementById(id), b = document.getElementById(id + "-say"), w = sayTime(ms);
+  if (a) a.textContent = fmtTime(ms); if (b && b.textContent !== w) b.textContent = w; }   // the words only change once a minute (each second in the last one)
 function shuffle(a){ a = a.slice(); for (let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
 const wc = t => { t = (t || "").trim(); return t ? t.split(/\s+/).length : 0; };
 const fmtDate = d => new Date(d).toLocaleDateString(undefined, {month:"short", day:"numeric"});
@@ -1265,7 +1272,7 @@ function vHome(){
   const A = P.active;
   if (A){
     const s = subj(A.sid);
-    cont += `<button class="continue" data-act="resume" style="${cvar(s)}"><span class="eyebrow">Unfinished practice test</span><span class="ct">${s.name} test</span><span class="cs">${A.ans.filter(x => x !== null).length} of ${A.ans.length} answered${A.limit ? " · " + fmtTime(A.limit - A.used) + " left" : ""}</span></button>`;
+    cont += `<button class="continue" data-act="resume" style="${cvar(s)}"><span class="eyebrow">Unfinished practice test</span><span class="ct">${s.name} test</span><span class="cs">${A.ans.filter(x => x !== null).length} of ${A.ans.length} answered${A.limit ? " · " + timeHTML(A.limit - A.used) + " left" : ""}</span></button>`;
   }
   const f = P.last && findUnit(P.last);
   if (f) cont += `<button class="continue" data-act="lesson" data-id="${f.u.id}" style="${cvar(f.s)}"><span class="eyebrow">Pick up where you left off</span><span class="ct">${f.u.title}</span><span class="cs">${f.s.name} · Lesson ${f.i + 1} of ${f.s.units.length}</span></button>`;
@@ -1414,7 +1421,7 @@ function vResults(v){
 /* ================= PRACTICE ================= */
 function vPractice(){
   const A = P.active, missN = missedIds().length;
-  const resume = A ? `<button class="continue" data-act="resume" style="${cvar(subj(A.sid))}"><span class="eyebrow">Unfinished practice test</span><span class="ct">${subj(A.sid).name} test</span><span class="cs">${A.ans.filter(x => x !== null).length} of ${A.ans.length} answered${A.limit ? " · " + fmtTime(A.limit - A.used) + " left" : " · untimed"}</span></button>` : "";
+  const resume = A ? `<button class="continue" data-act="resume" style="${cvar(subj(A.sid))}"><span class="eyebrow">Unfinished practice test</span><span class="ct">${subj(A.sid).name} test</span><span class="cs">${A.ans.filter(x => x !== null).length} of ${A.ans.length} answered${A.limit ? " · " + timeHTML(A.limit - A.used) + " left" : " · untimed"}</span></button>` : "";
   const tests = SUBJECTS.map(s => {
     const T = TESTS[s.id], h = P.tests[s.id] || [];
     const best = h.length ? Math.max(...h.map(a => pct(a.score, a.n))) : null;
@@ -1441,7 +1448,7 @@ function vTestIntro(v){
   const s = subj(v.id), T = TESTS[v.id], A = P.active, timed = v.timed !== false, h = P.tests[s.id] || [];
   let body;
   if (A && A.sid === v.id){
-    body = `<div class="sec"><h2>This test is in progress</h2><p>${A.ans.filter(x => x !== null).length} of ${A.ans.length} answered${A.limit ? ` · ${fmtTime(A.limit - A.used)} left` : " · untimed"}.</p></div>
+    body = `<div class="sec"><h2>This test is in progress</h2><p>${A.ans.filter(x => x !== null).length} of ${A.ans.length} answered${A.limit ? ` · ${timeHTML(A.limit - A.used)} left` : " · untimed"}.</p></div>
       <div class="stack"><button class="btn" data-act="resume">Resume test</button><button class="btn ghost" data-act="starttest" data-id="${s.id}">Start over</button></div>`;
   } else {
     body = `<div class="label">Timer</div>
@@ -1485,7 +1492,7 @@ function vTest(v){
   const answered = A.ans.filter(x => x !== null).length, unanswered = n - answered, flagged = A.flag.filter(Boolean).length;
   const opts = ord.map((k, j) => `<button class="opt ${sel === j ? "sel" : ""}" data-act="tpick" data-i="${j}" aria-pressed="${sel === j}"><span class="L">${"ABCD"[j]}</span><span>${q.o[k]}</span></button>`).join("");
   const left = A.limit ? A.limit - A.used : 0;
-  const timer = `<button class="timer${A.limit && left < 300000 ? " low" : ""}" data-act="tpause">${I.pause}<span id="timer">${A.limit ? fmtTime(left) : fmtTime(A.used)}</span><span class="vh"> ${A.limit ? "left" : "so far"}, pause test</span></button>`;
+  const timer = `<button class="timer${A.limit && left < 300000 ? " low" : ""}" data-act="tpause">${I.pause}${timeHTML(A.limit ? left : A.used, "timer", A.limit ? " left, pause test" : " so far, pause test")}</button>`;
   let sheet = "";
   if (v.sheet === "nav"){
     const cells = A.ans.map((x, i) => `<button class="cell${x !== null ? " ans" : ""}${A.flag[i] ? " fl" : ""}${i === A.i ? " cur" : ""}" data-act="tjump" data-i="${i}" aria-label="Question ${i + 1}${x !== null ? ", answered" : ", not answered"}${A.flag[i] ? ", flagged" : ""}">${i + 1}</button>`).join("");
@@ -1503,7 +1510,7 @@ function vTest(v){
       ${flagged ? `<p class="muted small">${flagged} question${flagged === 1 ? " is" : "s are"} flagged for review.</p>` : ""}
       <div class="stack"><button class="btn" data-act="tsubmit">Finish and see results</button><button class="btn ghost" data-act="tsheetclose">Go back</button></div>`, "tsheetclose");
   } else if (!A.run){
-    sheet = overlay(`<h2>Test paused</h2><p class="muted">${A.limit ? fmtTime(A.limit - A.used) + " left" : "Untimed"} · ${answered} of ${n} answered</p>
+    sheet = overlay(`<h2>Test paused</h2><p class="muted">${A.limit ? timeHTML(A.limit - A.used) + " left" : "Untimed"} · ${answered} of ${n} answered</p>
       <div class="stack"><button class="btn" data-act="tresume">${I.play} Resume</button><button class="btn ghost" data-act="texitgo">Save and exit</button></div>`);
   }
   return page(cvar(s), topbar(s.name + " test", {h1:true, close:true, act:"texit", right: timer + (A.sid !== "rla" ? calcBtn : "")}) + `<main class="screen">
@@ -1567,7 +1574,7 @@ function vTestResult(v){
   return page(cvar(s), topbar(s.name + " test results", {h1:true}) + `<main class="screen">
     <section class="score"><span class="eyebrow">${fmtDate(att.d)} · ${att.timed ? "Timed" : "Untimed"}${att.auto ? " · time ran out" : ""}</span>
       <div class="big">${p}<span>%</span></div>
-      <p class="muted">${att.score} of ${att.n} correct · ${fmtTime(att.secs * 1000)} used</p>
+      <p class="muted">${att.score} of ${att.n} correct · ${timeHTML(att.secs * 1000)} used</p>
       <h2>${msg[0]}</h2><p class="muted">${msg[1]}</p></section>
     <p class="small muted center">This is a practice score for studying, not a GED® score. The official GED Ready® practice test is the best predictor of your real result.</p>
     <div class="stack"><button class="btn" data-act="testintro" data-id="${s.id}">${I.redo} Retake test</button><button class="btn ghost" data-act="back">Done</button></div>
@@ -1651,7 +1658,7 @@ function vEssay(v){
   const E = ESSAYS.find(e => e.id === v.id), st = essayState(v.id), pane = v.pane || "read";
   const running = essayRun && essayRun.id === v.id;
   const left = ELIMIT - st.used - (running ? Date.now() - essayRun.lt : 0);
-  const timer = `<button class="timer${left <= 0 ? " low" : ""}" data-act="etimer">${left <= 0 ? I.redo : running ? I.pause : I.play}<span id="etimer">${left <= 0 ? "Time's up" : fmtTime(left)}</span><span class="vh">${left <= 0 ? " reset timer" : running ? " left, pause timer" : " left, start timer"}</span></button>`;
+  const timer = `<button class="timer${left <= 0 ? " low" : ""}" data-act="etimer">${left <= 0 ? I.redo : running ? I.pause : I.play}${left <= 0 ? `<span id="etimer">Time's up</span><span class="vh"> reset timer</span>` : timeHTML(left, "etimer", running ? " left, pause timer" : " left, start timer")}</button>`;
   const seg = `<div class="seg" role="group" aria-label="Essay steps">${[["read", "1. Read"], ["write", "2. Write"], ["check", "3. Check"]].map(([id, l]) => `<button class="${pane === id ? "on" : ""}" data-act="epane" data-id="${id}" aria-pressed="${pane === id}">${l}</button>`).join("")}</div>`;
   let body;
   if (pane === "read"){
@@ -2198,7 +2205,7 @@ setInterval(() => {
     commit();
     if (A.limit && A.used >= A.limit){ submitTest(true); return; }
     const el = document.getElementById("timer");
-    if (el){ el.textContent = A.limit ? fmtTime(A.limit - A.used) : fmtTime(A.used); if (A.limit && A.limit - A.used < 300000) el.parentNode.classList.add("low"); }
+    if (el){ showTime("timer", A.limit ? A.limit - A.used : A.used); if (A.limit && A.limit - A.used < 300000) el.parentNode.classList.add("low"); }
     if (tickN % 5 === 0) save();
   }
   if (essayRun){
@@ -2208,7 +2215,7 @@ setInterval(() => {
     if (st.used >= ELIMIT){
       st.used = ELIMIT; essayRun = null; save();
       if (cur().v === "essay") render(false);
-    } else if (el) el.textContent = fmtTime(ELIMIT - st.used);
+    } else if (el) showTime("etimer", ELIMIT - st.used);
     if (tickN % 10 === 0) save();
   }
 }, 1000);

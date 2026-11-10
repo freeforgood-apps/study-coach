@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-pK2ndcSxlr7lm999NbPbhfy22PB0hRrvEABKc7GQVWc=' 'sha256-5niRDldQjQLwEmgNH9g2Sr6rHb2FLS5yAxF5CwNBDC4=' 'sha256-h8FIo8stfE9t1G5Y2JsT6sY9uQeoe3bDl1sOTq+xEh8=' 'sha256-FRStbCI96HQBjgehf8Te1fl6kOesp6zCtjGrHVBCweQ=' 'sha256-V3b5JOykhSw3NCMPPlaP+O1xBOovSlRuo3JAzZqrIII=' 'sha256-00iDi6LwQdbI3D8YGEZtTVRyooYCmtTharGiJUdFaUs='; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src data:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'; frame-src 'none'; media-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-pK2ndcSxlr7lm999NbPbhfy22PB0hRrvEABKc7GQVWc=' 'sha256-5niRDldQjQLwEmgNH9g2Sr6rHb2FLS5yAxF5CwNBDC4=' 'sha256-h8FIo8stfE9t1G5Y2JsT6sY9uQeoe3bDl1sOTq+xEh8=' 'sha256-FRStbCI96HQBjgehf8Te1fl6kOesp6zCtjGrHVBCweQ=' 'sha256-xMsJeIi0ycKBMjADTeR812aHaJRu5js7o/KAnkRNp/k=' 'sha256-40nJjO/DbmeN3rtKFeaMD3wT3ZvnbSzPRjDCknAGhdw='; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src data:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'; frame-src 'none'; media-src 'none'">
 <meta name="referrer" content="no-referrer">
 <!-- The self-test's lock matches the app's, except it may read its own site's files (connect-src 'self') to check sw.js, the manifest and the app page's own lock. The app page itself can't send or fetch anything. -->
 <title>Study Coach Self-Test</title>
@@ -915,7 +915,7 @@ const TIPS = [
 </script>
 <script>
 "use strict";
-const APP_VERSION = "2.6.6";   // plain X.Y.Z: the tagging workflow and the release check read it
+const APP_VERSION = "2.6.7";   // plain X.Y.Z: the tagging workflow and the release check read it
 const FEEDBACK_EMAIL = "freeforgood-apps+study@proton.me";
 const SITE = "https://freeforgood-apps.github.io/study-coach/";   // the website, for links from the Claude copies
 /* ================= question registry ================= */
@@ -1065,6 +1065,13 @@ const cvar = s => `--c:var(${s.color})`;
 const glyph = s => `<span class="glyph${s.glyphSm ? " sm" : ""}">${s.glyph}</span>`;
 const pct = (a, b) => b ? Math.round(a / b * 100) : 0;
 function fmtTime(ms){ const t = Math.max(0, Math.round(ms / 1000)), h = Math.floor(t / 3600), m = Math.floor(t % 3600 / 60), s = t % 60; return h ? `${h}:${pad(m)}:${pad(s)}` : `${m}:${pad(s)}`; }
+// VoiceOver reads a clock like "45:00" as 45 hours, so screen readers get the time in words instead (2.6.7): hours and minutes, and seconds only in the last minute
+function sayTime(ms){ const t = Math.max(0, Math.round(ms / 1000)), h = Math.floor(t / 3600), m = Math.floor(t % 3600 / 60), s = t % 60, n = (x, w) => `${x} ${w}${x === 1 ? "" : "s"}`;
+  return h ? n(h, "hour") + (m ? " " + n(m, "minute") : "") : m ? n(m, "minute") : n(s, "second"); }
+// A time as it shows (hidden from screen readers) and in words (heard, not shown). `after` adds more heard-only words; an id lets showTime() update both with the tick.
+function timeHTML(ms, id, after = ""){ return `<span${id ? ` id="${id}"` : ""} aria-hidden="true">${fmtTime(ms)}</span><span class="vh"><span${id ? ` id="${id}-say"` : ""}>${sayTime(ms)}</span>${after}</span>`; }
+function showTime(id, ms){ const a = document.getElementById(id), b = document.getElementById(id + "-say"), w = sayTime(ms);
+  if (a) a.textContent = fmtTime(ms); if (b && b.textContent !== w) b.textContent = w; }   // the words only change once a minute (each second in the last one)
 function shuffle(a){ a = a.slice(); for (let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
 const wc = t => { t = (t || "").trim(); return t ? t.split(/\s+/).length : 0; };
 const fmtDate = d => new Date(d).toLocaleDateString(undefined, {month:"short", day:"numeric"});
@@ -1268,7 +1275,7 @@ function vHome(){
   const A = P.active;
   if (A){
     const s = subj(A.sid);
-    cont += `<button class="continue" data-act="resume" style="${cvar(s)}"><span class="eyebrow">Unfinished practice test</span><span class="ct">${s.name} test</span><span class="cs">${A.ans.filter(x => x !== null).length} of ${A.ans.length} answered${A.limit ? " · " + fmtTime(A.limit - A.used) + " left" : ""}</span></button>`;
+    cont += `<button class="continue" data-act="resume" style="${cvar(s)}"><span class="eyebrow">Unfinished practice test</span><span class="ct">${s.name} test</span><span class="cs">${A.ans.filter(x => x !== null).length} of ${A.ans.length} answered${A.limit ? " · " + timeHTML(A.limit - A.used) + " left" : ""}</span></button>`;
   }
   const f = P.last && findUnit(P.last);
   if (f) cont += `<button class="continue" data-act="lesson" data-id="${f.u.id}" style="${cvar(f.s)}"><span class="eyebrow">Pick up where you left off</span><span class="ct">${f.u.title}</span><span class="cs">${f.s.name} · Lesson ${f.i + 1} of ${f.s.units.length}</span></button>`;
@@ -1417,7 +1424,7 @@ function vResults(v){
 /* ================= PRACTICE ================= */
 function vPractice(){
   const A = P.active, missN = missedIds().length;
-  const resume = A ? `<button class="continue" data-act="resume" style="${cvar(subj(A.sid))}"><span class="eyebrow">Unfinished practice test</span><span class="ct">${subj(A.sid).name} test</span><span class="cs">${A.ans.filter(x => x !== null).length} of ${A.ans.length} answered${A.limit ? " · " + fmtTime(A.limit - A.used) + " left" : " · untimed"}</span></button>` : "";
+  const resume = A ? `<button class="continue" data-act="resume" style="${cvar(subj(A.sid))}"><span class="eyebrow">Unfinished practice test</span><span class="ct">${subj(A.sid).name} test</span><span class="cs">${A.ans.filter(x => x !== null).length} of ${A.ans.length} answered${A.limit ? " · " + timeHTML(A.limit - A.used) + " left" : " · untimed"}</span></button>` : "";
   const tests = SUBJECTS.map(s => {
     const T = TESTS[s.id], h = P.tests[s.id] || [];
     const best = h.length ? Math.max(...h.map(a => pct(a.score, a.n))) : null;
@@ -1444,7 +1451,7 @@ function vTestIntro(v){
   const s = subj(v.id), T = TESTS[v.id], A = P.active, timed = v.timed !== false, h = P.tests[s.id] || [];
   let body;
   if (A && A.sid === v.id){
-    body = `<div class="sec"><h2>This test is in progress</h2><p>${A.ans.filter(x => x !== null).length} of ${A.ans.length} answered${A.limit ? ` · ${fmtTime(A.limit - A.used)} left` : " · untimed"}.</p></div>
+    body = `<div class="sec"><h2>This test is in progress</h2><p>${A.ans.filter(x => x !== null).length} of ${A.ans.length} answered${A.limit ? ` · ${timeHTML(A.limit - A.used)} left` : " · untimed"}.</p></div>
       <div class="stack"><button class="btn" data-act="resume">Resume test</button><button class="btn ghost" data-act="starttest" data-id="${s.id}">Start over</button></div>`;
   } else {
     body = `<div class="label">Timer</div>
@@ -1488,7 +1495,7 @@ function vTest(v){
   const answered = A.ans.filter(x => x !== null).length, unanswered = n - answered, flagged = A.flag.filter(Boolean).length;
   const opts = ord.map((k, j) => `<button class="opt ${sel === j ? "sel" : ""}" data-act="tpick" data-i="${j}" aria-pressed="${sel === j}"><span class="L">${"ABCD"[j]}</span><span>${q.o[k]}</span></button>`).join("");
   const left = A.limit ? A.limit - A.used : 0;
-  const timer = `<button class="timer${A.limit && left < 300000 ? " low" : ""}" data-act="tpause">${I.pause}<span id="timer">${A.limit ? fmtTime(left) : fmtTime(A.used)}</span><span class="vh"> ${A.limit ? "left" : "so far"}, pause test</span></button>`;
+  const timer = `<button class="timer${A.limit && left < 300000 ? " low" : ""}" data-act="tpause">${I.pause}${timeHTML(A.limit ? left : A.used, "timer", A.limit ? " left, pause test" : " so far, pause test")}</button>`;
   let sheet = "";
   if (v.sheet === "nav"){
     const cells = A.ans.map((x, i) => `<button class="cell${x !== null ? " ans" : ""}${A.flag[i] ? " fl" : ""}${i === A.i ? " cur" : ""}" data-act="tjump" data-i="${i}" aria-label="Question ${i + 1}${x !== null ? ", answered" : ", not answered"}${A.flag[i] ? ", flagged" : ""}">${i + 1}</button>`).join("");
@@ -1506,7 +1513,7 @@ function vTest(v){
       ${flagged ? `<p class="muted small">${flagged} question${flagged === 1 ? " is" : "s are"} flagged for review.</p>` : ""}
       <div class="stack"><button class="btn" data-act="tsubmit">Finish and see results</button><button class="btn ghost" data-act="tsheetclose">Go back</button></div>`, "tsheetclose");
   } else if (!A.run){
-    sheet = overlay(`<h2>Test paused</h2><p class="muted">${A.limit ? fmtTime(A.limit - A.used) + " left" : "Untimed"} · ${answered} of ${n} answered</p>
+    sheet = overlay(`<h2>Test paused</h2><p class="muted">${A.limit ? timeHTML(A.limit - A.used) + " left" : "Untimed"} · ${answered} of ${n} answered</p>
       <div class="stack"><button class="btn" data-act="tresume">${I.play} Resume</button><button class="btn ghost" data-act="texitgo">Save and exit</button></div>`);
   }
   return page(cvar(s), topbar(s.name + " test", {h1:true, close:true, act:"texit", right: timer + (A.sid !== "rla" ? calcBtn : "")}) + `<main class="screen">
@@ -1570,7 +1577,7 @@ function vTestResult(v){
   return page(cvar(s), topbar(s.name + " test results", {h1:true}) + `<main class="screen">
     <section class="score"><span class="eyebrow">${fmtDate(att.d)} · ${att.timed ? "Timed" : "Untimed"}${att.auto ? " · time ran out" : ""}</span>
       <div class="big">${p}<span>%</span></div>
-      <p class="muted">${att.score} of ${att.n} correct · ${fmtTime(att.secs * 1000)} used</p>
+      <p class="muted">${att.score} of ${att.n} correct · ${timeHTML(att.secs * 1000)} used</p>
       <h2>${msg[0]}</h2><p class="muted">${msg[1]}</p></section>
     <p class="small muted center">This is a practice score for studying, not a GED® score. The official GED Ready® practice test is the best predictor of your real result.</p>
     <div class="stack"><button class="btn" data-act="testintro" data-id="${s.id}">${I.redo} Retake test</button><button class="btn ghost" data-act="back">Done</button></div>
@@ -1654,7 +1661,7 @@ function vEssay(v){
   const E = ESSAYS.find(e => e.id === v.id), st = essayState(v.id), pane = v.pane || "read";
   const running = essayRun && essayRun.id === v.id;
   const left = ELIMIT - st.used - (running ? Date.now() - essayRun.lt : 0);
-  const timer = `<button class="timer${left <= 0 ? " low" : ""}" data-act="etimer">${left <= 0 ? I.redo : running ? I.pause : I.play}<span id="etimer">${left <= 0 ? "Time's up" : fmtTime(left)}</span><span class="vh">${left <= 0 ? " reset timer" : running ? " left, pause timer" : " left, start timer"}</span></button>`;
+  const timer = `<button class="timer${left <= 0 ? " low" : ""}" data-act="etimer">${left <= 0 ? I.redo : running ? I.pause : I.play}${left <= 0 ? `<span id="etimer">Time's up</span><span class="vh"> reset timer</span>` : timeHTML(left, "etimer", running ? " left, pause timer" : " left, start timer")}</button>`;
   const seg = `<div class="seg" role="group" aria-label="Essay steps">${[["read", "1. Read"], ["write", "2. Write"], ["check", "3. Check"]].map(([id, l]) => `<button class="${pane === id ? "on" : ""}" data-act="epane" data-id="${id}" aria-pressed="${pane === id}">${l}</button>`).join("")}</div>`;
   let body;
   if (pane === "read"){
@@ -2201,7 +2208,7 @@ setInterval(() => {
     commit();
     if (A.limit && A.used >= A.limit){ submitTest(true); return; }
     const el = document.getElementById("timer");
-    if (el){ el.textContent = A.limit ? fmtTime(A.limit - A.used) : fmtTime(A.used); if (A.limit && A.limit - A.used < 300000) el.parentNode.classList.add("low"); }
+    if (el){ showTime("timer", A.limit ? A.limit - A.used : A.used); if (A.limit && A.limit - A.used < 300000) el.parentNode.classList.add("low"); }
     if (tickN % 5 === 0) save();
   }
   if (essayRun){
@@ -2211,7 +2218,7 @@ setInterval(() => {
     if (st.used >= ELIMIT){
       st.used = ELIMIT; essayRun = null; save();
       if (cur().v === "essay") render(false);
-    } else if (el) el.textContent = fmtTime(ELIMIT - st.used);
+    } else if (el) showTime("etimer", ELIMIT - st.used);
     if (tickN % 10 === 0) save();
   }
 }, 1000);
@@ -2310,9 +2317,17 @@ try {
       else if (hs[0] !== h1s[0]) issues.push(label + ": the main heading isn't the first heading");
       // A button's spoken name includes the words showing on it, so Voice Control users can say what they see (2.6.6). Calculator keys are symbols with spoken names on purpose.
       steps++; for (const b of document.querySelectorAll("button[aria-label],a[aria-label]")) { if (b.closest("#calc")) continue; const c = b.cloneNode(true); c.querySelectorAll(".vh,svg").forEach(x => x.remove()); const t = c.textContent.replace(/\s+/g, " ").trim().toLowerCase(), al = b.getAttribute("aria-label");
-        if (/[a-z0-9]/.test(t) && !al.replace(/\s+/g, " ").toLowerCase().includes(t)) issues.push(label + ": the spoken name “" + al + "” leaves out the words on the button (" + t.slice(0, 30) + ")"); } };
-    // The buttons that show a time, a count or a card are spoken with what's showing first, then what they do (2.6.6)
-    const said = (sel, want, label) => { steps++; const b = $(sel); if (!b) { issues.push(label + ": missing " + sel); return; } const t = b.textContent.replace(/\s+/g, " ").trim().toLowerCase();
+        if (/[a-z0-9]/.test(t) && !al.replace(/\s+/g, " ").toLowerCase().includes(t)) issues.push(label + ": the spoken name “" + al + "” leaves out the words on the button (" + t.slice(0, 30) + ")"); }
+      // A time the app counts (a timer, time left or used) is heard in words, never as a clock, since VoiceOver reads "45:00" as 45 hours (2.6.7).
+      // Times of day ("11:46 AM") and ratios in lessons ("3:12, 3 to 12") don't count.
+      steps++; if (/\d:\d\d/.test(app.textContent)) { const w = document.createTreeWalker(app, NodeFilter.SHOW_TEXT); for (let n; (n = w.nextNode());) if (/(^|\s)\d{1,2}(:\d\d){1,2}(\s+(left|used|so far)\b|$)/.test(n.data.trim()) && !n.parentElement.closest('[aria-hidden="true"]')) { issues.push(label + ": a screen reader hears “" + n.data.trim().slice(0, 24) + "” as a clock, not in words"); break; } } };
+    // A ticking time and its words agree, and only the words are heard (2.6.7)
+    const agrees = (id, label) => { steps++; const a = document.getElementById(id), b = document.getElementById(id + "-say"); if (!a || !b) { issues.push(label + ": the time or its words are missing"); return ""; }
+      const ms = a.textContent.split(":").reduce((t, x) => t * 60 + Number(x), 0) * 1000; if (a.getAttribute("aria-hidden") !== "true" || b.textContent !== sayTime(ms)) issues.push(label + ": shows " + a.textContent + " but is heard as “" + b.textContent + "”"); return b.textContent; };
+    // What a screen reader hears: the text, minus anything hidden from it (2.6.7)
+    const spoken = el => { const c = el.cloneNode(true); c.querySelectorAll('[aria-hidden="true"],svg').forEach(x => x.remove()); return c.textContent.replace(/\s+/g, " ").trim(); };
+    // The buttons that show a time, a count or a card are spoken with what's showing first, then what they do (2.6.6); a time is heard in words (2.6.7)
+    const said = (sel, want, label) => { steps++; const b = $(sel); if (!b) { issues.push(label + ": missing " + sel); return; } const t = spoken(b).toLowerCase();
       if (b.hasAttribute("aria-label") || !t.includes(want)) issues.push(label + ": " + sel + " is spoken as “" + (b.getAttribute("aria-label") || t) + "”, not with “" + want + "”"); };
     // Every item inside a sheet keeps its full height, so nothing gets squashed or cut off (2.5.2, like Till Payday 1.1.7)
     const sheetFits = label => { const all = document.querySelectorAll(".sheet"); steps++; if (!all.length) issues.push(label + ": no sheet open");
@@ -2328,6 +2343,9 @@ try {
       await step("Checking question data");
       for (const q of Object.values(QMAP)) { steps++; if (!q.q || !q.why) issues.push("Missing text " + q.id); if (q.o.length !== 4 || new Set(q.o).size !== 4) issues.push("Bad options " + q.id); }
       check("Home");
+      await step("Times in words");
+      for (const [ms, want] of [[45 * 60000, "45 minutes"], [59 * 60000 + 59000, "59 minutes"], [3600000, "1 hour"], [3600000 + 29 * 60000 + 58000, "1 hour 29 minutes"], [2 * 3600000 + 60000, "2 hours 1 minute"],
+        [60000, "1 minute"], [89500, "1 minute"], [59500, "1 minute"], [59000, "59 seconds"], [1000, "1 second"], [0, "0 seconds"], [-5000, "0 seconds"]]) { steps++; if (sayTime(ms) !== want) issues.push("Time in words: " + fmtTime(ms) + " is heard as “" + sayTime(ms) + "”, not “" + want + "”"); }
       for (const s of SUBJECTS) {
         await step("Lessons: " + s.name);
         act("tab", "learn"); act("subject", s.id); check(s.name);
@@ -2349,7 +2367,7 @@ try {
         const n = TESTS[sid].qs.length;
         document.dispatchEvent(new KeyboardEvent("keydown", {key:"c", bubbles:true})); if (P.active.ans[0] !== 2) issues.push("Keyboard answer (C) didn't work in test " + sid);
         for (let i = 0; i < n; i++) { check(sid + " test Q" + (i + 1)); if (i === 2) act("tflag"); const o = document.querySelectorAll('[data-act="tpick"]'); if (o.length !== 4) issues.push("Test options " + sid); if (i !== 5) o[(i * 7) % 4].click(); if (i < n - 1) act("tnext"); }
-        said(".timer", ", pause test", sid + " timer"); said('[data-act="tnav"]', " answered, all questions", sid + " questions button"); act("tprev"); act("tnext"); act("tnav"); check(sid + " question list"); sheetFits(sid + " question list"); click('[data-act="tjump"][data-i="5"]'); if (P.active.i !== 5) issues.push("Jump failed " + sid);
+        said(".timer", " left, pause test", sid + " timer"); agrees("timer", sid + " timer"); said('[data-act="tnav"]', " answered, all questions", sid + " questions button"); act("tprev"); act("tnext"); act("tnav"); check(sid + " question list"); sheetFits(sid + " question list"); click('[data-act="tjump"][data-i="5"]'); if (P.active.i !== 5) issues.push("Jump failed " + sid);
         act("tpause"); check(sid + " paused"); sheetFits(sid + " paused"); act("tresume"); act("texit"); act("tsheetclose"); act("tnav"); act("tsubmitask"); act("tsubmit");
         if (cur().v !== "tres") { issues.push("No test results " + sid); continue; }
         check(sid + " results"); act("rfilter", "all"); check(sid + " review all");
@@ -2359,13 +2377,19 @@ try {
       await step("Pause, save, resume and timer");
       act("tab", "practice"); act("testintro", "math"); act("starttest", "math"); document.querySelectorAll('[data-act="tpick"]')[1].click();
       act("texit"); act("texitgo"); if (!$('[data-act="resume"]')) issues.push("No resume card");
+      check("Unfinished test card"); said('[data-act="resume"]', sayTime(P.active.limit - P.active.used) + " left", "Unfinished test card");
+      act("tab", "learn"); act("tab", "learn"); check("Home with an unfinished test"); said('[data-act="resume"]', sayTime(P.active.limit - P.active.used) + " left", "Home's unfinished test card"); act("tab", "practice"); act("testintro", "math"); check("Test in progress");
       act("resume"); if (!P.active || P.active.ans[0] !== 1) issues.push("Answer lost on resume");
+      // Under an hour the timer is heard in minutes, and in seconds in its last minute, keeping up with the tick (2.6.7)
+      P.active.used = P.active.limit - 45 * 60000; await wait(1100); let heard = agrees("timer", "Timer under an hour"); if (!/^4[45] minutes$/.test(heard)) issues.push("Timer under an hour is heard as “" + heard + "”");
+      P.active.used = P.active.limit - 30000; await wait(1100); heard = agrees("timer", "Timer's last minute"); if (!/^(2\d|30) seconds$/.test(heard)) issues.push("Timer's last minute is heard as “" + heard + "”");
       P.active.used = P.active.limit - 300; await wait(1500); if (cur().v !== "tres") issues.push("Timer didn't finish the test"); else check("Auto-submitted results");
       await step("Tools: flashcards, formulas, essay, tips");
       act("tab", "tools"); check("Tools"); act("open", "decks");
       for (const sid of Object.keys(CARDS)) { act("deck", sid); let g = 0; while (cur().v === "cards" && cur().i < cur().queue.length && g++ < 40) { check("Card"); said(".flash", "tap to see the definition", "Card"); act("cflip"); said(".flash", "tap to flip back", "Card back"); act(g % 3 ? "cgot" : "cagain"); } check("Deck done"); act("back"); }
       act("back"); act("open", "formulas"); check("Formulas"); act("back");
-      act("open", "essays"); act("essay", "e1"); check("Essay"); said(".timer", " left, start timer", "Essay timer"); act("etimer"); said(".timer", " left, pause timer", "Essay timer running"); await wait(1200); act("etimer"); if (!(P.essay.e1.used > 500)) issues.push("Essay timer didn't run");
+      act("open", "essays"); act("essay", "e1"); check("Essay"); said(".timer", "45 minutes left, start timer", "Essay timer"); act("etimer"); said(".timer", " left, pause timer", "Essay timer running"); await wait(1200); agrees("etimer", "Essay timer running"); act("etimer"); if (!(P.essay.e1.used > 500)) issues.push("Essay timer didn't run");
+      said(".timer", "44 minutes left, start timer", "Essay timer paused");
       act("epane", "write"); const ta = $("#essay-text"); ta.value = "Passage A is better supported because it uses data."; ta.dispatchEvent(new Event("input", {bubbles:true}));
       if ($("#wc").textContent !== "9 words") issues.push("Word count wrong"); act("eoutline"); if (!$("#essay-text").value.includes("Intro:")) issues.push("Outline didn't insert");
       act("epane", "check"); document.querySelector("[data-check]").click(); if (!P.essay.e1.checks["0-0"]) issues.push("Checklist didn't save");
