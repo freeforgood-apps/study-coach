@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-pK2ndcSxlr7lm999NbPbhfy22PB0hRrvEABKc7GQVWc=' 'sha256-5niRDldQjQLwEmgNH9g2Sr6rHb2FLS5yAxF5CwNBDC4=' 'sha256-h8FIo8stfE9t1G5Y2JsT6sY9uQeoe3bDl1sOTq+xEh8=' 'sha256-FRStbCI96HQBjgehf8Te1fl6kOesp6zCtjGrHVBCweQ=' 'sha256-EBdNBM2DDS/I756ogiiwLkzk592lzORnWABZE9DQMfQ=' 'sha256-nj9uhm4slQjgeUzf76iST1dcs3HpxUYZ7cBXIFI1ILo='; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src data:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'; frame-src 'none'; media-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-pK2ndcSxlr7lm999NbPbhfy22PB0hRrvEABKc7GQVWc=' 'sha256-5niRDldQjQLwEmgNH9g2Sr6rHb2FLS5yAxF5CwNBDC4=' 'sha256-h8FIo8stfE9t1G5Y2JsT6sY9uQeoe3bDl1sOTq+xEh8=' 'sha256-FRStbCI96HQBjgehf8Te1fl6kOesp6zCtjGrHVBCweQ=' 'sha256-V3b5JOykhSw3NCMPPlaP+O1xBOovSlRuo3JAzZqrIII=' 'sha256-00iDi6LwQdbI3D8YGEZtTVRyooYCmtTharGiJUdFaUs='; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src data:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'; frame-src 'none'; media-src 'none'">
 <meta name="referrer" content="no-referrer">
 <!-- The self-test's lock matches the app's, except it may read its own site's files (connect-src 'self') to check sw.js, the manifest and the app page's own lock. The app page itself can't send or fetch anything. -->
 <title>Study Coach Self-Test</title>
@@ -314,6 +314,7 @@ textarea.code{width:100%;min-height:110px;font-family:ui-monospace,Menlo,Consola
 /* read aloud, pace, keyboard */
 .listen{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 14px;border-radius:99px;border:1px solid var(--line);background:var(--surface);font-weight:700;font-size:.85rem;cursor:pointer;color:var(--ink);align-self:flex-start;flex:none}
 .listen svg{width:17px;height:17px}
+.vh{position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 .qtools{display:flex;justify-content:space-between;align-items:center;gap:10px}
 .qhead{flex-wrap:wrap}
 .qhead-r{display:flex;gap:8px;align-items:center}
@@ -914,7 +915,7 @@ const TIPS = [
 </script>
 <script>
 "use strict";
-const APP_VERSION = "2.6.5";   // plain X.Y.Z: the tagging workflow and the release check read it
+const APP_VERSION = "2.6.6";   // plain X.Y.Z: the tagging workflow and the release check read it
 const FEEDBACK_EMAIL = "freeforgood-apps+study@proton.me";
 const SITE = "https://freeforgood-apps.github.io/study-coach/";   // the website, for links from the Claude copies
 /* ================= question registry ================= */
@@ -1103,9 +1104,10 @@ const I = {
 /* ================= read aloud ================= */
 const canSpeak = typeof window !== "undefined" && "speechSynthesis" in window && typeof SpeechSynthesisUtterance === "function";
 let speaking = false;
-function listenLabel(){ return speaking ? `${I.stop}<span>Stop</span>` : `${I.speaker}<span>Listen</span>`; }
-const listenBtn = () => canSpeak ? `<button class="listen" data-act="listen" aria-label="${speaking ? "Stop reading" : "Read aloud"}">${listenLabel()}</button>` : "";
-function syncListen(){ const b = document.querySelector('[data-act="listen"]'); if (b){ b.innerHTML = listenLabel(); b.setAttribute("aria-label", speaking ? "Stop reading" : "Read aloud"); } }
+// Spoken names start with the words on the button; the .vh part is heard but not shown (2.6.6)
+function listenLabel(){ return speaking ? `${I.stop}<span>Stop</span><span class="vh"> reading</span>` : `${I.speaker}<span>Listen</span><span class="vh"> to this read aloud</span>`; }
+const listenBtn = () => canSpeak ? `<button class="listen" data-act="listen">${listenLabel()}</button>` : "";
+function syncListen(){ const b = document.querySelector('[data-act="listen"]'); if (b) b.innerHTML = listenLabel(); }
 function stopSpeak(){ if (!canSpeak) return; try { speechSynthesis.cancel(); } catch (e) {} speaking = false; }
 function speak(text){
   if (!canSpeak || !text) return;
@@ -1486,7 +1488,7 @@ function vTest(v){
   const answered = A.ans.filter(x => x !== null).length, unanswered = n - answered, flagged = A.flag.filter(Boolean).length;
   const opts = ord.map((k, j) => `<button class="opt ${sel === j ? "sel" : ""}" data-act="tpick" data-i="${j}" aria-pressed="${sel === j}"><span class="L">${"ABCD"[j]}</span><span>${q.o[k]}</span></button>`).join("");
   const left = A.limit ? A.limit - A.used : 0;
-  const timer = `<button class="timer${A.limit && left < 300000 ? " low" : ""}" data-act="tpause" aria-label="Pause test">${I.pause}<span id="timer">${A.limit ? fmtTime(left) : fmtTime(A.used)}</span></button>`;
+  const timer = `<button class="timer${A.limit && left < 300000 ? " low" : ""}" data-act="tpause">${I.pause}<span id="timer">${A.limit ? fmtTime(left) : fmtTime(A.used)}</span><span class="vh"> ${A.limit ? "left" : "so far"}, pause test</span></button>`;
   let sheet = "";
   if (v.sheet === "nav"){
     const cells = A.ans.map((x, i) => `<button class="cell${x !== null ? " ans" : ""}${A.flag[i] ? " fl" : ""}${i === A.i ? " cur" : ""}" data-act="tjump" data-i="${i}" aria-label="Question ${i + 1}${x !== null ? ", answered" : ", not answered"}${A.flag[i] ? ", flagged" : ""}">${i + 1}</button>`).join("");
@@ -1518,7 +1520,7 @@ function vTest(v){
   </main>
   <div class="dock"><div class="in tnav">
     <button class="btn ghost" data-act="tprev"${A.i === 0 ? " disabled" : ""} aria-label="Previous question">${I.back}</button>
-    <button class="btn ghost" data-act="tnav" aria-label="All questions">${I.apps}<span>${answered}/${n}</span></button>
+    <button class="btn ghost" data-act="tnav">${I.apps}<span>${answered}/${n}</span><span class="vh"> answered, all questions</span></button>
     ${A.i < n - 1 ? `<button class="btn" data-act="tnext">Next ${I.arrow}</button>` : `<button class="btn" data-act="tsubmitask">Finish</button>`}
   </div></div>${sheet}`, "docked");
 }
@@ -1619,7 +1621,7 @@ function vCards(v){
   const c = deck[v.queue[v.i]];
   return page(cvar(s), topbar(s.name + " flashcards", {h1:true, right:`<div class="topright">${v.i + 1} of ${v.queue.length}</div>`}) + `<main class="screen">
     <div class="qtrack"><div style="width:${v.i / v.queue.length * 100}%"></div></div>
-    <button class="flash${v.flip ? " back" : ""}" data-act="cflip" aria-label="${v.flip ? "Show the term" : "Show the definition"}">
+    <button class="flash${v.flip ? " back" : ""}" data-act="cflip">
       <span class="eyebrow">${v.flip ? c[0] : "Term"}</span>
       <span class="${v.flip ? "fdef" : "fterm"}">${v.flip ? c[1] : c[0]}</span>
       <span class="fhint">${v.flip ? "Tap to flip back" : "Tap to see the definition"}</span>
@@ -1652,7 +1654,7 @@ function vEssay(v){
   const E = ESSAYS.find(e => e.id === v.id), st = essayState(v.id), pane = v.pane || "read";
   const running = essayRun && essayRun.id === v.id;
   const left = ELIMIT - st.used - (running ? Date.now() - essayRun.lt : 0);
-  const timer = `<button class="timer${left <= 0 ? " low" : ""}" data-act="etimer" aria-label="${left <= 0 ? "Reset timer" : running ? "Pause timer" : "Start timer"}">${left <= 0 ? I.redo : running ? I.pause : I.play}<span id="etimer">${left <= 0 ? "Time's up" : fmtTime(left)}</span></button>`;
+  const timer = `<button class="timer${left <= 0 ? " low" : ""}" data-act="etimer">${left <= 0 ? I.redo : running ? I.pause : I.play}<span id="etimer">${left <= 0 ? "Time's up" : fmtTime(left)}</span><span class="vh">${left <= 0 ? " reset timer" : running ? " left, pause timer" : " left, start timer"}</span></button>`;
   const seg = `<div class="seg" role="group" aria-label="Essay steps">${[["read", "1. Read"], ["write", "2. Write"], ["check", "3. Check"]].map(([id, l]) => `<button class="${pane === id ? "on" : ""}" data-act="epane" data-id="${id}" aria-pressed="${pane === id}">${l}</button>`).join("")}</div>`;
   let body;
   if (pane === "read"){
@@ -2305,7 +2307,13 @@ try {
       // Every screen has one main heading (h1), and it comes before any other heading (2.6.5)
       steps++; const hs = [...app.querySelectorAll("h1,h2,h3,h4,h5,h6")], h1s = hs.filter(h => h.tagName === "H1");
       if (h1s.length !== 1) issues.push(label + ": has " + h1s.length + " main headings (h1), not 1");
-      else if (hs[0] !== h1s[0]) issues.push(label + ": the main heading isn't the first heading"); };
+      else if (hs[0] !== h1s[0]) issues.push(label + ": the main heading isn't the first heading");
+      // A button's spoken name includes the words showing on it, so Voice Control users can say what they see (2.6.6). Calculator keys are symbols with spoken names on purpose.
+      steps++; for (const b of document.querySelectorAll("button[aria-label],a[aria-label]")) { if (b.closest("#calc")) continue; const c = b.cloneNode(true); c.querySelectorAll(".vh,svg").forEach(x => x.remove()); const t = c.textContent.replace(/\s+/g, " ").trim().toLowerCase(), al = b.getAttribute("aria-label");
+        if (/[a-z0-9]/.test(t) && !al.replace(/\s+/g, " ").toLowerCase().includes(t)) issues.push(label + ": the spoken name “" + al + "” leaves out the words on the button (" + t.slice(0, 30) + ")"); } };
+    // The buttons that show a time, a count or a card are spoken with what's showing first, then what they do (2.6.6)
+    const said = (sel, want, label) => { steps++; const b = $(sel); if (!b) { issues.push(label + ": missing " + sel); return; } const t = b.textContent.replace(/\s+/g, " ").trim().toLowerCase();
+      if (b.hasAttribute("aria-label") || !t.includes(want)) issues.push(label + ": " + sel + " is spoken as “" + (b.getAttribute("aria-label") || t) + "”, not with “" + want + "”"); };
     // Every item inside a sheet keeps its full height, so nothing gets squashed or cut off (2.5.2, like Till Payday 1.1.7)
     const sheetFits = label => { const all = document.querySelectorAll(".sheet"); steps++; if (!all.length) issues.push(label + ": no sheet open");
       // A sheet has a name for screen readers: its aria-label, or the heading it points to (2.6.2)
@@ -2341,7 +2349,7 @@ try {
         const n = TESTS[sid].qs.length;
         document.dispatchEvent(new KeyboardEvent("keydown", {key:"c", bubbles:true})); if (P.active.ans[0] !== 2) issues.push("Keyboard answer (C) didn't work in test " + sid);
         for (let i = 0; i < n; i++) { check(sid + " test Q" + (i + 1)); if (i === 2) act("tflag"); const o = document.querySelectorAll('[data-act="tpick"]'); if (o.length !== 4) issues.push("Test options " + sid); if (i !== 5) o[(i * 7) % 4].click(); if (i < n - 1) act("tnext"); }
-        act("tprev"); act("tnext"); act("tnav"); check(sid + " question list"); sheetFits(sid + " question list"); click('[data-act="tjump"][data-i="5"]'); if (P.active.i !== 5) issues.push("Jump failed " + sid);
+        said(".timer", ", pause test", sid + " timer"); said('[data-act="tnav"]', " answered, all questions", sid + " questions button"); act("tprev"); act("tnext"); act("tnav"); check(sid + " question list"); sheetFits(sid + " question list"); click('[data-act="tjump"][data-i="5"]'); if (P.active.i !== 5) issues.push("Jump failed " + sid);
         act("tpause"); check(sid + " paused"); sheetFits(sid + " paused"); act("tresume"); act("texit"); act("tsheetclose"); act("tnav"); act("tsubmitask"); act("tsubmit");
         if (cur().v !== "tres") { issues.push("No test results " + sid); continue; }
         check(sid + " results"); act("rfilter", "all"); check(sid + " review all");
@@ -2355,9 +2363,9 @@ try {
       P.active.used = P.active.limit - 300; await wait(1500); if (cur().v !== "tres") issues.push("Timer didn't finish the test"); else check("Auto-submitted results");
       await step("Tools: flashcards, formulas, essay, tips");
       act("tab", "tools"); check("Tools"); act("open", "decks");
-      for (const sid of Object.keys(CARDS)) { act("deck", sid); let g = 0; while (cur().v === "cards" && cur().i < cur().queue.length && g++ < 40) { check("Card"); act("cflip"); act(g % 3 ? "cgot" : "cagain"); } check("Deck done"); act("back"); }
+      for (const sid of Object.keys(CARDS)) { act("deck", sid); let g = 0; while (cur().v === "cards" && cur().i < cur().queue.length && g++ < 40) { check("Card"); said(".flash", "tap to see the definition", "Card"); act("cflip"); said(".flash", "tap to flip back", "Card back"); act(g % 3 ? "cgot" : "cagain"); } check("Deck done"); act("back"); }
       act("back"); act("open", "formulas"); check("Formulas"); act("back");
-      act("open", "essays"); act("essay", "e1"); check("Essay"); act("etimer"); await wait(1200); act("etimer"); if (!(P.essay.e1.used > 500)) issues.push("Essay timer didn't run");
+      act("open", "essays"); act("essay", "e1"); check("Essay"); said(".timer", " left, start timer", "Essay timer"); act("etimer"); said(".timer", " left, pause timer", "Essay timer running"); await wait(1200); act("etimer"); if (!(P.essay.e1.used > 500)) issues.push("Essay timer didn't run");
       act("epane", "write"); const ta = $("#essay-text"); ta.value = "Passage A is better supported because it uses data."; ta.dispatchEvent(new Event("input", {bubbles:true}));
       if ($("#wc").textContent !== "9 words") issues.push("Word count wrong"); act("eoutline"); if (!$("#essay-text").value.includes("Intro:")) issues.push("Outline didn't insert");
       act("epane", "check"); document.querySelector("[data-check]").click(); if (!P.essay.e1.checks["0-0"]) issues.push("Checklist didn't save");
@@ -2384,7 +2392,7 @@ try {
       else {
         document.dispatchEvent(new KeyboardEvent("keydown", {key:"b", bubbles:true})); if (cur().picked !== 1) issues.push("Keyboard answer (B) didn't work");
         document.dispatchEvent(new KeyboardEvent("keydown", {key:"Enter", bubbles:true})); if (cur().i !== 1) issues.push("Keyboard Enter didn't go to the next question");
-        if (canSpeak){ act("listen"); if (!speaking) issues.push("Listen didn't start"); act("listen"); if (speaking) issues.push("Listen didn't stop"); }
+        if (canSpeak){ said(".listen", "listen to this read aloud", "Listen"); act("listen"); if (!speaking) issues.push("Listen didn't start"); else said(".listen", "stop reading", "Listen while reading"); act("listen"); if (speaking) issues.push("Listen didn't stop"); }
         let g4 = 0; while (cur().v === "quiz" && g4++ < 10){ document.querySelectorAll('[data-act="pick"]')[0].click(); act("next"); }
         check("Quick 5 results");
       }

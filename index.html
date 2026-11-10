@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-5niRDldQjQLwEmgNH9g2Sr6rHb2FLS5yAxF5CwNBDC4=' 'sha256-h8FIo8stfE9t1G5Y2JsT6sY9uQeoe3bDl1sOTq+xEh8=' 'sha256-FRStbCI96HQBjgehf8Te1fl6kOesp6zCtjGrHVBCweQ=' 'sha256-EBdNBM2DDS/I756ogiiwLkzk592lzORnWABZE9DQMfQ='; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src data:; connect-src 'none'; manifest-src 'self'; worker-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'; frame-src 'none'; media-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-5niRDldQjQLwEmgNH9g2Sr6rHb2FLS5yAxF5CwNBDC4=' 'sha256-h8FIo8stfE9t1G5Y2JsT6sY9uQeoe3bDl1sOTq+xEh8=' 'sha256-FRStbCI96HQBjgehf8Te1fl6kOesp6zCtjGrHVBCweQ=' 'sha256-V3b5JOykhSw3NCMPPlaP+O1xBOovSlRuo3JAzZqrIII='; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src data:; connect-src 'none'; manifest-src 'self'; worker-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'; frame-src 'none'; media-src 'none'">
 <meta name="referrer" content="no-referrer">
 <link rel="manifest" href="manifest.webmanifest">
 <title>Study Coach for the GED® Test</title>
@@ -314,6 +314,7 @@ textarea.code{width:100%;min-height:110px;font-family:ui-monospace,Menlo,Consola
 /* read aloud, pace, keyboard */
 .listen{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 14px;border-radius:99px;border:1px solid var(--line);background:var(--surface);font-weight:700;font-size:.85rem;cursor:pointer;color:var(--ink);align-self:flex-start;flex:none}
 .listen svg{width:17px;height:17px}
+.vh{position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 .qtools{display:flex;justify-content:space-between;align-items:center;gap:10px}
 .qhead{flex-wrap:wrap}
 .qhead-r{display:flex;gap:8px;align-items:center}
@@ -911,7 +912,7 @@ const TIPS = [
 </script>
 <script>
 "use strict";
-const APP_VERSION = "2.6.5";   // plain X.Y.Z: the tagging workflow and the release check read it
+const APP_VERSION = "2.6.6";   // plain X.Y.Z: the tagging workflow and the release check read it
 const FEEDBACK_EMAIL = "freeforgood-apps+study@proton.me";
 const SITE = "https://freeforgood-apps.github.io/study-coach/";   // the website, for links from the Claude copies
 /* ================= question registry ================= */
@@ -1100,9 +1101,10 @@ const I = {
 /* ================= read aloud ================= */
 const canSpeak = typeof window !== "undefined" && "speechSynthesis" in window && typeof SpeechSynthesisUtterance === "function";
 let speaking = false;
-function listenLabel(){ return speaking ? `${I.stop}<span>Stop</span>` : `${I.speaker}<span>Listen</span>`; }
-const listenBtn = () => canSpeak ? `<button class="listen" data-act="listen" aria-label="${speaking ? "Stop reading" : "Read aloud"}">${listenLabel()}</button>` : "";
-function syncListen(){ const b = document.querySelector('[data-act="listen"]'); if (b){ b.innerHTML = listenLabel(); b.setAttribute("aria-label", speaking ? "Stop reading" : "Read aloud"); } }
+// Spoken names start with the words on the button; the .vh part is heard but not shown (2.6.6)
+function listenLabel(){ return speaking ? `${I.stop}<span>Stop</span><span class="vh"> reading</span>` : `${I.speaker}<span>Listen</span><span class="vh"> to this read aloud</span>`; }
+const listenBtn = () => canSpeak ? `<button class="listen" data-act="listen">${listenLabel()}</button>` : "";
+function syncListen(){ const b = document.querySelector('[data-act="listen"]'); if (b) b.innerHTML = listenLabel(); }
 function stopSpeak(){ if (!canSpeak) return; try { speechSynthesis.cancel(); } catch (e) {} speaking = false; }
 function speak(text){
   if (!canSpeak || !text) return;
@@ -1483,7 +1485,7 @@ function vTest(v){
   const answered = A.ans.filter(x => x !== null).length, unanswered = n - answered, flagged = A.flag.filter(Boolean).length;
   const opts = ord.map((k, j) => `<button class="opt ${sel === j ? "sel" : ""}" data-act="tpick" data-i="${j}" aria-pressed="${sel === j}"><span class="L">${"ABCD"[j]}</span><span>${q.o[k]}</span></button>`).join("");
   const left = A.limit ? A.limit - A.used : 0;
-  const timer = `<button class="timer${A.limit && left < 300000 ? " low" : ""}" data-act="tpause" aria-label="Pause test">${I.pause}<span id="timer">${A.limit ? fmtTime(left) : fmtTime(A.used)}</span></button>`;
+  const timer = `<button class="timer${A.limit && left < 300000 ? " low" : ""}" data-act="tpause">${I.pause}<span id="timer">${A.limit ? fmtTime(left) : fmtTime(A.used)}</span><span class="vh"> ${A.limit ? "left" : "so far"}, pause test</span></button>`;
   let sheet = "";
   if (v.sheet === "nav"){
     const cells = A.ans.map((x, i) => `<button class="cell${x !== null ? " ans" : ""}${A.flag[i] ? " fl" : ""}${i === A.i ? " cur" : ""}" data-act="tjump" data-i="${i}" aria-label="Question ${i + 1}${x !== null ? ", answered" : ", not answered"}${A.flag[i] ? ", flagged" : ""}">${i + 1}</button>`).join("");
@@ -1515,7 +1517,7 @@ function vTest(v){
   </main>
   <div class="dock"><div class="in tnav">
     <button class="btn ghost" data-act="tprev"${A.i === 0 ? " disabled" : ""} aria-label="Previous question">${I.back}</button>
-    <button class="btn ghost" data-act="tnav" aria-label="All questions">${I.apps}<span>${answered}/${n}</span></button>
+    <button class="btn ghost" data-act="tnav">${I.apps}<span>${answered}/${n}</span><span class="vh"> answered, all questions</span></button>
     ${A.i < n - 1 ? `<button class="btn" data-act="tnext">Next ${I.arrow}</button>` : `<button class="btn" data-act="tsubmitask">Finish</button>`}
   </div></div>${sheet}`, "docked");
 }
@@ -1616,7 +1618,7 @@ function vCards(v){
   const c = deck[v.queue[v.i]];
   return page(cvar(s), topbar(s.name + " flashcards", {h1:true, right:`<div class="topright">${v.i + 1} of ${v.queue.length}</div>`}) + `<main class="screen">
     <div class="qtrack"><div style="width:${v.i / v.queue.length * 100}%"></div></div>
-    <button class="flash${v.flip ? " back" : ""}" data-act="cflip" aria-label="${v.flip ? "Show the term" : "Show the definition"}">
+    <button class="flash${v.flip ? " back" : ""}" data-act="cflip">
       <span class="eyebrow">${v.flip ? c[0] : "Term"}</span>
       <span class="${v.flip ? "fdef" : "fterm"}">${v.flip ? c[1] : c[0]}</span>
       <span class="fhint">${v.flip ? "Tap to flip back" : "Tap to see the definition"}</span>
@@ -1649,7 +1651,7 @@ function vEssay(v){
   const E = ESSAYS.find(e => e.id === v.id), st = essayState(v.id), pane = v.pane || "read";
   const running = essayRun && essayRun.id === v.id;
   const left = ELIMIT - st.used - (running ? Date.now() - essayRun.lt : 0);
-  const timer = `<button class="timer${left <= 0 ? " low" : ""}" data-act="etimer" aria-label="${left <= 0 ? "Reset timer" : running ? "Pause timer" : "Start timer"}">${left <= 0 ? I.redo : running ? I.pause : I.play}<span id="etimer">${left <= 0 ? "Time's up" : fmtTime(left)}</span></button>`;
+  const timer = `<button class="timer${left <= 0 ? " low" : ""}" data-act="etimer">${left <= 0 ? I.redo : running ? I.pause : I.play}<span id="etimer">${left <= 0 ? "Time's up" : fmtTime(left)}</span><span class="vh">${left <= 0 ? " reset timer" : running ? " left, pause timer" : " left, start timer"}</span></button>`;
   const seg = `<div class="seg" role="group" aria-label="Essay steps">${[["read", "1. Read"], ["write", "2. Write"], ["check", "3. Check"]].map(([id, l]) => `<button class="${pane === id ? "on" : ""}" data-act="epane" data-id="${id}" aria-pressed="${pane === id}">${l}</button>`).join("")}</div>`;
   let body;
   if (pane === "read"){
