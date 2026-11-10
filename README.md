@@ -37,6 +37,7 @@ Results are tied to the version and date they were run. When the app changes, th
 
 | Version | Date | Browser and device | Result |
 |---|---|---|---|
+| 2.6.5 | Nov 10, 2026 | Chrome (Blink engine) on Linux: full check at phone size, small phone size in dark mode and desktop size (adds a check that every screen has one main heading, first on the screen). Not yet run on a real iPhone | ✓ Passed, 2,364 to 2,370 automated checks |
 | 2.6.4 | Nov 10, 2026 | The published GitHub Pages site (opened as selftest.html?v=2.6.4b), Safari engine (WebKit) on a real iPhone (iOS 18.7), in Safari | ✓ Passed, 1,961 automated checks |
 | 2.6.4 | Nov 10, 2026 | Chrome (Blink engine) on Linux: full check at phone size, small phone size in dark mode and desktop size (adds the restore checks: backups rebuilt from known fields only, a size cap and a newer-version message) | ✓ Passed, 1,957 to 1,964 automated checks |
 | 2.6.3 | Nov 9, 2026 | The published GitHub Pages site (opened as selftest.html?v=2.6.3), Safari engine (WebKit) on a real iPhone (iOS 18.7), in Safari | ✓ Passed, 1,933 automated checks |

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-5niRDldQjQLwEmgNH9g2Sr6rHb2FLS5yAxF5CwNBDC4=' 'sha256-h8FIo8stfE9t1G5Y2JsT6sY9uQeoe3bDl1sOTq+xEh8=' 'sha256-FRStbCI96HQBjgehf8Te1fl6kOesp6zCtjGrHVBCweQ=' 'sha256-j8/v3NkArqn48/ro3Z+0TlU8QOk7wTHoylJm2JVOcg8='; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src data:; connect-src 'none'; manifest-src 'self'; worker-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'; frame-src 'none'; media-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-5niRDldQjQLwEmgNH9g2Sr6rHb2FLS5yAxF5CwNBDC4=' 'sha256-h8FIo8stfE9t1G5Y2JsT6sY9uQeoe3bDl1sOTq+xEh8=' 'sha256-FRStbCI96HQBjgehf8Te1fl6kOesp6zCtjGrHVBCweQ=' 'sha256-EBdNBM2DDS/I756ogiiwLkzk592lzORnWABZE9DQMfQ='; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src data:; connect-src 'none'; manifest-src 'self'; worker-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'; frame-src 'none'; media-src 'none'">
 <meta name="referrer" content="no-referrer">
 <link rel="manifest" href="manifest.webmanifest">
 <title>Study Coach for the GED® Test</title>
@@ -61,6 +61,7 @@ svg{display:block}
 .iconbtn{flex:none;width:44px;height:44px;border-radius:14px;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center;cursor:pointer;color:var(--ink)}
 .iconbtn svg{width:22px;height:22px}
 .tt{flex:1;min-width:0;font-family:var(--display);font-weight:600;font-size:1.06rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+h1.tt{line-height:inherit;letter-spacing:inherit}   /* the top bar title is the main heading on full-screen views; same look as before */
 .brand{flex:1;display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:800;font-size:1.12rem}
 .brand i svg{width:20px;height:20px}
 .brand i{font-style:normal;display:grid;place-items:center;width:34px;height:34px;border-radius:10px;background:var(--ink);color:var(--bg);font-size:.74rem;letter-spacing:.02em}
@@ -158,7 +159,7 @@ details.info[open] summary .chev svg{transform:rotate(90deg)}
 
 /* lesson */
 .sec{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:18px;display:flex;flex-direction:column;gap:10px}
-.sec>h2,.sec>h3{font-family:var(--display);font-weight:600;font-size:1.18rem;line-height:1.25;margin:0;text-wrap:balance}
+.sec>h2{font-family:var(--display);font-weight:600;font-size:1.18rem;line-height:1.25;margin:0;text-wrap:balance}
 .sec ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
 .ex{background:color-mix(in srgb,var(--c) 9%,var(--surface));border-radius:14px;padding:12px 14px;font-variant-numeric:tabular-nums;line-height:1.7}
 .tip{border-radius:20px;padding:16px 18px;background:color-mix(in srgb,var(--c) 12%,var(--bg));display:flex;flex-direction:column;gap:4px}
@@ -189,7 +190,7 @@ details.info[open] summary .chev svg{transform:rotate(90deg)}
 .qtrack div{height:100%;background:var(--c);border-radius:inherit;transition:width .3s}
 .passage{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px 18px;font-size:.94rem;line-height:1.65}
 .passage > .eyebrow{display:block;margin-bottom:6px;color:var(--muted)}
-.ph{font-family:var(--display);font-weight:600;font-size:1.12rem;margin:0 0 6px}
+.ph{font-family:var(--display);font-weight:600;font-size:1.12rem;line-height:inherit;margin:0 0 6px;text-wrap:wrap}
 .qtext{font-weight:700;font-size:1.12rem;line-height:1.4;text-wrap:pretty}
 .opts{display:flex;flex-direction:column;gap:10px}
 .opt{display:grid;grid-template-columns:34px minmax(0,1fr);gap:12px;align-items:center;text-align:left;width:100%;min-height:60px;padding:12px 14px;border-radius:16px;background:var(--surface);border:2px solid var(--line);cursor:pointer;line-height:1.35}
@@ -205,9 +206,9 @@ details.info[open] summary .chev svg{transform:rotate(90deg)}
 .fb{border-radius:18px;padding:16px 18px;border:2px solid;display:flex;flex-direction:column;gap:6px;background:var(--surface)}
 .fb.good{border-color:var(--good)}
 .fb.bad{border-color:var(--bad)}
-.fb h4{margin:0;font-family:var(--display);font-weight:600;font-size:1.18rem}
-.fb.good h4{color:var(--good)}
-.fb.bad h4{color:var(--bad)}
+.fb h2{margin:0;font-family:var(--display);font-weight:600;font-size:1.18rem;line-height:inherit;text-wrap:wrap}
+.fb.good h2{color:var(--good)}
+.fb.bad h2{color:var(--bad)}
 .qhead{display:flex;justify-content:space-between;align-items:center;gap:12px}
 .qnum{font-family:var(--display);font-weight:600;font-size:1.12rem;font-variant-numeric:tabular-nums}
 .flag{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 14px;border-radius:99px;border:1px solid var(--line);background:var(--surface);font-weight:700;font-size:.85rem;cursor:pointer;color:var(--muted)}
@@ -910,7 +911,7 @@ const TIPS = [
 </script>
 <script>
 "use strict";
-const APP_VERSION = "2.6.4";   // plain X.Y.Z: the tagging workflow and the release check read it
+const APP_VERSION = "2.6.5";   // plain X.Y.Z: the tagging workflow and the release check read it
 const FEEDBACK_EMAIL = "freeforgood-apps+study@proton.me";
 const SITE = "https://freeforgood-apps.github.io/study-coach/";   // the website, for links from the Claude copies
 /* ================= question registry ================= */
@@ -1240,7 +1241,7 @@ const page = (style, inner, cls = "") => `<div class="wrap ${cls}" style="${styl
 function topbar(title, o = {}){
   const left = o.brand
     ? `<div class="brand"><i>${I.cap}</i>Study Coach</div>`
-    : `<button class="iconbtn" data-act="${o.act || "back"}" aria-label="${o.close ? "Exit" : "Back"}">${o.close ? I.close : I.back}</button><div class="tt">${title}</div>`;
+    : `<button class="iconbtn" data-act="${o.act || "back"}" aria-label="${o.close ? "Exit" : "Back"}">${o.close ? I.close : I.back}</button><${o.h1 ? "h1" : "div"} class="tt">${title}</${o.h1 ? "h1" : "div"}>`;
   return `<header class="top"><div class="bar">${left}${o.right || ""}</div></header>`;
 }
 const calcBtn = `<button class="iconbtn" data-act="calc" aria-label="Open calculator">${I.calc}</button>`;
@@ -1371,11 +1372,11 @@ function vQuiz(v){
   let fb = "";
   if (answered){
     const ok = q.opts[v.picked].ok, right = q.opts.find(o => o.ok).t;
-    fb = `<div class="fb ${ok ? "good" : "bad"}" aria-live="polite"><h4>${ok ? "Correct!" : "Not quite"}</h4>${ok ? "" : `<p><b>Answer:</b> ${right}</p>`}<p>${q.why}</p><button class="linkbtn sm" data-act="report" data-id="${q.id}">${I.flag} Think this question has a mistake? Report it</button></div>
+    fb = `<div class="fb ${ok ? "good" : "bad"}" aria-live="polite"><h2>${ok ? "Correct!" : "Not quite"}</h2>${ok ? "" : `<p><b>Answer:</b> ${right}</p>`}<p>${q.why}</p><button class="linkbtn sm" data-act="report" data-id="${q.id}">${I.flag} Think this question has a mistake? Report it</button></div>
       <button class="btn" id="fbnext" data-act="next">${v.i < n - 1 ? `Next question ${I.arrow}` : "See my results"}</button>`;
   }
   const tag = (v.mode === "all" || v.mode === "miss") ? `<span class="eyebrow">${s.name}</span>` : "";
-  return page(cvar(s), topbar(v.title, {close:true, right:`<div class="topright">${v.i + 1} of ${n}</div>${q.sid !== "rla" ? calcBtn : ""}`}) + `<main class="screen">
+  return page(cvar(s), topbar(v.title, {h1:true, close:true, right:`<div class="topright">${v.i + 1} of ${n}</div>${q.sid !== "rla" ? calcBtn : ""}`}) + `<main class="screen">
     <div class="qtrack"><div style="width:${(v.i + (answered ? 1 : 0)) / n * 100}%"></div></div>
     <div class="qtools">${tag || "<span></span>"}${listenBtn()}</div>
     ${q.p ? `<div class="passage"><span class="eyebrow">Read this</span>${q.p}</div>` : ""}
@@ -1398,7 +1399,7 @@ function vResults(v){
   const misses = v.wrongs.length
     ? `<div class="label">Review what you missed</div><div class="list">${v.wrongs.map(w => `<div class="miss"><p><b>${w.q}</b></p><p class="ans">${I.check}<span>${w.a}</span></p><p class="small muted">${w.why}</p></div>`).join("")}</div>`
     : (v.mode === "miss" ? `<p class="center muted">You cleared every question you'd missed. Nice work.</p>` : "");
-  return page(s ? cvar(s) : "--c:var(--ink)", topbar(s ? s.name : "Practice") + `<main class="screen">
+  return page(s ? cvar(s) : "--c:var(--ink)", topbar(s ? s.name : "Practice", {h1:true}) + `<main class="screen">
     <section class="score"><span class="eyebrow">${v.title}</span>
       <div class="big">${v.score}<span>/${v.n}</span></div><h2>${msg[0]}</h2><p class="muted">${msg[1]}</p></section>
     <div class="stack">${next}
@@ -1477,7 +1478,7 @@ function commit(){ const A = P.active; if (A && A.run){ const now = Date.now(); 
 
 function vTest(v){
   const A = P.active;
-  if (!A) return page("--c:var(--ink)", topbar("Practice test") + `<main class="screen"><p>There's no test in progress.</p><button class="btn" data-act="toroot">Back to Practice</button></main>`);
+  if (!A) return page("--c:var(--ink)", topbar("Practice test", {h1:true}) + `<main class="screen"><p>There's no test in progress.</p><button class="btn" data-act="toroot">Back to Practice</button></main>`);
   const s = subj(A.sid), T = TESTS[A.sid], n = T.qs.length, q = T.qs[A.i], ord = A.ord[A.i], sel = A.ans[A.i];
   const answered = A.ans.filter(x => x !== null).length, unanswered = n - answered, flagged = A.flag.filter(Boolean).length;
   const opts = ord.map((k, j) => `<button class="opt ${sel === j ? "sel" : ""}" data-act="tpick" data-i="${j}" aria-pressed="${sel === j}"><span class="L">${"ABCD"[j]}</span><span>${q.o[k]}</span></button>`).join("");
@@ -1503,7 +1504,7 @@ function vTest(v){
     sheet = overlay(`<h2>Test paused</h2><p class="muted">${A.limit ? fmtTime(A.limit - A.used) + " left" : "Untimed"} · ${answered} of ${n} answered</p>
       <div class="stack"><button class="btn" data-act="tresume">${I.play} Resume</button><button class="btn ghost" data-act="texitgo">Save and exit</button></div>`);
   }
-  return page(cvar(s), topbar(s.name + " test", {close:true, act:"texit", right: timer + (A.sid !== "rla" ? calcBtn : "")}) + `<main class="screen">
+  return page(cvar(s), topbar(s.name + " test", {h1:true, close:true, act:"texit", right: timer + (A.sid !== "rla" ? calcBtn : "")}) + `<main class="screen">
     <div class="qhead"><span class="qnum">Question ${A.i + 1} <span class="muted">of ${n}</span></span>
       <span class="qhead-r">${listenBtn()}<button class="flag${A.flag[A.i] ? " on" : ""}" data-act="tflag" aria-pressed="${A.flag[A.i]}">${I.flag}${A.flag[A.i] ? "Flagged" : "Flag"}</button></span></div>
     <div class="qtrack"><div style="width:${answered / n * 100}%"></div></div>
@@ -1537,7 +1538,7 @@ function submitTest(auto){
 
 function vTestResult(v){
   const s = subj(v.sid), T = TESTS[v.sid], att = (P.tests[v.sid] || [])[v.k];
-  if (!att) return page(cvar(s), topbar("Results") + `<main class="screen"><p>This result is no longer saved.</p></main>`);
+  if (!att) return page(cvar(s), topbar("Results", {h1:true}) + `<main class="screen"><p>This result is no longer saved.</p></main>`);
   const p = pct(att.score, att.n);
   const msg = p >= 80 ? ["You're in great shape", "Keep it up. When you're scoring like this consistently, try the official GED Ready® practice test to confirm."]
     : p >= 65 ? ["Getting close", "Focus on the topics with the lowest scores below, then retake the test."]
@@ -1561,7 +1562,7 @@ function vTestResult(v){
       <button class="linkbtn sm" data-act="report" data-id="${x.q.id}">${I.flag} Report a mistake</button></div>`).join("")
     : `<p class="center muted">No missed questions. Perfect score!</p>`;
   const missCount = all.filter(x => !x.ok).length;
-  return page(cvar(s), topbar(s.name + " test results") + `<main class="screen">
+  return page(cvar(s), topbar(s.name + " test results", {h1:true}) + `<main class="screen">
     <section class="score"><span class="eyebrow">${fmtDate(att.d)} · ${att.timed ? "Timed" : "Untimed"}${att.auto ? " · time ran out" : ""}</span>
       <div class="big">${p}<span>%</span></div>
       <p class="muted">${att.score} of ${att.n} correct · ${fmtTime(att.secs * 1000)} used</p>
@@ -1606,14 +1607,14 @@ function startDeck(sid){
 function vCards(v){
   const s = subj(v.sid), deck = CARDS[v.sid], kn = Object.keys(P.cards[v.sid] || {}).length;
   if (v.i >= v.queue.length){
-    return page(cvar(s), topbar(s.name + " flashcards") + `<main class="screen">
+    return page(cvar(s), topbar(s.name + " flashcards", {h1:true}) + `<main class="screen">
       <section class="score"><span class="eyebrow">Round complete</span><div class="big">${v.got}<span>/${v.queue.length}</span></div><h2>${kn === deck.length ? "You know every card!" : "Nice round"}</h2>
       <p class="muted">${kn} of ${deck.length} terms known in this deck.</p></section>
       <div class="stack"><button class="btn" data-act="deckagain" data-id="${v.sid}">${I.redo} Study again</button><button class="btn ghost" data-act="back">Done</button></div>
     </main>`);
   }
   const c = deck[v.queue[v.i]];
-  return page(cvar(s), topbar(s.name + " flashcards", {right:`<div class="topright">${v.i + 1} of ${v.queue.length}</div>`}) + `<main class="screen">
+  return page(cvar(s), topbar(s.name + " flashcards", {h1:true, right:`<div class="topright">${v.i + 1} of ${v.queue.length}</div>`}) + `<main class="screen">
     <div class="qtrack"><div style="width:${v.i / v.queue.length * 100}%"></div></div>
     <button class="flash${v.flip ? " back" : ""}" data-act="cflip" aria-label="${v.flip ? "Show the term" : "Show the definition"}">
       <span class="eyebrow">${v.flip ? c[0] : "Term"}</span>
@@ -1653,8 +1654,8 @@ function vEssay(v){
   let body;
   if (pane === "read"){
     body = `<div class="sec"><span class="eyebrow">Your task</span><p><b>${E.issue}</b></p><p>Read both passages. Then write an essay that analyzes both positions and explains which one is <b>better supported</b>. Use specific evidence from both passages. You have 45 minutes.</p><p class="small muted">Practice passages written for this app. The people, places and studies in them are made up.</p></div>
-      <article class="passage"><span class="eyebrow">Passage A · ${E.a.side}</span><h3 class="ph">${E.a.h}</h3><p>${E.a.text}</p></article>
-      <article class="passage"><span class="eyebrow">Passage B · ${E.b.side}</span><h3 class="ph">${E.b.h}</h3><p>${E.b.text}</p></article>
+      <article class="passage"><span class="eyebrow">Passage A · ${E.a.side}</span><h2 class="ph">${E.a.h}</h2><p>${E.a.text}</p></article>
+      <article class="passage"><span class="eyebrow">Passage B · ${E.b.side}</span><h2 class="ph">${E.b.h}</h2><p>${E.b.text}</p></article>
       <button class="btn" data-act="epane" data-id="write">Start writing ${I.arrow}</button>`;
   } else if (pane === "write"){
     body = `<div class="ebar"><span id="wc" class="small muted">${wc(st.text)} words</span><span class="ebtns"><button class="btn sm ghost" data-act="eoutline">Add outline</button><button class="btn sm ghost" data-act="eclear">Clear</button></span></div>
@@ -1664,11 +1665,11 @@ function vEssay(v){
   } else {
     const total = CHECKS.reduce((a, g) => a + g.items.length, 0);
     body = `<p class="muted">Reread your essay and check off each item. These match the three things graders look for.</p>
-      ${CHECKS.map((g, gi) => `<section class="sec"><h3>${g.h}</h3>${g.items.map((it, ii) => { const k = gi + "-" + ii;
+      ${CHECKS.map((g, gi) => `<section class="sec"><h2>${g.h}</h2>${g.items.map((it, ii) => { const k = gi + "-" + ii;
         return `<label class="ck"><input type="checkbox" id="ck-${v.id}-${k}" data-check="${k}"${st.checks[k] ? " checked" : ""}><span>${it}</span></label>`; }).join("")}</section>`).join("")}
       <p class="center small muted" id="ckcount">${Object.keys(st.checks).length} of ${total} checked</p>`;
   }
-  return page("--c:var(--rla)", topbar(E.title, {right: timer}) + `<main class="screen">${seg}${body}</main>`);
+  return page("--c:var(--rla)", topbar(E.title, {h1:true, right: timer}) + `<main class="screen">${seg}${body}</main>`);
 }
 
 function vTips(){
