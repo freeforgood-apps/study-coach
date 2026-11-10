@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-5niRDldQjQLwEmgNH9g2Sr6rHb2FLS5yAxF5CwNBDC4=' 'sha256-h8FIo8stfE9t1G5Y2JsT6sY9uQeoe3bDl1sOTq+xEh8=' 'sha256-FRStbCI96HQBjgehf8Te1fl6kOesp6zCtjGrHVBCweQ=' 'sha256-vlktQ5HokI9sh4sCdNrek/kxijs10myH03/kP8wGzDM='; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src data:; connect-src 'none'; manifest-src 'self'; worker-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'; frame-src 'none'; media-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-5niRDldQjQLwEmgNH9g2Sr6rHb2FLS5yAxF5CwNBDC4=' 'sha256-h8FIo8stfE9t1G5Y2JsT6sY9uQeoe3bDl1sOTq+xEh8=' 'sha256-FRStbCI96HQBjgehf8Te1fl6kOesp6zCtjGrHVBCweQ=' 'sha256-5AUlL3A0kWkpe8OcJVNh75/u36GOV3iOugtdswzaqFM='; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src data:; connect-src 'none'; manifest-src 'self'; worker-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'; frame-src 'none'; media-src 'none'">
 <meta name="referrer" content="no-referrer">
 <link rel="manifest" href="manifest.webmanifest">
 <title>Study Coach for the GED® Test</title>
@@ -910,7 +910,7 @@ const TIPS = [
 </script>
 <script>
 "use strict";
-const APP_VERSION = "2.6.1";   // plain X.Y.Z: the tagging workflow and the release check read it
+const APP_VERSION = "2.6.2";   // plain X.Y.Z: the tagging workflow and the release check read it
 const FEEDBACK_EMAIL = "freeforgood-apps+study@proton.me";
 const SITE = "https://freeforgood-apps.github.io/study-coach/";   // the website, for links from the Claude copies
 /* ================= question registry ================= */
@@ -1195,7 +1195,7 @@ function topbar(title, o = {}){
   return `<header class="top"><div class="bar">${left}${o.right || ""}</div></header>`;
 }
 const calcBtn = `<button class="iconbtn" data-act="calc" aria-label="Open calculator">${I.calc}</button>`;
-const overlay = (inner, closeAct) => `<div class="overlay"${closeAct ? ` data-act="${closeAct}" data-scrim="1"` : ""}><div class="sheet" role="dialog" aria-modal="true">${inner}</div></div>`;
+const overlay = (inner, closeAct) => `<div class="overlay"${closeAct ? ` data-act="${closeAct}" data-scrim="1"` : ""}><div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title">${inner.replace("<h2>", '<h2 id="sheet-title">')}</div></div>`;
 
 function tabbar(){
   const T = [["learn", "Learn", I.book], ["practice", "Practice", I.clip], ["tools", "Tools", I.apps], ["me", "Progress", I.chart]];

@@ -1,5 +1,11 @@
 # Study Coach: changelog
 
+## 2.6.2 (Nov 9, 2026)
+- Accessibility: the pop-up sheets (the test's question list, "Finish the test?", "Leave the test?", "Test paused" and "Report a mistake") now have a name, so VoiceOver announces which sheet opened instead of just "dialog". They look and work the same. The calculator already had one.
+- The self-test now checks that every sheet it opens has a name.
+- Nothing else changed. Your progress isn't affected.
+- Tested: the toolkit's release check passed every line: versions agree, the privacy lock is up to date on both pages, the self-test passed in headless Chrome at phone size, small phone size in dark mode and desktop size (1,926 to 1,931 checks), accessibility clean on Home, and no security leads. The checker also ran on all six sheets (calculator, question list, finish, leave, paused, report) with their opening taps pressed: no dialog-name problems left, and the self-test caught the sheet name removed on purpose (12 issues). Not run inside a frame, since the Claude copies are retired. Not yet run on a real iPhone.
+
 ## 2.6.1 (Nov 9, 2026)
 - Accessibility: section headings on About, Progress, Formula sheet, Test-day tips, every lesson and the practice test intro are now the right level, so screen reader users moving by heading don't hit a skipped level. They look exactly the same.
 - The self-test now checks that headings never skip a level on every screen it visits.
