@@ -38,6 +38,8 @@ Study Coach for the GED® Test: a free, mobile-first study web app. It's for adu
 
 ## Next up
 
+- Sheets have no name for screen readers (found Nov 9, 2026 with the new per-sheet scan, axe "aria-dialog-name", serious): the five `overlay()` dialogs (Questions list, Finish the test?, Leave the test?, Test paused, Report a mistake) are `role="dialog"` with no `aria-label` or `aria-labelledby`. Only the calculator has one. Fix: point each at its own `h2` (or label it), e.g. in `overlay()`. The calculator sheet itself shows only the x² key, which is left on purpose.
+- Short buttons on the test and quiz screens (found Nov 9, 2026 by the same scans, on the screen behind the sheets, not the sheets): "Read aloud" is 96×40 on the quiz and test screens, and "Flag" is 83×40 on the test screen. Both are under the 44px rule. Also the test screen's timer and question-list buttons show the same "spoken name doesn't include the visible words" issue as the item below.
 - No main heading on full-screen views (found Nov 9, 2026, older than 2.6.1): the quiz, flashcards, practice test, test results and essay screens show their title in the top bar as plain text, so they have no `h1` (axe: "page-has-heading-one", moderate). The essay checklist's `h3` headings and quiz feedback's `h4` would then need checking too.
 - Spoken names that don't include the visible words (axe "label-content-name-mismatch", found Nov 9, 2026, older than 2.6.1): the timers (spoken "Pause test" / "Start timer", showing the time), Listen ("Read aloud"), the test's "All questions" button, and a flashcard ("Show the definition"). Voice Control users say what they see. The calculator's x² key ("x squared") gets flagged too, but that's how "x²" is read, so leave it.
 - Restore checks, for the next release (found Nov 5, 2026, comparing with the shared kit in freeforgood-apps/toolkit): `parseCode()` checks the prefix and shape, but `hydrate()` merges the backup straight in with `Object.assign`, so unknown keys (including `__proto__`) come along. Rebuild from known fields only, like Till Payday's `sanitize()`, and add a size cap and a "this backup is from a newer version" message.
@@ -71,6 +73,18 @@ Why some things are the way they are, so nobody "fixes" them by mistake:
 - Keep `index.html` and `selftest.html` running identical app code. Add self-test checks for anything new.
 - After any script edit in either page, refresh the privacy lock: `python3 /tmp/toolkit/lock.py index.html selftest.html`.
 - Run the toolkit's release check: `bash /tmp/toolkit/release-check.sh <repo folder>`. Every line should pass; look at each REVIEW lead (it only scans lines changed since the last tag). On 2.6.0 the two leads were the self-test's `fetch("./")` (reads the app page) and its test request to example.com (meant to be blocked), both on purpose.
+- Check the sheets and dialogs too (the release check only scans what's showing on load, and its `--click` presses one element per pass, but every sheet here needs two to four taps). Serve the repo folder (`python3 -m http.server 8770 --bind 127.0.0.1` in the background), then run the checker once per sheet with chained `--click`s (pressed in order before the scan), and read each result against the screen behind it:
+  ```
+  C='node /tmp/toolkit/a11y-check.mjs'; U=http://127.0.0.1:8770/index.html
+  T='--click button[data-act=tab][data-id=practice] --click button[data-act=testintro] --click button[data-act=starttest]'
+  $C --click 'button[data-act=tab][data-id=tools]' --click 'button[data-act=calc]' $U   # Calculator
+  $C $T --click 'button[data-act=tnav]' $U                                              # Questions list
+  $C $T --click 'button[data-act=tnav]' --click 'button[data-act=tsubmitask]' $U        # Finish the test?
+  $C $T --click 'button[data-act=texit]' $U                                             # Leave the test?
+  $C $T --click 'button[data-act=tpause]' $U                                            # Test paused
+  $C --click 'button[data-act=quick5]' --click 'button[data-act=pick][data-i="0"]' --click 'button[data-act=report]' $U   # Report a mistake
+  ```
+  The sheets are the five `overlay()` dialogs plus the calculator (`#calc`). If a sheet is added or its opening taps change, update this list. A `--click matched nothing` error means the taps no longer lead there. Compare each result with the same screen without the sheet; only what the sheet adds is new.
 - Before delivering, always:
   1. Run the full self-test (it must pass).
   2. Check light and dark mode and small phone widths.
