@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-pK2ndcSxlr7lm999NbPbhfy22PB0hRrvEABKc7GQVWc=' 'sha256-5niRDldQjQLwEmgNH9g2Sr6rHb2FLS5yAxF5CwNBDC4=' 'sha256-h8FIo8stfE9t1G5Y2JsT6sY9uQeoe3bDl1sOTq+xEh8=' 'sha256-FRStbCI96HQBjgehf8Te1fl6kOesp6zCtjGrHVBCweQ=' 'sha256-5AUlL3A0kWkpe8OcJVNh75/u36GOV3iOugtdswzaqFM=' 'sha256-+L97gQNlvndmTMSWmU5jheQMdKQMkEYKCaH484M0/3o='; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src data:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'; frame-src 'none'; media-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-pK2ndcSxlr7lm999NbPbhfy22PB0hRrvEABKc7GQVWc=' 'sha256-5niRDldQjQLwEmgNH9g2Sr6rHb2FLS5yAxF5CwNBDC4=' 'sha256-h8FIo8stfE9t1G5Y2JsT6sY9uQeoe3bDl1sOTq+xEh8=' 'sha256-FRStbCI96HQBjgehf8Te1fl6kOesp6zCtjGrHVBCweQ=' 'sha256-ARnsjyQ7Dv4k54jcGT8c5wLfrgLjva6IA/g1gEOgKMk=' 'sha256-+L97gQNlvndmTMSWmU5jheQMdKQMkEYKCaH484M0/3o='; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src data:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'; frame-src 'none'; media-src 'none'">
 <meta name="referrer" content="no-referrer">
 <!-- The self-test's lock matches the app's, except it may read its own site's files (connect-src 'self') to check sw.js, the manifest and the app page's own lock. The app page itself can't send or fetch anything. -->
 <title>Study Coach Self-Test</title>
@@ -181,7 +181,7 @@ details.info[open] summary .chev svg{transform:rotate(90deg)}
 .warn{padding:12px 14px;border-radius:14px;background:color-mix(in srgb,var(--flag) 16%,var(--surface));font-size:.94rem}
 .warn.confirm{justify-content:flex-start}
 .chips{display:flex;gap:8px;flex-wrap:wrap}
-.chipbtn{min-height:40px;padding:0 14px;border-radius:99px;border:1px solid var(--line);background:var(--surface);font-weight:700;cursor:pointer;font-size:.88rem}
+.chipbtn{min-height:44px;padding:0 14px;border-radius:99px;border:1px solid var(--line);background:var(--surface);font-weight:700;cursor:pointer;font-size:.88rem}
 .chipbtn.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 
 /* quiz + test */
@@ -210,7 +210,7 @@ details.info[open] summary .chev svg{transform:rotate(90deg)}
 .fb.bad h4{color:var(--bad)}
 .qhead{display:flex;justify-content:space-between;align-items:center;gap:12px}
 .qnum{font-family:var(--display);font-weight:600;font-size:1.12rem;font-variant-numeric:tabular-nums}
-.flag{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 14px;border-radius:99px;border:1px solid var(--line);background:var(--surface);font-weight:700;font-size:.85rem;cursor:pointer;color:var(--muted)}
+.flag{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 14px;border-radius:99px;border:1px solid var(--line);background:var(--surface);font-weight:700;font-size:.85rem;cursor:pointer;color:var(--muted)}
 .flag svg{width:17px;height:17px}
 .flag.on{background:color-mix(in srgb,var(--flag) 20%,var(--surface));border-color:var(--flag);color:var(--ink)}
 .timer{flex:none;display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 12px;border-radius:14px;border:1px solid var(--line);background:var(--surface);font-weight:700;font-variant-numeric:tabular-nums;cursor:pointer;white-space:nowrap;color:var(--ink)}
@@ -311,7 +311,7 @@ textarea.code{width:100%;min-height:110px;font-family:ui-monospace,Menlo,Consola
 .sec .legal{font-size:.85rem;color:var(--muted)}
 
 /* read aloud, pace, keyboard */
-.listen{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 14px;border-radius:99px;border:1px solid var(--line);background:var(--surface);font-weight:700;font-size:.85rem;cursor:pointer;color:var(--ink);align-self:flex-start;flex:none}
+.listen{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 14px;border-radius:99px;border:1px solid var(--line);background:var(--surface);font-weight:700;font-size:.85rem;cursor:pointer;color:var(--ink);align-self:flex-start;flex:none}
 .listen svg{width:17px;height:17px}
 .qtools{display:flex;justify-content:space-between;align-items:center;gap:10px}
 .qhead{flex-wrap:wrap}
@@ -913,7 +913,7 @@ const TIPS = [
 </script>
 <script>
 "use strict";
-const APP_VERSION = "2.6.2";   // plain X.Y.Z: the tagging workflow and the release check read it
+const APP_VERSION = "2.6.3";   // plain X.Y.Z: the tagging workflow and the release check read it
 const FEEDBACK_EMAIL = "freeforgood-apps+study@proton.me";
 const SITE = "https://freeforgood-apps.github.io/study-coach/";   // the website, for links from the Claude copies
 /* ================= question registry ================= */

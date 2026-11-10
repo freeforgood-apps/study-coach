@@ -1,5 +1,10 @@
 # Study Coach: changelog
 
+## 2.6.3 (Nov 9, 2026)
+- Accessibility: the Listen and Flag buttons on the quiz and test screens, and the Missed / All filter buttons on test results, are now 44px tall instead of 40px, so they're easier to tap. Everything else looks the same.
+- Nothing else changed. Your progress isn't affected.
+- Tested: the toolkit's release check passed every line: versions agree, the privacy lock is up to date on both pages, the self-test passed in headless Chrome at phone size, small phone size in dark mode and desktop size, accessibility clean on Home, and no security leads. The checker also ran on the test screen, the quiz screen and all six sheets with their opening taps pressed: no buttons under 44px left, and the check caught the Flag button put back to 40px on purpose. Before and after screenshots of the test screen look the same apart from the 4px of height. The self-test ran 1,925 to 1,934 checks per size.
+
 ## 2.6.2 (Nov 9, 2026)
 - Accessibility: the pop-up sheets (the test's question list, "Finish the test?", "Leave the test?", "Test paused" and "Report a mistake") now have a name, so VoiceOver announces which sheet opened instead of just "dialog". They look and work the same. The calculator already had one.
 - The self-test now checks that every sheet it opens has a name.
