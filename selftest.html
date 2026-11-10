@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-pK2ndcSxlr7lm999NbPbhfy22PB0hRrvEABKc7GQVWc=' 'sha256-5niRDldQjQLwEmgNH9g2Sr6rHb2FLS5yAxF5CwNBDC4=' 'sha256-h8FIo8stfE9t1G5Y2JsT6sY9uQeoe3bDl1sOTq+xEh8=' 'sha256-FRStbCI96HQBjgehf8Te1fl6kOesp6zCtjGrHVBCweQ=' 'sha256-VTmzg8GJ7NVaXIyR+Y6dWns39477avcsbrE66vSFG9A=' 'sha256-/qL7XQzFv83RS2ErOznYlwQRNvTr7McUY+1M9VKGeDA='; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src data:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'; frame-src 'none'; media-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-pK2ndcSxlr7lm999NbPbhfy22PB0hRrvEABKc7GQVWc=' 'sha256-vXn5GuTCrKGAFeLxfrPAEpLNO4PZwxgCGBToVrNLsak=' 'sha256-h8FIo8stfE9t1G5Y2JsT6sY9uQeoe3bDl1sOTq+xEh8=' 'sha256-zLVtMUzPIvD3ofrur+JIlt2KVh0MTGHDOdqP+RhcOvE=' 'sha256-jcPcd4ZXavJgwudxF7lKWFSepfnQwOTigRYgVlIEXY4=' 'sha256-qd5m9btIKYHtT0LCXixDxA6syY4erVVJR1orrpCW88E='; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src data:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'; frame-src 'none'; media-src 'none'">
 <meta name="referrer" content="no-referrer">
 <!-- The self-test's lock matches the app's, except it may read its own site's files (connect-src 'self') to check sw.js, the manifest and the app page's own lock. The app page itself can't send or fetch anything. -->
 <title>Study Coach Self-Test</title>
@@ -383,7 +383,7 @@ const SUBJECTS = [
     ]},
   { id:"m2", title:"Ratios, Rates & Proportions", sum:"Unit prices, recipes and scale problems.",
     lesson:[
-      {h:"Ratios compare amounts", html:`<p>A ratio compares two quantities. 3 nurses for every 12 patients can be written 3:12, 3 to 12, or 3/12. Simplify it like a fraction: <b>1:4</b>.</p>`},
+      {h:"Ratios compare amounts", html:`<p>A ratio compares two quantities. 3 nurses for every 12 patients can be written 3:12, 3 to 12, or 3/12. Simplify it like a fraction: <b>1:4</b> (1 to 4).</p>`},
       {h:"Unit rates", html:`<p>A unit rate tells you how much for <b>one</b>. Divide to find it.</p><div class="ex">$4.50 for 3 lb → 4.50 ÷ 3 = <b>$1.50 per lb</b></div><p>Unit rates are the fastest way to compare deals.</p>`},
       {h:"Solving proportions", html:`<p>A proportion says two ratios are equal. Cross-multiply to solve.</p><div class="ex">3/5 = x/20<br>5 · x = 3 · 20<br>5x = 60<br><b>x = 12</b></div>`},
       {h:"Scale and maps", html:`<p>If 1 inch on a map = 50 miles, then 3.5 inches = 3.5 × 50 = <b>175 miles</b>. Set it up as a proportion if you're unsure.</p>`}
@@ -796,7 +796,7 @@ math:[
   ["Numerator","The top number of a fraction. In 3/4, it's 3."],
   ["Denominator","The bottom number of a fraction. In 3/4, it's 4."],
   ["Percent","Per hundred. 45% = 45/100 = 0.45."],
-  ["Ratio","A comparison of two amounts, like 3:5 or 3/5."],
+  ["Ratio","A comparison of two amounts, like 3:5 (3 to 5) or 3/5."],
   ["Proportion","Two equal ratios, like 2/3 = 8/12. Solve by cross-multiplying."],
   ["Variable","A letter that stands for an unknown number, like x."],
   ["Coefficient","The number multiplied by a variable. In 7x, it's 7."],
@@ -915,7 +915,7 @@ const TIPS = [
 </script>
 <script>
 "use strict";
-const APP_VERSION = "2.6.8";   // plain X.Y.Z: the tagging workflow and the release check read it
+const APP_VERSION = "2.6.9";   // plain X.Y.Z: the tagging workflow and the release check read it
 const FEEDBACK_EMAIL = "freeforgood-apps+study@proton.me";
 const SITE = "https://freeforgood-apps.github.io/study-coach/";   // the website, for links from the Claude copies
 /* ================= question registry ================= */
@@ -2346,6 +2346,11 @@ try {
       essayRun = null; P = fresh(); save(); tab = "learn"; stacks.learn = [{v:"home"}]; stacks.practice = [{v:"practice"}]; stacks.tools = [{v:"tools"}]; stacks.me = [{v:"me"}]; render(true);
       await step("Checking question data");
       for (const q of Object.values(QMAP)) { steps++; if (!q.q || !q.why) issues.push("Missing text " + q.id); if (q.o.length !== 4 || new Set(q.o).size !== 4) issues.push("Bad options " + q.id); }
+      // A ratio written with a colon has its words right after it, like "1:4 (1 to 4)", because VoiceOver reads "1:4" like a time, "one four" (2.6.9).
+      // This scans every lesson, question, card, essay and tip. Times of day ("3:15 PM") don't count; a colon in a sentence ("x = 2: 3(2)") has a space, so it doesn't either.
+      { const txt = JSON.stringify([SUBJECTS, TESTS, CARDS, FORMULAS, ESSAYS, CHECKS, TIPS]).replace(/<[^>]*>/g, "");
+        for (const m of txt.matchAll(/(^|[^\d:])(\d+):(\d+)(?![\d:])(?!\s*[AaPp]\.?[Mm]\b)/g)) { steps++; const words = m[2] + " to " + m[3];
+          if (!txt.slice(m.index, m.index + m[0].length + 30).includes(words)) issues.push("The ratio " + m[2] + ":" + m[3] + " has no words next to it (" + words + "), so VoiceOver reads it like a time"); } }
       check("Home");
       await step("Times in words");
       for (const [ms, want] of [[45 * 60000, "45 minutes"], [59 * 60000 + 59000, "59 minutes"], [3600000, "1 hour"], [3600000 + 29 * 60000 + 58000, "1 hour 29 minutes"], [2 * 3600000 + 60000, "2 hours 1 minute"],

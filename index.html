@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-5niRDldQjQLwEmgNH9g2Sr6rHb2FLS5yAxF5CwNBDC4=' 'sha256-h8FIo8stfE9t1G5Y2JsT6sY9uQeoe3bDl1sOTq+xEh8=' 'sha256-FRStbCI96HQBjgehf8Te1fl6kOesp6zCtjGrHVBCweQ=' 'sha256-VTmzg8GJ7NVaXIyR+Y6dWns39477avcsbrE66vSFG9A='; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src data:; connect-src 'none'; manifest-src 'self'; worker-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'; frame-src 'none'; media-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-vXn5GuTCrKGAFeLxfrPAEpLNO4PZwxgCGBToVrNLsak=' 'sha256-h8FIo8stfE9t1G5Y2JsT6sY9uQeoe3bDl1sOTq+xEh8=' 'sha256-zLVtMUzPIvD3ofrur+JIlt2KVh0MTGHDOdqP+RhcOvE=' 'sha256-jcPcd4ZXavJgwudxF7lKWFSepfnQwOTigRYgVlIEXY4='; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src data:; connect-src 'none'; manifest-src 'self'; worker-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'; frame-src 'none'; media-src 'none'">
 <meta name="referrer" content="no-referrer">
 <link rel="manifest" href="manifest.webmanifest">
 <title>Study Coach for the GED® Test</title>
@@ -380,7 +380,7 @@ const SUBJECTS = [
     ]},
   { id:"m2", title:"Ratios, Rates & Proportions", sum:"Unit prices, recipes and scale problems.",
     lesson:[
-      {h:"Ratios compare amounts", html:`<p>A ratio compares two quantities. 3 nurses for every 12 patients can be written 3:12, 3 to 12, or 3/12. Simplify it like a fraction: <b>1:4</b>.</p>`},
+      {h:"Ratios compare amounts", html:`<p>A ratio compares two quantities. 3 nurses for every 12 patients can be written 3:12, 3 to 12, or 3/12. Simplify it like a fraction: <b>1:4</b> (1 to 4).</p>`},
       {h:"Unit rates", html:`<p>A unit rate tells you how much for <b>one</b>. Divide to find it.</p><div class="ex">$4.50 for 3 lb → 4.50 ÷ 3 = <b>$1.50 per lb</b></div><p>Unit rates are the fastest way to compare deals.</p>`},
       {h:"Solving proportions", html:`<p>A proportion says two ratios are equal. Cross-multiply to solve.</p><div class="ex">3/5 = x/20<br>5 · x = 3 · 20<br>5x = 60<br><b>x = 12</b></div>`},
       {h:"Scale and maps", html:`<p>If 1 inch on a map = 50 miles, then 3.5 inches = 3.5 × 50 = <b>175 miles</b>. Set it up as a proportion if you're unsure.</p>`}
@@ -793,7 +793,7 @@ math:[
   ["Numerator","The top number of a fraction. In 3/4, it's 3."],
   ["Denominator","The bottom number of a fraction. In 3/4, it's 4."],
   ["Percent","Per hundred. 45% = 45/100 = 0.45."],
-  ["Ratio","A comparison of two amounts, like 3:5 or 3/5."],
+  ["Ratio","A comparison of two amounts, like 3:5 (3 to 5) or 3/5."],
   ["Proportion","Two equal ratios, like 2/3 = 8/12. Solve by cross-multiplying."],
   ["Variable","A letter that stands for an unknown number, like x."],
   ["Coefficient","The number multiplied by a variable. In 7x, it's 7."],
@@ -912,7 +912,7 @@ const TIPS = [
 </script>
 <script>
 "use strict";
-const APP_VERSION = "2.6.8";   // plain X.Y.Z: the tagging workflow and the release check read it
+const APP_VERSION = "2.6.9";   // plain X.Y.Z: the tagging workflow and the release check read it
 const FEEDBACK_EMAIL = "freeforgood-apps+study@proton.me";
 const SITE = "https://freeforgood-apps.github.io/study-coach/";   // the website, for links from the Claude copies
 /* ================= question registry ================= */

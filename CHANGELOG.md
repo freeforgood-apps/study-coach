@@ -1,5 +1,10 @@
 # Study Coach: changelog
 
+## 2.6.9 (Nov 10, 2026)
+- Accessibility: ratios are said the right way. VoiceOver read "1:4" in the Ratios, Rates & Proportions lesson like a time ("one four"). Now the words come right after it: "1:4 (1 to 4)". The Ratio flashcard now says "like 3:5 (3 to 5) or 3/5". The lesson's "3:12, 3 to 12" already had its words, so it stays the same.
+- Your progress isn't affected.
+- Tested: the toolkit's release check passed every line: versions agree, the privacy lock is up to date on both pages, the self-test passed in headless Chrome at phone size, small phone size in dark mode and desktop size (3,388 to 3,395 steps), accessibility clean on Home, and no security leads. The self-test now scans every lesson, question, flashcard, essay and tip, and fails any ratio written with a colon that doesn't have its words right after it. It caught all 4 ratio bugs planted on purpose, and a time of day ("3:15 PM") planted as a control didn't set it off. The accessibility checker ran on the Ratios lesson and the Ratio flashcard's back: nothing found. Before and after screenshots (phone, and small phone in dark mode) match apart from the added words.
+
 ## 2.6.8 (Nov 10, 2026)
 - Accessibility: "Show passage" on test results is easier to tap. It was only 23px tall, so it was easy to miss with a thumb. Now it's 44px tall, like every other button in the app, with a little more space above and below it.
 - Accessibility: the essay checklist rows are easier to tap. A one-line row was 42px tall. Now every row is at least 44px.

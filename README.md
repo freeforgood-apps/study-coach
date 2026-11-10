@@ -37,6 +37,7 @@ Results are tied to the version and date they were run. When the app changes, th
 
 | Version | Date | Browser and device | Result |
 |---|---|---|---|
+| 2.6.9 | Nov 10, 2026 | Chrome (Blink engine) on Linux: full check at phone size, small phone size in dark mode and desktop size (adds a check that every ratio written with a colon has its words next to it) | ✓ Passed, 3,388 to 3,395 automated checks |
 | 2.6.8 | Nov 10, 2026 | The published GitHub Pages site (opened as selftest.html?v=2.6.8), Safari engine (WebKit) on a real iPhone (iOS 18.7), in Safari | ✓ Passed, 3,385 automated checks |
 | 2.6.8 | Nov 10, 2026 | Chrome (Blink engine) on Linux: full check at phone size, small phone size in dark mode and desktop size (adds checks that "Show passage" and the essay checklist rows are at least 44px tall) | ✓ Passed, 3,377 to 3,389 automated checks |
 | 2.6.7 | Nov 10, 2026 | The published GitHub Pages site (opened as selftest.html?v=2.6.7), Safari engine (WebKit) on a real iPhone (iOS 18.7), in Safari | ✓ Passed, 3,354 automated checks |
