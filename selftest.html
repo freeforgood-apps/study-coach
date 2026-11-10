@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-pK2ndcSxlr7lm999NbPbhfy22PB0hRrvEABKc7GQVWc=' 'sha256-vXn5GuTCrKGAFeLxfrPAEpLNO4PZwxgCGBToVrNLsak=' 'sha256-h8FIo8stfE9t1G5Y2JsT6sY9uQeoe3bDl1sOTq+xEh8=' 'sha256-zLVtMUzPIvD3ofrur+JIlt2KVh0MTGHDOdqP+RhcOvE=' 'sha256-jcPcd4ZXavJgwudxF7lKWFSepfnQwOTigRYgVlIEXY4=' 'sha256-qd5m9btIKYHtT0LCXixDxA6syY4erVVJR1orrpCW88E='; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src data:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'; frame-src 'none'; media-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-pK2ndcSxlr7lm999NbPbhfy22PB0hRrvEABKc7GQVWc=' 'sha256-vXn5GuTCrKGAFeLxfrPAEpLNO4PZwxgCGBToVrNLsak=' 'sha256-h8FIo8stfE9t1G5Y2JsT6sY9uQeoe3bDl1sOTq+xEh8=' 'sha256-zLVtMUzPIvD3ofrur+JIlt2KVh0MTGHDOdqP+RhcOvE=' 'sha256-pa1Gsc09UYnE8f9zvbyRgqCETfizJ2wEcnXKs4ndcEQ=' 'sha256-8exw0eA3thBPgzKG6m07vz4T4+bi/aQ1HPuBYX06AHA='; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src data:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'; frame-src 'none'; media-src 'none'">
 <meta name="referrer" content="no-referrer">
 <!-- The self-test's lock matches the app's, except it may read its own site's files (connect-src 'self') to check sw.js, the manifest and the app page's own lock. The app page itself can't send or fetch anything. -->
 <title>Study Coach Self-Test</title>
@@ -915,7 +915,7 @@ const TIPS = [
 </script>
 <script>
 "use strict";
-const APP_VERSION = "2.6.9";   // plain X.Y.Z: the tagging workflow and the release check read it
+const APP_VERSION = "2.6.10";   // plain X.Y.Z: the tagging workflow and the release check read it
 const FEEDBACK_EMAIL = "freeforgood-apps+study@proton.me";
 const SITE = "https://freeforgood-apps.github.io/study-coach/";   // the website, for links from the Claude copies
 /* ================= question registry ================= */
@@ -2256,7 +2256,7 @@ try {
     #st .in{max-width:640px;margin:0 auto;display:flex;flex-direction:column;gap:10px}
     #st h2{margin:0;font-size:1.25rem}#st .big{font-size:2.2rem;line-height:1.1;font-weight:800}
     #st .ok{color:var(--good)}#st .no{color:var(--bad)}#st ul{margin:0;padding-left:20px;font-size:.9rem}
-    #st table{border-collapse:collapse;font-size:.85rem;width:100%}#st td{padding:4px 6px;border-top:1px solid var(--line);vertical-align:top}#st td:first-child{color:var(--muted);white-space:nowrap}
+    #st table{border-collapse:collapse;font-size:.85rem;width:100%}#st td{padding:4px 6px;border-top:1px solid var(--line);vertical-align:top}#st td:first-child{color:var(--muted)}
     #st button{min-height:50px;border-radius:14px;border:0;background:var(--ink);color:var(--bg);font:inherit;font-weight:700;font-size:1rem;cursor:pointer}
     #st .row{display:grid;grid-template-columns:1fr 1fr;gap:8px}#st .ghost{background:var(--bg);color:var(--ink);border:1px solid var(--line)}
     #st textarea{width:100%;min-height:90px;font:12px ui-monospace,Menlo,monospace;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:8px}`;
@@ -2679,11 +2679,11 @@ try {
   function report(issues, steps, ms){
     const pass = issues.length === 0;
     const feats = features();
-    const summary = `Study Coach self-test: ${pass ? "PASSED" : "FAILED (" + issues.length + " issue" + (issues.length === 1 ? "" : "s") + ")"}\n${engine()} · ${os()} · ${innerWidth}×${innerHeight}\n${steps} steps in ${(ms / 1000).toFixed(1)}s\n` +
+    const summary = `Study Coach self-test ${APP_VERSION}: ${pass ? "PASSED" : "FAILED (" + issues.length + " issue" + (issues.length === 1 ? "" : "s") + ")"}\n${engine()} · ${os()} · ${innerWidth}×${innerHeight}\n${steps} steps in ${(ms / 1000).toFixed(1)}s\n` +
       feats.map(f => `${f[1] ? "✓" : "✗"} ${f[0]}`).join("\n") + (issues.length ? "\nIssues:\n- " + issues.slice(0, 30).join("\n- ") : "") + "\n" + navigator.userAgent;
     box.innerHTML = `<div class="in">
       <div class="big ${pass ? "ok" : "no"}">${pass ? "✓ Passed" : "✗ " + issues.length + " issue" + (issues.length === 1 ? "" : "s")}</div>
-      <p class="small muted">${steps} steps checked in ${(ms / 1000).toFixed(1)} seconds</p>
+      <p class="small muted">${steps} steps checked in ${(ms / 1000).toFixed(1)} seconds · Study Coach ${APP_VERSION}</p>
       <table><tr><td>Browser engine</td><td><b>${engine()}</b></td></tr><tr><td>System</td><td>${os()}</td></tr><tr><td>Screen</td><td>${innerWidth} × ${innerHeight}</td></tr>
       ${feats.map(f => `<tr><td>${f[0]}</td><td class="${f[1] ? "ok" : (f[2] ? "no" : "")}">${f[1] ? "✓ Supported" : (f[2] ? "✗ Missing (needed)" : "Not supported (app still works)")}</td></tr>`).join("")}</table>
       ${issues.length ? `<ul>${issues.slice(0, 30).map(i => `<li>${i}</li>`).join("")}</ul>` : ""}

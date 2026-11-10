@@ -1,5 +1,11 @@
 # Study Coach: changelog
 
+## 2.6.10 (Nov 10, 2026)
+- The self-test report now says which version of Study Coach it checked: on its first line ("Study Coach self-test 2.6.10: PASSED") and next to the step count under the result. That makes it easy to tell whether a report came from the newest version.
+- Accessibility: the self-test's results table now fits on a phone screen. Its labels weren't allowed to wrap, so the table was wider than the screen (about 444px wide on a 320px or 390px screen) and had to be scrolled sideways. The labels now wrap, like Till Payday's.
+- Only the self-test page changed. The app and your progress aren't affected.
+- Tested: the toolkit's release check passed every line: versions agree, the privacy lock is up to date on both pages, the self-test passed in headless Chrome at phone size, small phone size in dark mode and desktop size (3,387 to 3,391 steps), accessibility clean on Home, and no security leads. The finished self-test report was opened in headless Chrome at phone size (light) and small phone size (dark): its first line and the line under the result both say 2.6.10, nothing scrolls sideways (2.6.9's report did, at both sizes), and axe found nothing on the report. Before and after screenshots match apart from the added words and the wrapped labels. The accessibility checker on the self-test's start screen found one older best-practice note (its text sits outside a page landmark), the same as on 2.6.9. A failure planted on purpose showed "Study Coach self-test 2.6.10: FAILED (1 issue)" and was reported as failed. Not yet run on a real iPhone.
+
 ## 2.6.9 (Nov 10, 2026)
 - Accessibility: ratios are said the right way. VoiceOver read "1:4" in the Ratios, Rates & Proportions lesson like a time ("one four"). Now the words come right after it: "1:4 (1 to 4)". The Ratio flashcard now says "like 3:5 (3 to 5) or 3/5". The lesson's "3:12, 3 to 12" already had its words, so it stays the same.
 - Your progress isn't affected.

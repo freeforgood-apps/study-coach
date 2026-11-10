@@ -37,6 +37,7 @@ Results are tied to the version and date they were run. When the app changes, th
 
 | Version | Date | Browser and device | Result |
 |---|---|---|---|
+| 2.6.10 | Nov 10, 2026 | Chrome (Blink engine) on Linux: full check at phone size, small phone size in dark mode and desktop size (the report now shows the version it checked) | ✓ Passed, 3,387 to 3,391 automated checks |
 | 2.6.9 | Nov 10, 2026 | The published GitHub Pages site (opened as selftest.html?v=2.6.9), Safari engine (WebKit) on a real iPhone (iOS 18.7), in Safari | ✓ Passed twice, 3,380 and 3,383 automated checks |
 | 2.6.9 | Nov 10, 2026 | Chrome (Blink engine) on Linux: full check at phone size, small phone size in dark mode and desktop size (adds a check that every ratio written with a colon has its words next to it) | ✓ Passed, 3,388 to 3,395 automated checks |
 | 2.6.8 | Nov 10, 2026 | The published GitHub Pages site (opened as selftest.html?v=2.6.8), Safari engine (WebKit) on a real iPhone (iOS 18.7), in Safari | ✓ Passed, 3,385 automated checks |
@@ -87,7 +88,7 @@ Chrome's engine also powers Microsoft Edge, Chromebooks, Android phones, Samsung
 
 ### Run the self-test yourself
 
-Open **selftest.html** in any browser (the app's About screen links to it, under Feedback) and tap **Run self-test**. In a few seconds it taps through the whole app and shows a pass/fail report you can copy. It saves to its own separate storage, so it never touches anyone's real progress. If you run it on a browser that isn't listed above, please share the report by email or in this repository's **Issues** tab (see Feedback below).
+Open **selftest.html** in any browser (the app's About screen links to it, under Feedback) and tap **Run self-test**. In a few seconds it taps through the whole app and shows a pass/fail report you can copy, with the version it checked on the first line. It saves to its own separate storage, so it never touches anyone's real progress. If you run it on a browser that isn't listed above, please share the report by email or in this repository's **Issues** tab (see Feedback below).
 
 ## Privacy
 
