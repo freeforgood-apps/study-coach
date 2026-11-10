@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-pK2ndcSxlr7lm999NbPbhfy22PB0hRrvEABKc7GQVWc=' 'sha256-vXn5GuTCrKGAFeLxfrPAEpLNO4PZwxgCGBToVrNLsak=' 'sha256-h8FIo8stfE9t1G5Y2JsT6sY9uQeoe3bDl1sOTq+xEh8=' 'sha256-zLVtMUzPIvD3ofrur+JIlt2KVh0MTGHDOdqP+RhcOvE=' 'sha256-pa1Gsc09UYnE8f9zvbyRgqCETfizJ2wEcnXKs4ndcEQ=' 'sha256-8exw0eA3thBPgzKG6m07vz4T4+bi/aQ1HPuBYX06AHA='; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src data:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'; frame-src 'none'; media-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-pK2ndcSxlr7lm999NbPbhfy22PB0hRrvEABKc7GQVWc=' 'sha256-vXn5GuTCrKGAFeLxfrPAEpLNO4PZwxgCGBToVrNLsak=' 'sha256-h8FIo8stfE9t1G5Y2JsT6sY9uQeoe3bDl1sOTq+xEh8=' 'sha256-zLVtMUzPIvD3ofrur+JIlt2KVh0MTGHDOdqP+RhcOvE=' 'sha256-1ZLjQqaO2utcbjJbEGFQV/BunAr5ajL6uncOO61lI7w=' 'sha256-zfsGM+FQVenJ/uAmcGNb6AJ8V8qlEDHuSylLuJNx1T4='; style-src 'unsafe-inline'; img-src 'self' data: blob:; font-src data:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'; frame-src 'none'; media-src 'none'">
 <meta name="referrer" content="no-referrer">
 <!-- The self-test's lock matches the app's, except it may read its own site's files (connect-src 'self') to check sw.js, the manifest and the app page's own lock. The app page itself can't send or fetch anything. -->
 <title>Study Coach Self-Test</title>
@@ -915,7 +915,7 @@ const TIPS = [
 </script>
 <script>
 "use strict";
-const APP_VERSION = "2.6.10";   // plain X.Y.Z: the tagging workflow and the release check read it
+const APP_VERSION = "2.6.11";   // plain X.Y.Z: the tagging workflow and the release check read it
 const FEEDBACK_EMAIL = "freeforgood-apps+study@proton.me";
 const SITE = "https://freeforgood-apps.github.io/study-coach/";   // the website, for links from the Claude copies
 /* ================= question registry ================= */
@@ -2261,7 +2261,9 @@ try {
     #st .row{display:grid;grid-template-columns:1fr 1fr;gap:8px}#st .ghost{background:var(--bg);color:var(--ink);border:1px solid var(--line)}
     #st textarea{width:100%;min-height:90px;font:12px ui-monospace,Menlo,monospace;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:8px}`;
   document.head.appendChild(css);
-  const box = document.createElement("div"); box.id = "st"; document.body.appendChild(box);
+  const box = document.createElement("div"); box.id = "st";
+  box.setAttribute("role", "region"); box.setAttribute("aria-label", "Self-test");   // a named landmark, like Till Payday's (2.6.11)
+  document.body.appendChild(box);
 
   function engine(){
     const ua = navigator.userAgent;
@@ -2301,6 +2303,8 @@ try {
     const stepEl = document.getElementById("st-step");
     const t0 = Date.now();
     const issues = []; let steps = 0; lockOK = null;
+    // The self-test panel is a named page region, so screen readers can jump to it and nothing on it sits outside a landmark (2.6.11)
+    steps++; if (box.getAttribute("role") !== "region" || !box.getAttribute("aria-label")) issues.push("The self-test panel isn't a named page region");
     const errs = []; const onErr = e => errs.push(String(e.message || e.reason || e)); window.addEventListener("error", onErr); window.addEventListener("unhandledrejection", onErr);
     const wait = ms => new Promise(r => setTimeout(r, ms));
     const $ = s => document.querySelector(s);

@@ -1,5 +1,11 @@
 # Study Coach: changelog
 
+## 2.6.11 (Nov 10, 2026)
+- Accessibility: the self-test panel is now a named area of the page ("Self-test"), like Till Payday's. Screen reader users can jump straight to it, and its start screen and report no longer sit outside the page's named areas. It looks exactly the same.
+- The self-test now checks that its own panel keeps that name.
+- Only the self-test page changed. The app and your progress aren't affected.
+- Tested: the toolkit's release check passed every line: versions agree, the privacy lock is up to date on both pages, the self-test passed in headless Chrome at phone size, small phone size in dark mode and desktop size (3,387 to 3,392 steps), accessibility clean on Home and on the self-test page, and no security leads. The self-test's start screen and finished report were scanned with axe in headless Chrome at phone size (light) and small phone size (dark): the "content outside a landmark" finding is gone and nothing new showed up. Before and after screenshots of the start screen are pixel-for-pixel the same, and the reports match apart from the version number and step count. The self-test caught both panel bugs planted on purpose (no role, no name). Not yet run on a real iPhone, and not heard with VoiceOver.
+
 ## 2.6.10 (Nov 10, 2026)
 - The self-test report now says which version of Study Coach it checked: on its first line ("Study Coach self-test 2.6.10: PASSED") and next to the step count under the result. That makes it easy to tell whether a report came from the newest version.
 - Accessibility: the self-test's results table now fits on a phone screen. Its labels weren't allowed to wrap, so the table was wider than the screen (about 444px wide on a 320px or 390px screen) and had to be scrolled sideways. The labels now wrap, like Till Payday's.
