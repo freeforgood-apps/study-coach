@@ -141,6 +141,7 @@ Free to use. Provided "as is," without warranties of any kind. Study Coach is a 
 | `README.md` | This page |
 | `CHANGELOG.md` | What changed in each version |
 | `PROGRESS.md` | Where the project stands, and the rules for working on it |
+| `how-to-update.md` | The steps for any change and release, and what must not break |
 | `SECURITY.md` | How to report a security problem privately |
 | `.gitignore` | Keeps private files, like keys, from being uploaded by mistake |
 
